@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BE6 Technologies – AI & Machine Learning</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #0f1e38;
+    --navy-card: #111d30;
+    --dark-bg: #080f1e;
+    --purple: #a855f7;
+    --purple-deep: #9333ea;
+    --purple-dim: rgba(168,85,247,0.1);
+    --purple-border: rgba(168,85,247,0.22);
+    --purple-glow: rgba(168,85,247,0.06);
+    --violet: #818cf8;
+    --violet-dim: rgba(129,140,248,0.08);
+    --orange: #16ca6d;
+    --orange-deep: #16ca6d;
+    --orange-subtle: rgba(249,115,22,0.08);
+    --white: #ffffff;
+    --text: rgba(255,255,255,0.88);
+    --text-muted: rgba(255,255,255,0.5);
+    --text-dim: rgba(255,255,255,0.25);
+    --border: rgba(255,255,255,0.07);
+    --border-purple: rgba(168,85,247,0.2);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  ::-webkit-scrollbar { width:4px; }
+  ::-webkit-scrollbar-track { background:var(--dark-bg); }
+  ::-webkit-scrollbar-thumb { background:var(--purple); border-radius:2px; }
+
+  body {
+    font-family:'DM Sans',sans-serif;
+    background:var(--dark-bg);
+    color:var(--text);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  /* NAV */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(8,15,30,0.96);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--border-purple);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 48px; height:68px;
+  }
+  .nav-logo { display:flex; align-items:center; gap:12px; }
+  .nav-logo img { width:42px; height:42px; border-radius:50%; object-fit:cover; border:2px solid var(--purple); box-shadow:0 0 14px rgba(168,85,247,0.35); }
+  .nav-brand { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:white; letter-spacing:1px; }
+  .nav-links { display:flex; gap:32px; list-style:none; }
+  .nav-links a { color:var(--text-muted); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--purple); }
+  .nav-cta {
+    background:var(--orange); color:white;
+    padding:10px 24px; border-radius:6px;
+    font-size:13px; font-weight:700; text-decoration:none;
+    letter-spacing:0.5px; transition:all 0.2s;
+    box-shadow:0 4px 20px rgba(249,115,22,0.3);
+  }
+  .nav-cta:hover { background:var(--orange-deep); transform:translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse at 65% 25%, rgba(168,85,247,0.08) 0%, transparent 55%),
+      radial-gradient(ellipse at 25% 75%, rgba(129,140,248,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 75%, rgba(249,115,22,0.04) 0%, transparent 40%),
+      linear-gradient(180deg, #080f1e 0%, #0a1420 100%);
+    display:flex; align-items:center; justify-content:center;
+    text-align:center; position:relative; overflow:hidden;
+    padding-top:68px;
+  }
+  .hero-grid {
+    position:absolute; inset:0; opacity:0.04;
+    background-image:
+      linear-gradient(rgba(168,85,247,0.6) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(168,85,247,0.6) 1px, transparent 1px);
+    background-size:50px 50px;
+  }
+  .hero-nodes {
+    position:absolute; inset:0; overflow:hidden; pointer-events:none;
+  }
+  .node {
+    position:absolute; width:5px; height:5px; border-radius:50%;
+    background:var(--purple); opacity:0.3;
+    animation:nodeFloat 6s ease-in-out infinite;
+  }
+  .node::after {
+    content:''; position:absolute;
+    width:60px; height:1px; background:linear-gradient(90deg, rgba(168,85,247,0.3), transparent);
+    top:2px; left:5px;
+  }
+  @keyframes nodeFloat {
+    0%,100% { transform:translateY(0px); opacity:0.3; }
+    50% { transform:translateY(-12px); opacity:0.6; }
+  }
+  .node:nth-child(1) { top:15%; left:8%; animation-delay:0s; }
+  .node:nth-child(2) { top:35%; left:85%; animation-delay:1s; }
+  .node:nth-child(3) { top:70%; left:12%; animation-delay:2s; }
+  .node:nth-child(4) { top:20%; left:70%; animation-delay:0.5s; }
+  .node:nth-child(5) { top:80%; left:75%; animation-delay:1.5s; }
+  .node:nth-child(6) { top:55%; left:45%; animation-delay:3s; }
+
+  .hero-orb1 {
+    position:absolute; width:600px; height:600px; border-radius:50%;
+    background:radial-gradient(circle, rgba(168,85,247,0.07) 0%, transparent 70%);
+    top:-200px; right:-150px; pointer-events:none;
+  }
+  .hero-orb2 {
+    position:absolute; width:450px; height:450px; border-radius:50%;
+    background:radial-gradient(circle, rgba(129,140,248,0.05) 0%, transparent 70%);
+    bottom:-120px; left:-100px; pointer-events:none;
+  }
+
+  .hero-content { position:relative; z-index:2; max-width:880px; padding:0 24px; }
+
+  /* Brain/AI icon */
+  .hero-icon {
+    width:80px; height:80px; margin:0 auto 32px;
+    background:var(--purple-dim); border:1px solid var(--purple-border);
+    border-radius:20px; display:flex; align-items:center; justify-content:center;
+    font-size:40px;
+    box-shadow:0 0 40px rgba(168,85,247,0.2), inset 0 1px 0 rgba(255,255,255,0.05);
+    animation:iconPulse 3s ease-in-out infinite;
+  }
+  @keyframes iconPulse {
+    0%,100% { box-shadow:0 0 40px rgba(168,85,247,0.2), inset 0 1px 0 rgba(255,255,255,0.05); }
+    50% { box-shadow:0 0 60px rgba(168,85,247,0.4), inset 0 1px 0 rgba(255,255,255,0.05); }
+  }
+
+  .hero-eyebrow {
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(168,85,247,0.1); border:1px solid var(--purple-border);
+    color:var(--purple); padding:6px 18px; border-radius:100px;
+    font-size:12px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase;
+    margin-bottom:28px; animation:fadeUp 0.6s ease both;
+  }
+  .hero-eyebrow::before { content:''; width:6px; height:6px; background:var(--purple); border-radius:50%; animation:pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.4;transform:scale(0.7);} }
+
+  .hero-title {
+    font-family:'Syne',sans-serif;
+    font-size:clamp(44px,7.5vw,80px); font-weight:800;
+    line-height:1.0; color:white; margin-bottom:14px;
+    animation:fadeUp 0.7s 0.1s ease both;
+    letter-spacing:-1px;
+  }
+  .hero-title .purple { color:var(--purple); text-shadow:0 0 40px rgba(168,85,247,0.5); }
+  .hero-title .violet { color:var(--violet); }
+
+  .hero-sub {
+    font-size:17px; color:var(--text-muted); font-weight:300;
+    max-width:560px; margin:0 auto 44px;
+    animation:fadeUp 0.7s 0.2s ease both; line-height:1.75;
+  }
+
+  .hero-badges {
+    display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-bottom:48px;
+    animation:fadeUp 0.7s 0.3s ease both;
+  }
+  .badge {
+    display:flex; align-items:center; gap:8px;
+    background:rgba(255,255,255,0.05); border:1px solid var(--border);
+    padding:10px 20px; border-radius:8px;
+    color:var(--text); font-size:13px; font-weight:500;
+  }
+
+  .hero-btns { display:flex; gap:16px; justify-content:center; animation:fadeUp 0.7s 0.4s ease both; }
+  .btn-primary {
+    background:var(--purple); color:white;
+    padding:15px 36px; border-radius:8px;
+    font-size:14px; font-weight:700; text-decoration:none;
+    letter-spacing:0.4px; transition:all 0.2s;
+    box-shadow:0 8px 28px rgba(168,85,247,0.4);
+  }
+  .btn-primary:hover { background:var(--purple-deep); transform:translateY(-2px); box-shadow:0 12px 40px rgba(168,85,247,0.5); }
+  .btn-outline {
+    background:transparent; color:var(--text);
+    padding:15px 36px; border-radius:8px;
+    font-size:14px; font-weight:600; text-decoration:none;
+    border:1px solid var(--border); transition:all 0.2s;
+  }
+  .btn-outline:hover { border-color:var(--purple); color:var(--purple); }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(22px);} to{opacity:1;transform:translateY(0);} }
+
+  /* STATS BAND */
+  .stats-band {
+    background:var(--navy);
+    border-top:1px solid var(--border-purple);
+    border-bottom:1px solid var(--border-purple);
+    display:grid; grid-template-columns:repeat(4,1fr);
+  }
+  .stat-item {
+    padding:36px 24px; text-align:center;
+    border-right:1px solid var(--border); transition:background 0.2s;
+  }
+  .stat-item:last-child { border-right:none; }
+  .stat-item:hover { background:var(--purple-glow); }
+  .stat-num { font-family:'Syne',sans-serif; font-size:38px; font-weight:800; color:var(--orange); line-height:1; }
+  .stat-label { font-size:12px; color:var(--text-muted); margin-top:6px; letter-spacing:0.5px; }
+
+  /* SECTIONS */
+  section { padding:96px 48px; }
+  .section-inner { max-width:1100px; margin:0 auto; }
+  .section-tag {
+    display:inline-block;
+    background:var(--purple-dim); border:1px solid var(--purple-border);
+    color:var(--purple); padding:4px 14px; border-radius:100px;
+    font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+    margin-bottom:16px;
+  }
+  .section-tag.orange {
+    background:var(--orange-subtle); border-color:rgba(249,115,22,0.25); color:var(--orange);
+  }
+  .section-title {
+    font-family:'Syne',sans-serif; font-size:clamp(28px,4vw,44px); font-weight:800;
+    color:white; line-height:1.1; margin-bottom:16px;
+  }
+  .section-sub { font-size:15px; color:var(--text-muted); max-width:520px; margin-bottom:56px; line-height:1.75; }
+
+  /* OVERVIEW */
+  .overview-section { background:var(--navy); }
+  .overview-grid { display:grid; grid-template-columns:1.2fr 1fr; gap:64px; align-items:start; }
+  .overview-desc { font-size:15px; color:var(--text-muted); line-height:1.85; margin-bottom:36px; }
+  .why-list { display:flex; flex-direction:column; gap:12px; }
+  .why-item {
+    display:flex; align-items:flex-start; gap:14px;
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:8px; padding:14px 18px; transition:all 0.2s;
+  }
+  .why-item:hover { border-color:var(--purple-border); background:var(--purple-glow); }
+  .why-dot { color:var(--purple); font-size:16px; flex-shrink:0; margin-top:1px; }
+  .why-text { font-size:14px; color:var(--text); }
+
+  /* AUDIENCE */
+  .audience-section { background:var(--dark-bg); }
+  .audience-outer { display:grid; grid-template-columns:1fr 1fr; gap:56px; }
+  .audience-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:28px; }
+  .audience-card {
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:10px; padding:20px 18px;
+    display:flex; align-items:center; gap:14px; transition:all 0.2s;
+  }
+  .audience-card:hover { border-color:var(--purple-border); background:var(--purple-glow); }
+  .audience-emoji { font-size:26px; }
+  .audience-name { font-family:'Syne',sans-serif; font-size:14px; font-weight:700; color:white; }
+  .audience-desc { font-size:12px; color:var(--text-muted); margin-top:2px; }
+  .skills-label { font-family:'Syne',sans-serif; font-size:16px; font-weight:700; color:var(--purple); margin-bottom:14px; }
+  .skills-row { display:flex; flex-wrap:wrap; gap:10px; }
+  .skill-chip {
+    background:var(--purple-dim); border:1px solid var(--purple-border);
+    color:var(--purple); padding:7px 16px; border-radius:100px;
+    font-size:13px; font-weight:600; transition:all 0.2s;
+  }
+  .skill-chip:hover { background:var(--purple); color:white; }
+
+  /* CURRICULUM */
+  .curriculum-section { background:var(--navy); }
+  .modules-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:22px; }
+  .module-card {
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:14px; padding:28px 26px; position:relative;
+    transition:all 0.25s; overflow:hidden;
+  }
+  .module-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg, var(--purple), var(--violet));
+    opacity:0; transition:opacity 0.25s;
+  }
+  .module-card:hover { border-color:var(--purple-border); transform:translateY(-3px); box-shadow:0 12px 40px rgba(168,85,247,0.1); }
+  .module-card:hover::before { opacity:1; }
+  .module-num {
+    position:absolute; top:22px; right:22px;
+    width:32px; height:32px; border-radius:8px;
+    background:var(--orange); color:white;
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:800; font-family:'Syne',sans-serif;
+  }
+  .module-icon { font-size:28px; margin-bottom:12px; display:block; }
+  .module-name { font-family:'Syne',sans-serif; font-size:16px; font-weight:700; color:white; margin-bottom:8px; }
+  .module-desc { font-size:13.5px; color:var(--text-muted); line-height:1.65; }
+
+  /* TECH */
+  .tech-section { background:var(--dark-bg); }
+  .tech-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+  .tech-card {
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:12px; padding:26px 16px; text-align:center;
+    transition:all 0.2s;
+  }
+  .tech-card:hover { border-color:var(--purple-border); box-shadow:0 4px 20px rgba(168,85,247,0.1); transform:translateY(-2px); }
+  .tech-emoji { font-size:28px; margin-bottom:10px; display:block; }
+  .tech-name { font-size:14px; font-weight:600; color:var(--text); }
+
+  /* PROJECTS */
+  .projects-section { background:var(--navy); }
+  .projects-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .project-card {
+    border-radius:16px; overflow:hidden; border:1px solid var(--border);
+    transition:all 0.25s;
+  }
+  .project-card:hover { transform:translateY(-4px); box-shadow:0 16px 48px rgba(168,85,247,0.12); border-color:var(--purple-border); }
+  .project-top {
+    background:linear-gradient(135deg, #0f1a30, #1a1040);
+    padding:28px 24px 22px;
+  }
+  .project-emoji { font-size:32px; }
+  .project-name { font-family:'Syne',sans-serif; font-size:17px; font-weight:700; color:white; margin-top:10px; }
+  .project-bottom { padding:18px 24px; background:var(--navy-card); }
+  .project-desc { font-size:13.5px; color:var(--text-muted); line-height:1.65; }
+
+  /* DURATION BAND */
+  .duration-band {
+    background:linear-gradient(135deg, #07101e, #0f1830);
+    border-top:1px solid var(--border-purple);
+    border-bottom:1px solid var(--border-purple);
+    padding:48px;
+  }
+  .duration-inner { max-width:800px; margin:0 auto; display:grid; grid-template-columns:1fr 1px 1fr; gap:0; align-items:center; text-align:center; }
+  .dur-divider { background:var(--purple-border); height:80px; align-self:center; }
+  .dur-label { font-size:11px; letter-spacing:2px; color:var(--purple); text-transform:uppercase; margin-bottom:10px; font-family:'DM Mono',monospace; }
+  .dur-value { font-family:'Syne',sans-serif; font-size:36px; font-weight:800; color:white; }
+  .dur-sub { font-size:13px; color:var(--text-muted); margin-top:6px; }
+
+  /* CAREERS */
+  .careers-section { background:var(--dark-bg); }
+  .careers-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+  .career-card {
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:14px; padding:28px 26px;
+    display:flex; align-items:center; gap:20px;
+    border-bottom:3px solid var(--orange); transition:all 0.25s;
+  }
+  .career-card:hover { border-color:var(--purple-border); background:var(--purple-glow); transform:translateY(-2px); box-shadow:0 10px 32px rgba(168,85,247,0.1); }
+  .career-icon {
+    width:52px; height:52px; border-radius:12px;
+    background:var(--purple-dim); border:1px solid var(--purple-border);
+    display:flex; align-items:center; justify-content:center;
+    font-size:26px; flex-shrink:0;
+  }
+  .career-name { font-family:'Syne',sans-serif; font-size:18px; font-weight:700; color:white; margin-bottom:4px; }
+  .career-sub { font-size:13px; color:var(--text-muted); }
+
+  /* WHY US */
+  .why-section { background:var(--navy); }
+  .why-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:22px; }
+  .why-card {
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:14px; padding:28px 26px;
+    display:flex; gap:20px; align-items:flex-start; transition:all 0.25s;
+  }
+  .why-card:hover { border-color:var(--orange); box-shadow:0 8px 28px rgba(249,115,22,0.08); }
+  .why-icon-wrap {
+    width:48px; height:48px; border-radius:12px;
+    background:linear-gradient(135deg, var(--orange), var(--orange-deep));
+    display:flex; align-items:center; justify-content:center;
+    font-size:22px; flex-shrink:0;
+    box-shadow:0 4px 14px rgba(249,115,22,0.3);
+  }
+  .why-name { font-family:'Syne',sans-serif; font-size:17px; font-weight:700; color:white; margin-bottom:6px; }
+  .why-desc { font-size:13.5px; color:var(--text-muted); line-height:1.65; }
+
+  /* FOOTER */
+  footer {
+    background:var(--dark-bg);
+    border-top:1px solid var(--border-purple);
+    padding:64px 48px 40px; text-align:center;
+  }
+  .footer-logo { display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:12px; }
+  .footer-logo img { width:50px; height:50px; border-radius:50%; border:2px solid var(--purple); box-shadow:0 0 16px rgba(168,85,247,0.3); }
+  .footer-brand { font-family:'Syne',sans-serif; font-size:22px; font-weight:800; color:white; letter-spacing:2px; }
+  .footer-tagline { font-size:13px; color:var(--text-muted); letter-spacing:1px; margin-bottom:36px; }
+  .footer-cta { font-size:19px; font-weight:700; color:#d8b4fe; margin-bottom:32px; }
+  .footer-contacts { display:flex; justify-content:center; gap:48px; margin-bottom:36px; }
+  .footer-contact { display:flex; align-items:center; gap:10px; font-size:14px; color:var(--text-muted); }
+  .footer-contact a { color:#d8b4fe; text-decoration:none; }
+  .footer-contact a:hover { color:var(--purple); }
+  .footer-contact a { color:#d8b4fe; text-decoration:none; }
+
+  .footer-contact  { color:#d8b4fe; text-decoration:none; }
+  .footer-divider { width:70px; height:2px; background:var(--purple); margin:0 auto 22px; opacity:0.3; }
+  .footer-copy { font-size:11px; color:var(--text-dim); font-family:'DM Mono',monospace; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="data:image/png;base64,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" alt="BE6 Technologies">
+    <span class="nav-brand">BE6 TECHNOLOGIES</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#curriculum">Curriculum</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#careers">Careers</a></li>
+  </ul>
+  <a href="/src/html/index.html" class="nav-cta">←Back to Home</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-nodes">
+    <div class="node"></div><div class="node"></div><div class="node"></div>
+    <div class="node"></div><div class="node"></div><div class="node"></div>
+  </div>
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-content">
+    <div class="hero-icon">🧠</div>
+    <div class="hero-eyebrow">Now Enrolling — Batch 2026</div>
+    <h1 class="hero-title">Artificial<br><span class="purple">Intelligence</span> &<br><span class="violet">Machine Learning</span></h1>
+    <p class="hero-sub">Build intelligent systems that learn, adapt, and predict. Master Python, Deep Learning, NLP, and real-world AI applications from industry experts.</p>
+    <div class="hero-badges">
+      <div class="badge">🤖 AI & Deep Learning</div>
+      <div class="badge">⏱️ 6 Months Training</div>
+      <div class="badge">📈 Top-Paying Career</div>
+      <div class="badge">🏆 Industry Certificate</div>
+    </div>
+    <div class="hero-btns">
+      <a href="#enroll" class="btn-primary" id="enroll" onclick="window.location.href='/src/html/Register/BE6_Register.html'">Enroll Now →</a>
+      <a href="#curriculum" class="btn-outline">View Curriculum</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAND -->
+<div class="stats-band">
+  <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">Months Duration</div></div>
+  <div class="stat-item"><div class="stat-num">8</div><div class="stat-label">Course Modules</div></div>
+  <div class="stat-item"><div class="stat-num">10+</div><div class="stat-label">Tools & Libraries</div></div>
+  <div class="stat-item"><div class="stat-num">4+</div><div class="stat-label">Real AI Projects</div></div>
+</div>
+
+<!-- OVERVIEW -->
+<section class="overview-section" id="overview">
+  <div class="section-inner">
+    <div class="overview-grid">
+      <div>
+        <div class="section-tag">About the Course</div>
+        <h2 class="section-title">What is AI & Machine Learning?</h2>
+        <p class="overview-desc">Artificial Intelligence and Machine Learning are transforming every industry — from healthcare and finance to retail and manufacturing. This program takes you from Python fundamentals all the way to deploying production-ready AI models, with hands-on training on real datasets and industry tools.</p>
+        <div class="why-list">
+          <div class="why-item"><span class="why-dot">◆</span><span class="why-text">One of the highest-paying fields in global IT</span></div>
+          <div class="why-item"><span class="why-dot">◆</span><span class="why-text">AI is disrupting every major industry worldwide</span></div>
+          <div class="why-item"><span class="why-dot">◆</span><span class="why-text">Massive demand with a severe global talent shortage</span></div>
+          <div class="why-item"><span class="why-dot">◆</span><span class="why-text">Work with cutting-edge tech: neural networks, NLP, computer vision</span></div>
+          <div class="why-item"><span class="why-dot">◆</span><span class="why-text">Future-proof career with unlimited growth potential</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="section-tag" style="margin-bottom:20px;">Who Should Enroll</div>
+        <div class="audience-grid">
+          <div class="audience-card"><span class="audience-emoji">🎓</span><div><div class="audience-name">Students</div><div class="audience-desc">Any engineering degree</div></div></div>
+          <div class="audience-card"><span class="audience-emoji">💼</span><div><div class="audience-name">Graduates</div><div class="audience-desc">Fresh or experienced</div></div></div>
+          <div class="audience-card"><span class="audience-emoji">⚙️</span><div><div class="audience-name">Software Devs</div><div class="audience-desc">Upskilling to AI</div></div></div>
+          <div class="audience-card"><span class="audience-emoji">📊</span><div><div class="audience-name">Data Analysts</div><div class="audience-desc">Moving into ML</div></div></div>
+        </div>
+        <div class="skills-label">Skills You Will Learn</div>
+        <div class="skills-row">
+          <div class="skill-chip">Python for AI</div>
+          <div class="skill-chip">Machine Learning</div>
+          <div class="skill-chip">Deep Learning</div>
+          <div class="skill-chip">NLP</div>
+          <div class="skill-chip">Computer Vision</div>
+          <div class="skill-chip">Model Deployment</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section class="curriculum-section" id="curriculum">
+  <div class="section-inner">
+    <div class="section-tag">Course Curriculum</div>
+    <h2 class="section-title">8 Power-Packed Modules</h2>
+    <p class="section-sub">A structured path from Python fundamentals to deploying real AI systems in production.</p>
+    <div class="modules-grid">
+      <div class="module-card">
+        <div class="module-num">1</div>
+        <span class="module-icon">🐍</span>
+        <div class="module-name">Python for AI & ML</div>
+        <div class="module-desc">Python essentials, NumPy, Pandas, data structures, and libraries needed for AI development.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">2</div>
+        <span class="module-icon">📐</span>
+        <div class="module-name">Mathematics for ML</div>
+        <div class="module-desc">Linear algebra, probability, statistics, and calculus — the mathematical foundation behind every ML model.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">3</div>
+        <span class="module-icon">🤖</span>
+        <div class="module-name">Machine Learning Fundamentals</div>
+        <div class="module-desc">Supervised & unsupervised learning, regression, classification, clustering, and model evaluation.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">4</div>
+        <span class="module-icon">📊</span>
+        <div class="module-name">Data Preprocessing & EDA</div>
+        <div class="module-desc">Data cleaning, feature engineering, exploratory analysis, and visualization with Matplotlib & Seaborn.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">5</div>
+        <span class="module-icon">🧠</span>
+        <div class="module-name">Deep Learning & Neural Networks</div>
+        <div class="module-desc">ANNs, CNNs, RNNs, backpropagation, activation functions, and training deep models with TensorFlow & Keras.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">6</div>
+        <span class="module-icon">💬</span>
+        <div class="module-name">Natural Language Processing</div>
+        <div class="module-desc">Text preprocessing, tokenization, sentiment analysis, transformers, and building NLP pipelines.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">7</div>
+        <span class="module-icon">👁️</span>
+        <div class="module-name">Computer Vision</div>
+        <div class="module-desc">Image classification, object detection, OpenCV, CNNs for vision tasks, and real-time applications.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">8</div>
+        <span class="module-icon">🚀</span>
+        <div class="module-name">Model Deployment & MLOps</div>
+        <div class="module-desc">Deploying models with Flask & FastAPI, REST APIs, cloud deployment, and MLOps best practices.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH -->
+<section class="tech-section">
+  <div class="section-inner">
+    <div class="section-tag">Tech Stack</div>
+    <h2 class="section-title">Tools & Technologies</h2>
+    <p class="section-sub">The complete AI/ML toolkit used by professionals at top companies worldwide.</p>
+    <div class="tech-grid">
+      <div class="tech-card"><span class="tech-emoji">🐍</span><span class="tech-name">Python</span></div>
+      <div class="tech-card"><span class="tech-emoji">🔢</span><span class="tech-name">NumPy</span></div>
+      <div class="tech-card"><span class="tech-emoji">🐼</span><span class="tech-name">Pandas</span></div>
+      <div class="tech-card"><span class="tech-emoji">📊</span><span class="tech-name">Matplotlib</span></div>
+      <div class="tech-card"><span class="tech-emoji">🤖</span><span class="tech-name">Scikit-Learn</span></div>
+      <div class="tech-card"><span class="tech-emoji">🧠</span><span class="tech-name">TensorFlow</span></div>
+      <div class="tech-card"><span class="tech-emoji">🔥</span><span class="tech-name">PyTorch</span></div>
+      <div class="tech-card"><span class="tech-emoji">👁️</span><span class="tech-name">OpenCV</span></div>
+      <div class="tech-card"><span class="tech-emoji">💬</span><span class="tech-name">NLTK / spaCy</span></div>
+      <div class="tech-card"><span class="tech-emoji">📓</span><span class="tech-name">Jupyter</span></div>
+      <div class="tech-card"><span class="tech-emoji">⚡</span><span class="tech-name">FastAPI</span></div>
+      <div class="tech-card"><span class="tech-emoji">☁️</span><span class="tech-name">Cloud Deploy</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects-section" id="projects">
+  <div class="section-inner">
+    <div class="section-tag orange">Real-Time Projects</div>
+    <h2 class="section-title">Build AI That Matters</h2>
+    <p class="section-sub">Portfolio-ready AI projects built on real datasets — exactly what top employers look for.</p>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-emoji">🏥</div>
+          <div class="project-name">Disease Prediction System</div>
+        </div>
+        <div class="project-bottom">
+          <div class="project-desc">ML model that predicts disease likelihood from patient data using classification algorithms and health datasets.</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-emoji">💬</div>
+          <div class="project-name">Sentiment Analysis Engine</div>
+        </div>
+        <div class="project-bottom">
+          <div class="project-desc">NLP pipeline that classifies customer reviews and social media posts as positive, negative, or neutral.</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-emoji">👁️</div>
+          <div class="project-name">Image Recognition System</div>
+        </div>
+        <div class="project-bottom">
+          <div class="project-desc">CNN-based computer vision model trained to classify and detect objects in images with high accuracy.</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-emoji">📈</div>
+          <div class="project-name">Stock Price Predictor</div>
+        </div>
+        <div class="project-bottom">
+          <div class="project-desc">LSTM-based deep learning model for time-series forecasting of stock prices using historical market data.</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-emoji">🎬</div>
+          <div class="project-name">AI Recommendation Engine</div>
+        </div>
+        <div class="project-bottom">
+          <div class="project-desc">Collaborative and content-based filtering system for personalized movie or product recommendations.</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-emoji">🤖</div>
+          <div class="project-name">Deployed ML REST API</div>
+        </div>
+        <div class="project-bottom">
+          <div class="project-desc">End-to-end ML model packaged into a production-ready REST API using FastAPI with cloud deployment.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DURATION BAND -->
+<div class="duration-band">
+  <div class="duration-inner">
+    <div>
+      <div class="dur-label">Duration</div>
+      <div class="dur-value">6 Months</div>
+      <div class="dur-sub">Intensive Practical Training</div>
+    </div>
+    <div class="dur-divider"></div>
+    <div>
+      <div class="dur-label">Training Mode</div>
+      <div class="dur-value">Hands-on Labs</div>
+      <div class="dur-sub">Real datasets · Real models · Real deployment</div>
+    </div>
+  </div>
+</div>
+
+<!-- CAREERS -->
+<section class="careers-section" id="careers">
+  <div class="section-inner">
+    <div class="section-tag">Career Opportunities</div>
+    <h2 class="section-title">Your Future in AI</h2>
+    <p class="section-sub">AI/ML professionals command some of the highest salaries in the global tech industry.</p>
+    <div class="careers-grid">
+      <div class="career-card">
+        <div class="career-icon">🧠</div>
+        <div><div class="career-name">AI Engineer</div><div class="career-sub">Building intelligent systems & pipelines</div></div>
+      </div>
+      <div class="career-card">
+        <div class="career-icon">🤖</div>
+        <div><div class="career-name">ML Engineer</div><div class="career-sub">Model training · Deployment · MLOps</div></div>
+      </div>
+      <div class="career-card">
+        <div class="career-icon">📊</div>
+        <div><div class="career-name">Data Scientist</div><div class="career-sub">Analytics · Predictive Modeling · Insights</div></div>
+      </div>
+      <div class="career-card">
+        <div class="career-icon">💬</div>
+        <div><div class="career-name">NLP Engineer</div><div class="career-sub">Chatbots · Text Analysis · LLMs</div></div>
+      </div>
+      <div class="career-card">
+        <div class="career-icon">👁️</div>
+        <div><div class="career-name">Computer Vision Engineer</div><div class="career-sub">Image AI · Object Detection · Video</div></div>
+      </div>
+      <div class="career-card">
+        <div class="career-icon">🔬</div>
+        <div><div class="career-name">AI Research Analyst</div><div class="career-sub">R&D · Publications · Innovation</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-section" id="why-us">
+  <div class="section-inner">
+    <div class="section-tag">Why BE6</div>
+    <h2 class="section-title">Why Choose BE6 Technologies?</h2>
+    <p class="section-sub">Practical AI education with expert mentors, real projects, and dedicated placement support.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon-wrap">👨‍🏫</div>
+        <div>
+          <div class="why-name">Industry Expert Trainers</div>
+          <div class="why-desc">Learn from AI professionals who have built and shipped real models at product companies.</div>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon-wrap">🧪</div>
+        <div>
+          <div class="why-name">Real-World Datasets & Labs</div>
+          <div class="why-desc">Every session involves hands-on work with actual data, not just theory and slides.</div>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon-wrap">🏆</div>
+        <div>
+          <div class="why-name">Industry-Recognized Certificate</div>
+          <div class="why-desc">Receive a professional certification that validates your AI/ML skills to employers.</div>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon-wrap">🤝</div>
+        <div>
+          <div class="why-name">100% Placement Support</div>
+          <div class="why-desc">Resume building, mock interviews, and job referrals until you land your dream role.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="data:image/png;base64,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" alt="BE6 Technologies">
+    <span class="footer-brand">BE6 TECHNOLOGIES</span>
+  </div>
+  <div class="footer-tagline">Empowering Careers Through Technology</div>
+  <div class="footer-cta">🚀 Start Your AI Journey Today!</div>
+  <div class="footer-contacts">
+    <div class="footer-contact">📞 +91 9000351289</div>
+    <div class="footer-contact">📧 <a href="mailto:Info@be6technologies.com">Info@be6technologies.com</a></div>
+    <div class="footer-contact">🌐 <a href="https://www.be6technologies.in/" target="_blank">www.be6technologies.in</a></div>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-copy">© 2026 BE6 Technologies. All Rights Reserved.</div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BE6 Technologies — 6-Month Immersive IT Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Satoshi:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+<div id="cursor-glow"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">
+    <div class="nav-logo-icon"><img src="data:image/png;base64,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" alt="BE6 Technologies Logo"/></div>
+    <span>Technologies</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#modules">Modules</a></li>
+    <li><a href="#capstone">Projects</a></li>
+    <li><a href="#placement">Placement</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <button class="nav-cta" onclick="window.location.href='Register/BE6_Register.html'">Apply Now →</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="bubble-canvas"></canvas>
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-fade"></div>
+
+  <div class="hero-logo-wrap">
+    <div class="hero-logo-ring r1"></div>
+    <div class="hero-logo-ring r2"></div>
+    <div class="hero-logo-ring r3"></div>
+    <img src="data:image/png;base64,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" class="hero-logo-img" alt="BE6 Technologies"/>
+    <div class="hero-logo-glow"></div>
+  </div>
+
+  <div class="hero-badge">
+    <div class="live-dot"></div>
+    6-Month Immersive IT Program
+  </div>
+
+  <div class="hero-tag tag-t"><span class="tag-dot"></span>Java Full Stack</div>
+  <div class="hero-tag tag-b"><span class="tag-dot"></span>Data Science</div>
+  <div class="hero-tag tag-r1"><span class="tag-dot"></span>AI & Machine Learning</div>
+  <div class="hero-tag tag-r2"><span class="tag-dot"></span>Cyber Security</div>
+  <h1>BE6 <em class="grad" style="font-style:normal">Technologies</em></h1>
+  <p>An immersive, 6-month program designed for ambitious professionals — whether you're upskilling, transitioning careers, or preparing for the future of IT.</p>
+
+  <div class="hero-btns">
+    <a href="#" class="btn-primary" onclick="window.location.href='Register/BE6_Register.html'">Apply Now →</a>
+    <a href="#journey" class="btn-secondary">🚀 Explore Program</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item"><div class="stat-num" data-target="6">0</div><div class="stat-label">Months Course</div></div>
+    <div class="stat-item"><div class="stat-num" data-target="8">0</div><div class="stat-label">Modules</div></div>
+    <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Support</div></div>
+    <div class="stat-item"><div class="stat-num">Live</div><div class="stat-label">Projects</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- JOURNEY -->
+<section id="journey">
+  <div class="journey-inner">
+    <div class="journey-text">
+      <div class="label reveal">Your Journey</div>
+      <h2 class="section-title reveal">From <span class="grad">Community</span><br>to Career</h2>
+      <p class="section-sub reveal" style="margin-bottom:0">Every step of your transformation, mapped out — from your first session to landing the role.</p>
+    </div>
+    <div class="journey-steps stagger">
+      <div class="step">
+        <div class="step-icon">🤝</div>
+        <div><div class="step-num">Step 01</div><h4>Join the Program</h4><p>Onboard into our learning community and get access to all resources.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-icon">📞</div>
+        <div><div class="step-num">Step 02</div><h4>1-on-1 Orientation Call</h4><p>Meet your mentor and set your learning goals and timeline.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-icon">📅</div>
+        <div><div class="step-num">Step 03</div><h4>Live Sessions</h4><p>Attend interactive, expert-led classes with real-time Q&A.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-icon">📝</div>
+        <div><div class="step-num">Step 04</div><h4>Assignments & Tasks</h4><p>Reinforce learning with hands-on coding challenges and projects.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-icon">💬</div>
+        <div><div class="step-num">Step 05</div><h4>Feedback & Iterations</h4><p>Receive detailed mentor feedback to continuously improve.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-icon">🏆</div>
+        <div><div class="step-num">Step 06</div><h4>Career Launch</h4><p>Graduate with a portfolio, certificate, and placement support.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="rm-header reveal">
+    <div class="rm-header-text">
+      <h2>Your Roadmap to <span class="grad">IT Career Growth</span> 💻</h2>
+      <p>From Beginner Developer to Tech Leader</p>
+    </div>
+    <div class="rm-badge">Career Path</div>
+  </div>
+  <div class="rm-track">
+    <div class="rm-row reveal-left">
+      <div class="rm-lbl"><h3>Foundation</h3><div class="exp">0–2 Yrs</div></div>
+      <div class="rm-dot"></div>
+      <div class="rm-pts">
+        <div class="rm-pt">Master programming basics (Java, Python, JavaScript).</div>
+        <div class="rm-pt">Understand Data Structures &amp; Algorithms (DSA).</div>
+        <div class="rm-pt">Build real-world projects (CRUD apps, APIs, mini systems).</div>
+        <div class="rm-pt">Learn Git, GitHub, and basic deployment.</div>
+      </div>
+    </div>
+    <div class="rm-row reveal-right">
+      <div class="rm-lbl"><h3>Growth</h3><div class="exp">2–5 Yrs</div></div>
+      <div class="rm-dot"></div>
+      <div class="rm-pts">
+        <div class="rm-pt">Work with frameworks (Spring Boot, React, Node.js).</div>
+        <div class="rm-pt">Design REST APIs and scalable backend systems.</div>
+        <div class="rm-pt">Understand databases (SQL &amp; NoSQL).</div>
+        <div class="rm-pt">Learn cloud basics (AWS, Docker, CI/CD).</div>
+      </div>
+    </div>
+    <div class="rm-row reveal-left">
+      <div class="rm-lbl"><h3>Leadership</h3><div class="exp">5–10+ Yrs</div></div>
+      <div class="rm-dot"></div>
+      <div class="rm-pts">
+        <div class="rm-pt">Design scalable architectures (Microservices, System Design).</div>
+        <div class="rm-pt">Lead teams and manage end-to-end product development.</div>
+        <div class="rm-pt">Optimize performance, security, and scalability.</div>
+        <div class="rm-pt">Mentor juniors and contribute to tech strategy.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MODULES -->
+<section id="modules">
+  <div class="label reveal">Curriculum</div>
+  <h2 class="section-title reveal">Course <span class="grad">Modules</span> 📘</h2>
+  <p class="section-sub reveal">11 hands-on modules — click any card to expand details &amp; download the brochure</p>
+
+  <div class="mod-grid stagger">
+    <div class="mod-card">
+      <div class="mod-head">
+        <div class="mod-num">Module 1</div>
+        <div style="flex:1"><h3>Java Full Stack Developer</h3><span class="mod-hint">Click to expand</span></div>
+        <div class="mod-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="mod-body">
+        <p>Master the core building blocks of programming with Java — from variables and loops to OOP concepts used in real industry projects.</p>
+        <div class="ok-lbl">Key Outcomes</div>
+        <ul>
+          <li>Understand core programming concepts and syntax</li>
+          <li>Build small console-based Java applications</li>
+          <li>Learn OOP: classes, objects, inheritance, polymorphism</li>
+        </ul>
+        <div class="tools-row"><span class="tb">Java</span><span class="tb">IntelliJ IDEA</span><span class="tb">GitHub</span></div>
+        <a href="Modules/java full.html" class="brochure-btn" onclick="event.stopPropagation()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          🔓 Open Brochure
+        </a>
+      </div>
+    </div>
+
+    <div class="mod-card">
+      <div class="mod-head">
+        <div class="mod-num">Module 2</div>
+        <div style="flex:1"><h3>Data Science</h3><span class="mod-hint">Click to expand</span></div>
+        <div class="mod-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="mod-body">
+        <p>Learn to work with real-world data by cleaning, transforming, and analyzing datasets to extract meaningful business insights.</p>
+        <div class="ok-lbl">Key Outcomes</div>
+        <ul>
+          <li>Understand data cleaning and preprocessing techniques</li>
+          <li>Handle missing values and outliers effectively</li>
+          <li>Perform exploratory data analysis (EDA)</li>
+          <li>Work with structured datasets for insights</li>
+        </ul>
+        <div class="tools-row"><span class="tb">Python</span><span class="tb">NumPy</span><span class="tb">Pandas</span></div>
+        <a href="Modules/Data Science.html" class="brochure-btn" onclick="event.stopPropagation()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          🔓 Open Brochure
+        </a>
+      </div>
+    </div>
+
+    <div class="mod-card">
+      <div class="mod-head">
+        <div class="mod-num">Module 3</div>
+        <div style="flex:1"><h3>Cyber Security</h3><span class="mod-hint">Click to expand</span></div>
+        <div class="mod-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="mod-body">
+        <p>Learn how hackers think and operate. Introduces ethical hacking techniques used to identify and exploit system vulnerabilities in a controlled, legal way.</p>
+        <div class="ok-lbl">Key Outcomes</div>
+        <ul>
+          <li>Understand footprinting and reconnaissance techniques</li>
+          <li>Perform network scanning and enumeration</li>
+          <li>Learn social engineering attack methods</li>
+          <li>Explore system hacking fundamentals</li>
+        </ul>
+        <div class="tools-row"><span class="tb">Kali Linux</span><span class="tb">Nmap</span><span class="tb">Wireshark</span></div>
+        <a href="Modules/Cyber.html" class="brochure-btn" onclick="event.stopPropagation()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          🔓 Open Brochure
+        </a>
+      </div>
+    </div>
+
+    <div class="mod-card">
+      <div class="mod-head">
+        <div class="mod-num">Module 4</div>
+        <div style="flex:1"><h3>AI &amp; Machine Learning</h3><span class="mod-hint">Click to expand</span></div>
+        <div class="mod-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="mod-body">
+        <p>Dive into Artificial Intelligence and Machine Learning. Build intelligent systems that analyze data, make predictions, and automate decision-making.</p>
+        <div class="ok-lbl">Key Outcomes</div>
+        <ul>
+          <li>Understand fundamentals of AI and Machine Learning</li>
+          <li>Work with supervised &amp; unsupervised learning algorithms</li>
+          <li>Build predictive models using real-world datasets</li>
+          <li>Learn model evaluation and performance optimization</li>
+        </ul>
+        <div class="tools-row"><span class="tb">Scikit-Learn</span><span class="tb">TensorFlow</span><span class="tb">Python</span></div>
+        <a href="Modules/AIML.html"  class="brochure-btn" onclick="event.stopPropagation()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          🔓 Open Brochure
+        </a>
+      </div>
+    </div>
+
+    <div class="mod-card">
+      <div class="mod-head">
+        <div class="mod-num">Module 5</div>
+        <div style="flex:1"><h3>Cloud Computing</h3><span class="mod-hint">Click to expand</span></div>
+        <div class="mod-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="mod-body">
+        <p>Learn to deploy, manage, and scale applications on the cloud. Master AWS services, containers, and modern DevOps practices.</p>
+        <div class="ok-lbl">Key Outcomes</div>
+        <ul>
+          <li>Understand core cloud service models (IaaS, PaaS, SaaS)</li>
+          <li>Deploy applications on AWS EC2 and S3</li>
+          <li>Work with Docker containers and Kubernetes</li>
+          <li>Implement CI/CD pipelines</li>
+        </ul>
+        <div class="tools-row"><span class="tb">AWS</span><span class="tb">Docker</span><span class="tb">Kubernetes</span></div>
+        <a href="Modules/cloud.html" class="brochure-btn" onclick="event.stopPropagation()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          🔓 Open Brochure
+        </a>
+      </div>
+    </div>
+
+    <div class="mod-card">
+      <div class="mod-head">
+        <div class="mod-num">Module 6</div>
+        <div style="flex:1"><h3>Python Full Stack Developer</h3><span class="mod-hint">Click to expand</span></div>
+        <div class="mod-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="mod-body">
+        <p>Build complete web applications from front to back using Python. Master Django/Flask for backend APIs and integrate with modern frontend frameworks to deliver production-ready full stack projects.</p>
+        <div class="ok-lbl">Key Outcomes</div>
+        <ul>
+          <li>Build RESTful APIs with Django REST Framework &amp; Flask</li>
+          <li>Develop dynamic frontends using HTML, CSS &amp; JavaScript</li>
+          <li>Work with databases (PostgreSQL, SQLite) via ORM</li>
+          <li>Deploy full stack apps on cloud platforms (Heroku, AWS)</li>
+        </ul>
+        <div class="tools-row"><span class="tb">Python</span><span class="tb">Django</span><span class="tb">Flask</span><span class="tb">React</span></div>
+        <a href="Modules/python.html" class="brochure-btn" onclick="event.stopPropagation()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          🔓 Open Brochure
+        </a>
+      </div>
+    </div>
+
+    <div class="mod-card">
+      <div class="mod-head">
+        <div class="mod-num">Module 7</div>
+        <div style="flex:1"><h3>Salesforce Development</h3><span class="mod-hint">Click to expand</span></div>
+        <div class="mod-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div class="mod-body">
+        <p>Master the world's #1 CRM platform. Learn to build custom applications, automate business processes, and integrate Salesforce with external systems for enterprise-grade solutions.</p>
+        <div class="ok-lbl">Key Outcomes</div>
+        <ul>
+          <li>Build custom apps using Apex, Visualforce &amp; Lightning Web Components</li>
+          <li>Configure Sales Cloud, Service Cloud &amp; automation flows</li>
+          <li>Design data models with custom objects &amp; relationships</li>
+          <li>Integrate Salesforce with REST/SOAP APIs &amp; third-party tools</li>
+        </ul>
+        <div class="tools-row"><span class="tb">Apex</span><span class="tb">LWC</span><span class="tb">Salesforce CLI</span><span class="tb">SOQL</span></div>
+        <a href="Modules/salesforce.html" class="brochure-btn" onclick="event.stopPropagation()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          🔓 Open Brochure
+        </a>
+      </div>
+    </div>
+
+   <div class="mod-card">
+  <div class="mod-head">
+    <div class="mod-num">Module 8</div>
+    <div style="flex:1">
+      <h3>SAP FICO & HANA</h3>
+      <span class="mod-hint">Click to expand</span>
+    </div>
+    <div class="mod-chevron">
+      <svg viewBox="0 0 24 24">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="mod-body">
+    <p>
+      Master SAP FICO (Financial Accounting & Controlling) along with SAP HANA — 
+      the powerful in-memory database. Learn how to manage financial operations, 
+      reporting, and real-time analytics used by global enterprises.
+    </p>
+
+    <div class="ok-lbl">Key Outcomes</div>
+    <ul>
+      <li>Understand SAP FICO modules (FI & CO) for financial management</li>
+      <li>Work with SAP HANA database and real-time analytics</li>
+      <li>Configure financial processes like GL, AP, AR, and Asset Accounting</li>
+      <li>Generate financial reports and cost controlling insights</li>
+    </ul>
+
+    <div class="tools-row">
+      <span class="tb">SAP FICO</span>
+      <span class="tb">SAP HANA</span>
+      <span class="tb">Financial Accounting (FI)</span>
+      <span class="tb">Controlling (CO)</span>
+    </div>
+
+    <a href="Modules/sap.html" target="_blank" class="brochure-btn" onclick="event.stopPropagation()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+      </svg>
+      🔓 Open Brochure
+    </a>
+  </div>
+</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CAPSTONE -->
+<section id="capstone">
+  <div class="label reveal">Live Projects</div>
+  <h2 class="section-title reveal">Live Projects &amp; <span class="grad">Career Prep</span> 🏆</h2>
+  <p class="section-sub reveal">Build real products — not simulated exercises — with actual industry impact</p>
+
+  <div class="cap-intro reveal">
+    Bring it all together in a final project where you design, develop, and deploy real-world IT applications based on industry use cases. Gain hands-on experience, receive mentor feedback, and showcase your projects during Demo Day.
+  </div>
+  <div class="ko-box reveal">
+    <h4>Key Outcomes</h4>
+    <ul>
+      <li>Complete live projects with industry-ready deliverables</li>
+      <li>Resume &amp; portfolio building with mentor guidance</li>
+      <li>Mock interviews, case study prep, and job application strategy</li>
+    </ul>
+  </div>
+  <div class="fd-title reveal">Final Deliverables</div>
+  <div class="fd-cards stagger">
+    <div class="fd-card"><span class="di">📊</span><h4>Live Projects Presentation</h4></div>
+    <div class="fd-card"><span class="di">📄</span><h4>Resume + Portfolio</h4></div>
+    <div class="fd-card"><span class="di">💬</span><h4>Case Interview Kit</h4></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PLACEMENT -->
+<section id="placement">
+  <div class="label reveal">Placement</div>
+  <h2 class="section-title reveal">Placement <span class="grad">Services</span> 🎯</h2>
+  <p class="section-sub reveal">We don't just teach — we help you land the role</p>
+  <div class="pl-grid stagger">
+    <div class="pl-card"><div class="pi">💼</div><h3>LinkedIn Optimization</h3><p>We polish your profile to highlight strengths, achievements, and keywords that attract recruiters.</p></div>
+    <div class="pl-card"><div class="pi">🗂️</div><h3>Portfolio Building</h3><p>Showcase real projects and case studies in a clean, compelling format that proves your skills.</p></div>
+    <div class="pl-card"><div class="pi">📋</div><h3>Resume Building</h3><p>We create your industry-standard resume with our AI Resume Builder for maximum impact.</p></div>
+    <div class="pl-card"><div class="pi">🎤</div><h3>Mock Interviews</h3><p>Simulated product, tech, and behavioral rounds with detailed feedback to sharpen your confidence.</p></div>
+    <div class="pl-card"><div class="pi">🤝</div><h3>Hiring Partner Access</h3><p>Direct visibility to roles through our trusted hiring network of top companies.</p></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RESOURCES -->
+<section id="resources">
+  <div class="label reveal">Resources</div>
+  <h2 class="section-title reveal">Additional Learning <span class="grad">Resources</span> 📚</h2>
+  <p class="section-sub reveal">Everything you need beyond the core curriculum</p>
+  <div class="res-grid stagger">
+    <div class="res-card"><h3>🏭 Industry Specific Projects</h3><p>Apply what you've learned with additional weekly projects tailored to specific industries like fintech, healthtech, and e-commerce.</p></div>
+    <div class="res-card"><h3>📝 Practice Quizzes</h3><p>Enhance your learning experience with quizzes designed to reinforce key concepts and identify areas for improvement.</p></div>
+    <div class="res-card"><h3>🚀 Advance Learning Courses</h3><p>Expand your skillset with Tech for PM and Analytics for PM to make data-driven product decisions.</p></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- INTERVIEW -->
+<section id="interview">
+  <div class="label reveal">Interview Prep</div>
+  <h2 class="section-title reveal">IT Interview <span class="grad">Preparation</span> 🎯</h2>
+  <p class="section-sub reveal">Master the essential skills required to crack software interviews at top companies</p>
+  <div class="iv-grid stagger">
+    <div class="iv-card"><div class="ico">💻</div><h3>Coding &amp; DSA</h3><p>Strengthen problem-solving skills with data structures and algorithms practice.</p></div>
+    <div class="iv-card"><div class="ico">🧩</div><h3>Problem Solving</h3><p>Improve logical thinking and approach complex challenges efficiently and systematically.</p></div>
+    <div class="iv-card"><div class="ico">🧮</div><h3>Aptitude &amp; Reasoning</h3><p>Prepare for quantitative aptitude, logical reasoning, and verbal ability assessments.</p></div>
+    <div class="iv-card"><div class="ico">🗣️</div><h3>Group Discussion</h3><p>Learn structured communication, argument building, and confidence for GD rounds.</p></div>
+    <div class="iv-card"><div class="ico">🎤</div><h3>Mock Interviews</h3><p>Practice real interview scenarios with expert feedback to improve your performance.</p></div>
+    <div class="iv-card"><div class="ico">🧠</div><h3>Behavioral &amp; HR</h3><p>Prepare for communication, teamwork, and leadership-focused interview scenarios.</p></div>
+  </div>
+
+  <!-- MENTORS -->
+  <div id="mentors">
+    <div class="mentors-header">
+      <div class="label reveal">Mentors From</div>
+      <h2 class="section-title reveal">Industry Leaders From <span class="grad">Top Companies</span> 🏢</h2>
+      <p class="section-sub reveal" style="margin-bottom:0">Guided by professionals from the world's leading organizations</p>
+    </div>
+    <div class="slider">
+      <div class="slide-track">
+        <div class="co-card">EY</div><div class="co-card">Genpact</div><div class="co-card">IBM</div>
+        <div class="co-card">Infosys</div><div class="co-card">Accenture</div><div class="co-card">BYJU'S</div>
+        <div class="co-card">ZOHO</div><div class="co-card">Google</div><div class="co-card">Microsoft</div>
+        <div class="co-card">TCS</div><div class="co-card">Wipro</div><div class="co-card">HCL</div>
+        <!-- duplicate for seamless scroll -->
+        <div class="co-card">EY</div><div class="co-card">Genpact</div><div class="co-card">IBM</div>
+        <div class="co-card">Infosys</div><div class="co-card">Accenture</div><div class="co-card">BYJU'S</div>
+        <div class="co-card">ZOHO</div><div class="co-card">Google</div><div class="co-card">Microsoft</div>
+        <div class="co-card">TCS</div><div class="co-card">Wipro</div><div class="co-card">HCL</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="label reveal">FAQ</div>
+  <h2 class="section-title reveal">Frequently Asked <span class="grad">Questions</span> ❓</h2>
+  <div class="faq-wrap">
+    <div class="faq-item reveal">
+      <div class="faq-q">What courses do you offer? <div class="faq-icon">+</div></div>
+      <div class="faq-a">We offer a wide range of IT courses including Full Stack Development (Java &amp; Python), Data Science, Cyber Security, AI &amp; ML, Cloud Computing, and more across 11 comprehensive modules.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">Are the courses beginner-friendly? <div class="faq-icon">+</div></div>
+      <div class="faq-a">Yes. Our courses are designed for beginners as well as experienced learners. We start from fundamentals and gradually move to advanced concepts, ensuring nobody is left behind.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">Do you provide real-time projects? <div class="faq-icon">+</div></div>
+      <div class="faq-a">Yes, every course includes real-time projects that help you gain practical experience and build a strong portfolio. Our capstone project involves building and deploying actual applications.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">Will I get placement assistance? <div class="faq-icon">+</div></div>
+      <div class="faq-a">Yes, we provide comprehensive placement support including resume building, mock interviews, LinkedIn optimization, portfolio building, and direct access to our hiring partner network.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">Do I need prior coding knowledge? <div class="faq-icon">+</div></div>
+      <div class="faq-a">No prior experience is required for beginner-level modules. For advanced tracks, basic programming knowledge is helpful but our curriculum is designed to accommodate different starting points.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">Are the classes live or recorded? <div class="faq-icon">+</div></div>
+      <div class="faq-a">We provide live interactive sessions along with recorded content so you can learn at your own pace. All live sessions are recorded and accessible afterward for revision.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">Will I receive a certificate? <div class="faq-icon">+</div></div>
+      <div class="faq-a">Yes, you will receive an industry-recognized course completion certificate after successfully finishing the program and all required projects. This certificate can be added to your LinkedIn profile.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">How can I enroll? <div class="faq-icon">+</div></div>
+      <div class="faq-a">Click the "Apply Now" button and submit your details. Our admissions team will contact you within 24 hours with further steps, including an orientation call with your assigned mentor.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-glow"></div>
+  <h2 class="reveal">Ready to <em class="grad" style="font-style:normal">Accelerate</em><br>Your Career?</h2>
+  <p class="reveal">If you're driven to build innovative products and stay ahead in a rapidly evolving world, we'd love to connect with you.</p>
+  <a href="#" class="btn-primary reveal" style="font-size:1rem;padding:16px 52px" onclick="window.location.href='Register/BE6_Register.html'">Apply Now →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo" style="display:flex;align-items:center;gap:9px;"><img src="data:image/png;base64,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" style="width:28px;height:28px;border-radius:50%;object-fit:cover;"/> BE6 <span>Technologies</span></div>
+    <p>📞 +91 9000351289</p>
+
+    <p href="mailto:Info@be6technologies.com">📧 Info@be6technologies.com</p>
+
+    <p href="https://www.be6technologies.in/" target="_blank">🌐 www.be6technologies.in</p>
+  <p>© 2025 BE6 Technologies. All rights reserved.</p>
+</footer>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span>🎯</span> Java Full Stack &nbsp;•&nbsp; <span>🔒</span> Cyber Security &nbsp;•&nbsp; <span>🤖</span> AI & Machine Learning &nbsp;•&nbsp; <span>📊</span> Data Science &nbsp;•&nbsp; <span> &#9925;&#65039;</span> Cloud Computing &nbsp;•&nbsp; <span>🐍</span> Python Full Stack &nbsp;•&nbsp; <span> &#128187;</span></span> SAP&nbsp;•&nbsp; <span> &#9729;&#65039;</span> Salesforce &nbsp;•&nbsp;
+    <span>🎯</span> Java Full Stack &nbsp;•&nbsp; <span>🔒</span> Cyber Security &nbsp;•&nbsp; <span>🤖</span> AI & Machine Learning &nbsp;•&nbsp; <span>📊</span> Data Science &nbsp;•&nbsp; <span> &#9925;&#65039;</span> Cloud Computing &nbsp;•&nbsp; <span>🐍</span> Python Full Stack &nbsp;•&nbsp; <span> &#128187;</span></span> SAP &nbsp;•&nbsp; <span> &#9729;&#65039;</span> Salesforce &nbsp;•&nbsp;
+  </div>
+</div>
+
+<!-- BROCHURE REGISTER MODAL -->
+<div id="brochure-modal" class="bm-overlay" aria-hidden="true">
+  <div class="bm-box">
+    <button class="bm-close" id="bm-close" aria-label="Close">&times;</button>
+
+    <!-- Step 1: Form -->
+    <div id="bm-step-form">
+      <div class="bm-logo-wrap">
+        <div class="bm-icon" id="bm-modal-emoji">📘</div>
+      </div>
+      <h2 class="bm-title">Get Your Free Brochure</h2>
+      <div class="bm-module-tag">
+        <span id="bm-modal-modnum"></span>&nbsp;—&nbsp;<span id="bm-modal-modname"></span>
+      </div>
+      <p class="bm-sub">Enter your details below and we'll open the brochure instantly.</p>
+
+      <div class="bm-field">
+        <label for="bm-name">Full Name</label>
+        <div class="bm-input-wrap">
+          <span class="bm-input-icon">👤</span>
+          <input type="text" id="bm-name" placeholder="e.g. Kumar Swamy" autocomplete="name"/>
+        </div>
+        <span class="bm-err" id="err-name"></span>
+      </div>
+
+      <div class="bm-field">
+        <label for="bm-phone">Phone Number</label>
+        <div class="bm-input-wrap">
+          <span class="bm-input-icon">📱</span>
+          <input type="tel" id="bm-phone" placeholder="e.g. 9876543210" autocomplete="tel" maxlength="15"/>
+        </div>
+        <span class="bm-err" id="err-phone"></span>
+      </div>
+
+      <div class="bm-field">
+        <label for="bm-email">Email Address</label>
+        <div class="bm-input-wrap">
+          <span class="bm-input-icon">✉️</span>
+          <input type="email" id="bm-email" placeholder="e.g. kumar@email.com" autocomplete="email"/>
+        </div>
+        <span class="bm-err" id="err-email"></span>
+      </div>
+
+      <button class="bm-submit" id="bm-submit">
+        <span id="bm-submit-text">Register &amp; Open Brochure →</span>
+        <span id="bm-submit-loader" style="display:none">⏳ Registering you...</span>
+      </button>
+
+      <p class="bm-privacy">🔒 Your details are safe with us. No spam, ever.</p>
+    </div>
+
+    <!-- Step 2: Success -->
+    <div id="bm-step-success" style="display:none">
+      <div class="bm-success-icon">✅</div>
+      <h2 class="bm-title">You're Registered!</h2>
+      <p class="bm-sub">Thank you, <strong id="bm-success-name"></strong>! Your brochure is opening now.</p>
+      <div class="bm-success-details" id="bm-success-details"></div>
+      <button class="bm-submit" id="bm-open-brochure">🔓 Open Brochure Now</button>
+      <p class="bm-privacy" style="margin-top:14px">Opening brochure in a new tab automatically...</p>
+    </div>
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>

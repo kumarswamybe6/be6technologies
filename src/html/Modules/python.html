@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BE6 Technologies – Python Full Stack Development</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #0f1e38;
+    --navy-card: #111d30;
+    --dark-bg: #080f1e;
+    --green: #22c55e;
+    --green-deep: #16a34a;
+    --green-dim: rgba(34,197,94,0.1);
+    --green-border: rgba(34,197,94,0.22);
+    --green-glow: rgba(34,197,94,0.05);
+    --yellow: #facc15;
+    --yellow-dim: rgba(250,204,21,0.08);
+    --yellow-border: rgba(250,204,21,0.2);
+    --orange: #22c55e;
+    --orange-deep: #16a34a;
+    --orange-subtle: rgba(249,115,22,0.08);
+    --white: #ffffff;
+    --text: rgba(255,255,255,0.88);
+    --text-muted: rgba(255,255,255,0.5);
+    --text-dim: rgba(255,255,255,0.22);
+    --border: rgba(255,255,255,0.07);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  ::-webkit-scrollbar { width:4px; }
+  ::-webkit-scrollbar-track { background:var(--dark-bg); }
+  ::-webkit-scrollbar-thumb { background:var(--green); border-radius:2px; }
+
+  body {
+    font-family:'DM Sans',sans-serif;
+    background:var(--dark-bg);
+    color:var(--text);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  /* NAV */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(8,15,30,0.96);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--green-border);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 48px; height:68px;
+  }
+  .nav-logo { display:flex; align-items:center; gap:12px; }
+  .nav-logo img { width:42px; height:42px; border-radius:50%; object-fit:cover; border:2px solid var(--green); box-shadow:0 0 14px rgba(34,197,94,0.3); }
+  .nav-brand { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:white; letter-spacing:1px; }
+  .nav-links { display:flex; gap:32px; list-style:none; }
+  .nav-links a { color:var(--text-muted); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--green); }
+  .nav-cta {
+    background:var(--orange); color:white;
+    padding:10px 24px; border-radius:6px;
+    font-size:13px; font-weight:700; text-decoration:none;
+    letter-spacing:0.5px; transition:all 0.2s;
+    box-shadow:0 4px 20px rgba(249,115,22,0.3);
+  }
+  .nav-cta:hover { background:var(--orange-deep); transform:translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse at 60% 20%, rgba(34,197,94,0.07) 0%, transparent 55%),
+      radial-gradient(ellipse at 20% 80%, rgba(250,204,21,0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 70%, rgba(249,115,22,0.04) 0%, transparent 40%),
+      linear-gradient(180deg, #080f1e 0%, #09141f 100%);
+    display:flex; align-items:center; justify-content:center;
+    text-align:center; position:relative; overflow:hidden;
+    padding-top:68px;
+  }
+
+  /* Animated code rain columns */
+  .code-rain {
+    position:absolute; inset:0; overflow:hidden; pointer-events:none; opacity:0.035;
+  }
+  .rain-col {
+    position:absolute; top:0; font-family:'DM Mono',monospace;
+    font-size:12px; color:var(--green); line-height:1.8;
+    animation:rainFall linear infinite;
+    white-space:nowrap; writing-mode:horizontal-tb;
+    display:flex; flex-direction:column; gap:0;
+  }
+  @keyframes rainFall {
+    0% { transform:translateY(-100%); }
+    100% { transform:translateY(100vh); }
+  }
+
+  .hero-orb1 {
+    position:absolute; width:640px; height:640px; border-radius:50%;
+    background:radial-gradient(circle, rgba(34,197,94,0.07) 0%, transparent 70%);
+    top:-220px; right:-160px; pointer-events:none;
+  }
+  .hero-orb2 {
+    position:absolute; width:480px; height:480px; border-radius:50%;
+    background:radial-gradient(circle, rgba(250,204,21,0.04) 0%, transparent 70%);
+    bottom:-140px; left:-120px; pointer-events:none;
+  }
+
+  .hero-content { position:relative; z-index:2; max-width:900px; padding:0 24px; }
+
+  .hero-icon {
+    width:80px; height:80px; margin:0 auto 32px;
+    background:var(--green-dim); border:1px solid var(--green-border);
+    border-radius:20px; display:flex; align-items:center; justify-content:center;
+    font-size:40px;
+    box-shadow:0 0 40px rgba(34,197,94,0.2), inset 0 1px 0 rgba(255,255,255,0.05);
+    animation:iconPulse 3s ease-in-out infinite;
+  }
+  @keyframes iconPulse {
+    0%,100% { box-shadow:0 0 40px rgba(34,197,94,0.2), inset 0 1px 0 rgba(255,255,255,0.05); }
+    50% { box-shadow:0 0 65px rgba(34,197,94,0.4), inset 0 1px 0 rgba(255,255,255,0.05); }
+  }
+
+  .hero-eyebrow {
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(34,197,94,0.1); border:1px solid var(--green-border);
+    color:var(--green); padding:6px 18px; border-radius:100px;
+    font-size:12px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase;
+    margin-bottom:28px; animation:fadeUp 0.6s ease both;
+  }
+  .hero-eyebrow::before { content:''; width:6px; height:6px; background:var(--green); border-radius:50%; animation:pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.4;transform:scale(0.7);} }
+
+  .hero-title {
+    font-family:'Syne',sans-serif;
+    font-size:clamp(44px,7.5vw,80px); font-weight:800;
+    line-height:1.0; color:white; margin-bottom:14px;
+    animation:fadeUp 0.7s 0.1s ease both; letter-spacing:-1px;
+  }
+  .hero-title .green { color:var(--green); text-shadow:0 0 40px rgba(34,197,94,0.5); }
+  .hero-title .yellow { color:var(--yellow); text-shadow:0 0 30px rgba(250,204,21,0.4); }
+
+  .hero-sub {
+    font-size:17px; color:var(--text-muted); font-weight:300;
+    max-width:580px; margin:0 auto 44px;
+    animation:fadeUp 0.7s 0.2s ease both; line-height:1.75;
+  }
+
+  .hero-code-snippet {
+    display:inline-flex; align-items:center; gap:10px;
+    background:rgba(0,0,0,0.4); border:1px solid var(--green-border);
+    border-radius:8px; padding:12px 20px; margin-bottom:40px;
+    font-family:'DM Mono',monospace; font-size:13px;
+    animation:fadeUp 0.7s 0.25s ease both;
+  }
+  .snippet-prompt { color:var(--green); }
+  .snippet-code { color:var(--yellow); }
+  .snippet-cursor { display:inline-block; width:8px; height:14px; background:var(--green); animation:blink 1s infinite; vertical-align:middle; }
+  @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+
+  .hero-badges {
+    display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-bottom:48px;
+    animation:fadeUp 0.7s 0.3s ease both;
+  }
+  .badge {
+    display:flex; align-items:center; gap:8px;
+    background:rgba(255,255,255,0.05); border:1px solid var(--border);
+    padding:10px 20px; border-radius:8px;
+    color:var(--text); font-size:13px; font-weight:500;
+  }
+
+  .hero-btns { display:flex; gap:16px; justify-content:center; animation:fadeUp 0.7s 0.4s ease both; }
+  .btn-primary {
+    background:var(--green); color:var(--dark-bg);
+    padding:15px 36px; border-radius:8px;
+    font-size:14px; font-weight:800; text-decoration:none;
+    letter-spacing:0.4px; transition:all 0.2s;
+    box-shadow:0 8px 28px rgba(34,197,94,0.4);
+  }
+  .btn-primary:hover { background:var(--green-deep); transform:translateY(-2px); box-shadow:0 12px 40px rgba(34,197,94,0.5); color:white; }
+  .btn-outline {
+    background:transparent; color:var(--text);
+    padding:15px 36px; border-radius:8px;
+    font-size:14px; font-weight:600; text-decoration:none;
+    border:1px solid var(--border); transition:all 0.2s;
+  }
+  .btn-outline:hover { border-color:var(--green); color:var(--green); }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(22px);} to{opacity:1;transform:translateY(0);} }
+
+  /* STATS BAND */
+  .stats-band {
+    background:var(--navy);
+    border-top:1px solid var(--green-border);
+    border-bottom:1px solid var(--green-border);
+    display:grid; grid-template-columns:repeat(4,1fr);
+  }
+  .stat-item {
+    padding:36px 24px; text-align:center;
+    border-right:1px solid var(--border); transition:background 0.2s;
+  }
+  .stat-item:last-child { border-right:none; }
+  .stat-item:hover { background:var(--green-glow); }
+  .stat-num { font-family:'Syne',sans-serif; font-size:38px; font-weight:800; color:var(--orange); line-height:1; }
+  .stat-label { font-size:12px; color:var(--text-muted); margin-top:6px; letter-spacing:0.5px; }
+
+  /* SECTIONS */
+  section { padding:96px 48px; }
+  .section-inner { max-width:1100px; margin:0 auto; }
+  .section-tag {
+    display:inline-block;
+    background:var(--green-dim); border:1px solid var(--green-border);
+    color:var(--green); padding:4px 14px; border-radius:100px;
+    font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+    margin-bottom:16px;
+  }
+  .section-tag.orange {
+    background:var(--orange-subtle); border-color:rgba(249,115,22,0.25); color:var(--orange);
+  }
+  .section-tag.yellow {
+    background:var(--yellow-dim); border-color:var(--yellow-border); color:var(--yellow);
+  }
+  .section-title {
+    font-family:'Syne',sans-serif; font-size:clamp(28px,4vw,44px); font-weight:800;
+    color:white; line-height:1.1; margin-bottom:16px;
+  }
+  .section-sub { font-size:15px; color:var(--text-muted); max-width:520px; margin-bottom:56px; line-height:1.75; }
+
+  /* OVERVIEW */
+  .overview-section { background:var(--navy); }
+  .overview-grid { display:grid; grid-template-columns:1.2fr 1fr; gap:64px; align-items:start; }
+  .overview-desc { font-size:15px; color:var(--text-muted); line-height:1.85; margin-bottom:36px; }
+  .why-list { display:flex; flex-direction:column; gap:12px; }
+  .why-item {
+    display:flex; align-items:flex-start; gap:14px;
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:8px; padding:14px 18px; transition:all 0.2s;
+  }
+  .why-item:hover { border-color:var(--green-border); background:var(--green-glow); }
+  .why-dot { color:var(--green); font-size:16px; flex-shrink:0; margin-top:1px; }
+  .why-text { font-size:14px; color:var(--text); }
+
+  /* AUDIENCE */
+  .audience-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:28px; }
+  .audience-card {
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:10px; padding:18px;
+    display:flex; align-items:center; gap:12px; transition:all 0.2s;
+  }
+  .audience-card:hover { border-color:var(--green-border); background:var(--green-glow); }
+  .audience-emoji { font-size:24px; }
+  .audience-name { font-family:'Syne',sans-serif; font-size:14px; font-weight:700; color:white; }
+  .audience-desc { font-size:12px; color:var(--text-muted); margin-top:2px; }
+  .skills-label { font-family:'Syne',sans-serif; font-size:16px; font-weight:700; color:var(--green); margin-bottom:14px; }
+  .skills-row { display:flex; flex-wrap:wrap; gap:10px; }
+  .skill-chip {
+    background:var(--green-dim); border:1px solid var(--green-border);
+    color:var(--green); padding:7px 16px; border-radius:100px;
+    font-size:13px; font-weight:600; transition:all 0.2s;
+  }
+  .skill-chip:hover { background:var(--green); color:var(--dark-bg); }
+
+  /* CURRICULUM */
+  .curriculum-section { background:var(--dark-bg); }
+  .modules-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:22px; }
+  .module-card {
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:14px; padding:28px 26px; position:relative;
+    transition:all 0.25s; overflow:hidden;
+    border-left:3px solid var(--green);
+  }
+  .module-card:hover { border-color:var(--green); transform:translateX(3px); box-shadow:0 8px 32px rgba(34,197,94,0.08); }
+  .module-num {
+    position:absolute; top:22px; right:22px;
+    width:32px; height:32px; border-radius:8px;
+    background:var(--orange); color:white;
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:800; font-family:'Syne',sans-serif;
+  }
+  .module-icon { font-size:26px; margin-bottom:12px; display:block; }
+  .module-name { font-family:'Syne',sans-serif; font-size:16px; font-weight:700; color:white; margin-bottom:8px; }
+  .module-desc { font-size:13.5px; color:var(--text-muted); line-height:1.65; }
+
+  /* TECH STACK — split frontend / backend / db */
+  .tech-section { background:var(--navy); }
+  .tech-cols { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .tech-col-title {
+    font-family:'Syne',sans-serif; font-size:14px; font-weight:700;
+    text-transform:uppercase; letter-spacing:1.5px; margin-bottom:16px;
+    padding-bottom:10px; border-bottom:1px solid var(--border);
+  }
+  .tech-col-title.frontend { color:var(--yellow); }
+  .tech-col-title.backend { color:var(--green); }
+  .tech-col-title.database { color:#60a5fa; }
+  .tech-grid-mini { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .tech-card {
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:10px; padding:18px 14px; text-align:center;
+    transition:all 0.2s;
+  }
+  .tech-card:hover { border-color:var(--green-border); box-shadow:0 4px 16px rgba(34,197,94,0.08); transform:translateY(-2px); }
+  .tech-emoji { font-size:24px; margin-bottom:8px; display:block; }
+  .tech-name { font-size:13px; font-weight:600; color:var(--text); }
+
+  /* PROJECTS */
+  .projects-section { background:var(--dark-bg); }
+  .projects-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .project-card {
+    border-radius:16px; overflow:hidden; border:1px solid var(--border);
+    transition:all 0.25s;
+  }
+  .project-card:hover { transform:translateY(-4px); box-shadow:0 16px 48px rgba(34,197,94,0.1); border-color:var(--green-border); }
+  .project-top {
+    background:linear-gradient(135deg, #0a1a14, #0d2218);
+    padding:28px 24px 22px;
+  }
+  .project-emoji { font-size:32px; }
+  .project-name { font-family:'Syne',sans-serif; font-size:17px; font-weight:700; color:white; margin-top:10px; margin-bottom:6px; }
+  .project-stack {
+    display:inline-block; background:var(--green-dim); border:1px solid var(--green-border);
+    color:var(--green); padding:2px 10px; border-radius:3px;
+    font-size:10px; font-family:'DM Mono',monospace; letter-spacing:1px;
+  }
+  .project-bottom { padding:18px 24px; background:var(--navy-card); }
+  .project-desc { font-size:13.5px; color:var(--text-muted); line-height:1.65; }
+
+  /* DURATION BAND */
+  .duration-band {
+    background:linear-gradient(135deg, #060e18, #09161f);
+    border-top:1px solid var(--green-border);
+    border-bottom:1px solid var(--green-border);
+    padding:48px;
+  }
+  .duration-inner { max-width:800px; margin:0 auto; display:grid; grid-template-columns:1fr 1px 1fr; gap:0; align-items:center; text-align:center; }
+  .dur-divider { background:var(--green-border); height:80px; align-self:center; }
+  .dur-label { font-size:11px; letter-spacing:2px; color:var(--green); text-transform:uppercase; margin-bottom:10px; font-family:'DM Mono',monospace; }
+  .dur-value { font-family:'Syne',sans-serif; font-size:36px; font-weight:800; color:white; }
+  .dur-sub { font-size:13px; color:var(--text-muted); margin-top:6px; }
+
+  /* CAREERS */
+  .careers-section { background:var(--navy); }
+  .careers-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+  .career-card {
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:14px; padding:28px 26px;
+    display:flex; align-items:center; gap:20px;
+    border-bottom:3px solid var(--orange); transition:all 0.25s;
+  }
+  .career-card:hover { border-color:var(--green-border); background:var(--green-glow); transform:translateY(-2px); box-shadow:0 10px 32px rgba(34,197,94,0.08); }
+  .career-icon {
+    width:52px; height:52px; border-radius:12px;
+    background:var(--green-dim); border:1px solid var(--green-border);
+    display:flex; align-items:center; justify-content:center;
+    font-size:26px; flex-shrink:0;
+  }
+  .career-name { font-family:'Syne',sans-serif; font-size:18px; font-weight:700; color:white; margin-bottom:4px; }
+  .career-sub { font-size:13px; color:var(--text-muted); }
+
+  /* WHY US */
+  .why-section { background:var(--dark-bg); }
+  .why-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:22px; }
+  .why-card {
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:14px; padding:28px 26px;
+    display:flex; gap:20px; align-items:flex-start; transition:all 0.25s;
+  }
+  .why-card:hover { border-color:var(--orange); box-shadow:0 8px 28px rgba(249,115,22,0.08); }
+  .why-icon-wrap {
+    width:48px; height:48px; border-radius:12px;
+    background:linear-gradient(135deg, var(--orange), var(--orange-deep));
+    display:flex; align-items:center; justify-content:center;
+    font-size:22px; flex-shrink:0;
+    box-shadow:0 4px 14px rgba(249,115,22,0.3);
+  }
+  .why-name { font-family:'Syne',sans-serif; font-size:17px; font-weight:700; color:white; margin-bottom:6px; }
+  .why-desc { font-size:13.5px; color:var(--text-muted); line-height:1.65; }
+
+  /* FOOTER */
+  footer {
+    background:var(--navy);
+    border-top:1px solid var(--green-border);
+    padding:64px 48px 40px; text-align:center;
+  }
+  .footer-logo { display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:12px; }
+  .footer-logo img { width:50px; height:50px; border-radius:50%; border:2px solid var(--green); box-shadow:0 0 16px rgba(34,197,94,0.3); }
+  .footer-brand { font-family:'Syne',sans-serif; font-size:22px; font-weight:800; color:white; letter-spacing:2px; }
+  .footer-tagline { font-size:13px; color:var(--text-muted); letter-spacing:1px; margin-bottom:36px; }
+  .footer-cta { font-size:19px; font-weight:700; color:#86efac; margin-bottom:32px; }
+  .footer-contacts { display:flex; justify-content:center; gap:48px; margin-bottom:36px; }
+  .footer-contact { display:flex; align-items:center; gap:10px; font-size:14px; color:var(--text-muted); }
+  .footer-contact a { color:#86efac; text-decoration:none; }
+  .footer-contact a:hover { color:var(--green); }
+  .footer-contact  { color:#86efac; text-decoration:none; }
+
+  .footer-divider { width:70px; height:2px; background:var(--green); margin:0 auto 22px; opacity:0.3; }
+  .footer-copy { font-size:11px; color:var(--text-dim); font-family:'DM Mono',monospace; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="data:image/png;base64,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" alt="BE6 Technologies">
+    <span class="nav-brand">BE6 TECHNOLOGIES</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#curriculum">Curriculum</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#careers">Careers</a></li>
+  </ul>
+  <a href="/src/html/index.html" class="nav-cta">←Back to Home</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="code-rain">
+    <div class="rain-col" style="left:4%;animation-duration:8s;animation-delay:0s;">def train():<br>  model.fit()<br>  return acc<br>import flask<br>@app.route<br>if __name__<br>class View:<br>  pass</div>
+    <div class="rain-col" style="left:14%;animation-duration:11s;animation-delay:2s;">SELECT *<br>FROM users<br>WHERE id=1<br>JOIN orders<br>ON id<br>GROUP BY<br>ORDER BY<br>LIMIT 10</div>
+    <div class="rain-col" style="left:78%;animation-duration:9s;animation-delay:1s;">pip install<br>django rest<br>celery beat<br>redis cache<br>gunicorn<br>nginx conf<br>docker run<br>kubectl</div>
+    <div class="rain-col" style="left:88%;animation-duration:13s;animation-delay:3s;">async def<br>await fetch<br>useState()<br>useEffect<br>axios.get<br>JSON.parse<br>router.get<br>res.json()</div>
+  </div>
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-content">
+    <div class="hero-icon">🐍</div>
+    <div class="hero-eyebrow">Now Enrolling — Batch 2026</div>
+    <h1 class="hero-title"><span class="yellow">Python</span> Full<br><span class="green">Stack</span> Development</h1>
+    <p class="hero-sub">Build powerful web apps from front to back using Python, Django, React, and modern databases. Master the complete stack that top companies hire for.</p>
+    <div class="hero-code-snippet">
+      <span class="snippet-prompt">$</span>
+      <span class="snippet-code">python manage.py runserver &nbsp;→&nbsp; App running on port 8000</span>
+      <span class="snippet-cursor"></span>
+    </div>
+    <div class="hero-badges">
+      <div class="badge">⏱️ 6 Months Training</div>
+      <div class="badge">🌐 Frontend + Backend</div>
+      <div class="badge">🏆 Industry Certificate</div>
+      <div class="badge">🤝 100% Support</div>
+    </div>
+    <div class="hero-btns">
+      <a href="#enroll" class="btn-primary" id="enroll" onclick="window.location.href='/src/html/Register/BE6_Register.html'">Enroll Now →</a>
+      <a href="#curriculum" class="btn-outline">View Curriculum</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAND -->
+<div class="stats-band">
+  <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">Months Duration</div></div>
+  <div class="stat-item"><div class="stat-num">8</div><div class="stat-label">Course Modules</div></div>
+  <div class="stat-item"><div class="stat-num">12+</div><div class="stat-label">Tools & Frameworks</div></div>
+  <div class="stat-item"><div class="stat-num">4+</div><div class="stat-label">Real Projects</div></div>
+</div>
+
+<!-- OVERVIEW -->
+<section class="overview-section" id="overview">
+  <div class="section-inner">
+    <div class="overview-grid">
+      <div>
+        <div class="section-tag">About the Course</div>
+        <h2 class="section-title">What is Python Full Stack?</h2>
+        <p class="overview-desc">Python Full Stack Development covers everything needed to build complete, production-ready web applications — from responsive frontends with HTML, CSS, and JavaScript to powerful backends with Django and REST APIs, and databases with PostgreSQL and MySQL. Python is the #1 most popular language globally and the go-to choice for modern web development.</p>
+        <div class="why-list">
+          <div class="why-item"><span class="why-dot">◆</span><span class="why-text">Python is the world's most popular programming language</span></div>
+          <div class="why-item"><span class="why-dot">◆</span><span class="why-text">Django powers Instagram, Pinterest, and thousands of startups</span></div>
+          <div class="why-item"><span class="why-dot">◆</span><span class="why-text">Full stack skills command higher salaries than single-track roles</span></div>
+          <div class="why-item"><span class="why-dot">◆</span><span class="why-text">Massive demand across startups, MNCs and product companies</span></div>
+          <div class="why-item"><span class="why-dot">◆</span><span class="why-text">Python bridges web development, data science, and AI/ML worlds</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="section-tag" style="margin-bottom:20px;">Who Should Enroll</div>
+        <div class="audience-grid">
+          <div class="audience-card"><span class="audience-emoji">🎓</span><div><div class="audience-name">Students</div><div class="audience-desc">Any degree background</div></div></div>
+          <div class="audience-card"><span class="audience-emoji">📜</span><div><div class="audience-name">Graduates</div><div class="audience-desc">Fresh or experienced</div></div></div>
+          <div class="audience-card"><span class="audience-emoji">🌱</span><div><div class="audience-name">Beginners</div><div class="audience-desc">Zero coding needed</div></div></div>
+          <div class="audience-card"><span class="audience-emoji">💼</span><div><div class="audience-name">Job Seekers</div><div class="audience-desc">Career switchers</div></div></div>
+        </div>
+        <div class="skills-label">Skills You Will Learn</div>
+        <div class="skills-row">
+          <div class="skill-chip">Python</div>
+          <div class="skill-chip">Django</div>
+          <div class="skill-chip">REST APIs</div>
+          <div class="skill-chip">Frontend Dev</div>
+          <div class="skill-chip">Databases</div>
+          <div class="skill-chip">Deployment</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section class="curriculum-section" id="curriculum">
+  <div class="section-inner">
+    <div class="section-tag">Course Curriculum</div>
+    <h2 class="section-title">8 Comprehensive Modules</h2>
+    <p class="section-sub">A structured path from Python basics to deploying full-stack web applications in production.</p>
+    <div class="modules-grid">
+      <div class="module-card">
+        <div class="module-num">1</div>
+        <span class="module-icon">🐍</span>
+        <div class="module-name">Python Programming Fundamentals</div>
+        <div class="module-desc">Variables, data types, loops, functions, OOP, file handling, and exception management.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">2</div>
+        <span class="module-icon">🎨</span>
+        <div class="module-name">Frontend Development</div>
+        <div class="module-desc">HTML5, CSS3, JavaScript ES6+, responsive design, Bootstrap, and building interactive UIs.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">3</div>
+        <span class="module-icon">🌐</span>
+        <div class="module-name">Django Web Framework</div>
+        <div class="module-desc">MVT architecture, URL routing, views, templates, forms, authentication, and admin panel.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">4</div>
+        <span class="module-icon">🔌</span>
+        <div class="module-name">Django REST Framework</div>
+        <div class="module-desc">Building RESTful APIs, serializers, viewsets, authentication tokens, and API testing.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">5</div>
+        <span class="module-icon">🗄️</span>
+        <div class="module-name">Database Management</div>
+        <div class="module-desc">PostgreSQL, MySQL, Django ORM, CRUD operations, migrations, and query optimization.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">6</div>
+        <span class="module-icon">⚛️</span>
+        <div class="module-name">React.js Frontend</div>
+        <div class="module-desc">Components, hooks, state management, axios API calls, and connecting React to Django backends.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">7</div>
+        <span class="module-icon">🔐</span>
+        <div class="module-name">Authentication & Security</div>
+        <div class="module-desc">JWT tokens, session management, OAuth, CSRF protection, and web application security best practices.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">8</div>
+        <span class="module-icon">🚀</span>
+        <div class="module-name">Deployment & DevOps</div>
+        <div class="module-desc">Git, GitHub, Docker basics, deploying on AWS/Heroku, CI/CD pipelines, and Nginx configuration.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section class="tech-section">
+  <div class="section-inner">
+    <div class="section-tag yellow">Tech Stack</div>
+    <h2 class="section-title">Tools & Technologies</h2>
+    <p class="section-sub">The complete Python full stack toolkit — from pixel to production.</p>
+    <div class="tech-cols">
+      <div>
+        <div class="tech-col-title frontend">⚡ Frontend</div>
+        <div class="tech-grid-mini">
+          <div class="tech-card"><span class="tech-emoji">🌐</span><span class="tech-name">HTML5 / CSS3</span></div>
+          <div class="tech-card"><span class="tech-emoji">📜</span><span class="tech-name">JavaScript</span></div>
+          <div class="tech-card"><span class="tech-emoji">⚛️</span><span class="tech-name">React.js</span></div>
+          <div class="tech-card"><span class="tech-emoji">🅱️</span><span class="tech-name">Bootstrap</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="tech-col-title backend">🐍 Backend</div>
+        <div class="tech-grid-mini">
+          <div class="tech-card"><span class="tech-emoji">🐍</span><span class="tech-name">Python</span></div>
+          <div class="tech-card"><span class="tech-emoji">🎸</span><span class="tech-name">Django</span></div>
+          <div class="tech-card"><span class="tech-emoji">🔌</span><span class="tech-name">Django REST</span></div>
+          <div class="tech-card"><span class="tech-emoji">🔑</span><span class="tech-name">JWT Auth</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="tech-col-title database">🗄️ Database & DevOps</div>
+        <div class="tech-grid-mini">
+          <div class="tech-card"><span class="tech-emoji">🐘</span><span class="tech-name">PostgreSQL</span></div>
+          <div class="tech-card"><span class="tech-emoji">🐬</span><span class="tech-name">MySQL</span></div>
+          <div class="tech-card"><span class="tech-emoji">🔄</span><span class="tech-name">Git / GitHub</span></div>
+          <div class="tech-card"><span class="tech-emoji">☁️</span><span class="tech-name">Cloud Deploy</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects-section" id="projects">
+  <div class="section-inner">
+    <div class="section-tag orange">Real-Time Projects</div>
+    <h2 class="section-title">Build Portfolio-Ready Apps</h2>
+    <p class="section-sub">End-to-end web applications with real backends, databases, and deployments.</p>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-emoji">🛒</div>
+          <div class="project-name">E-Commerce Platform</div>
+          <span class="project-stack">Django · React · PostgreSQL</span>
+        </div>
+        <div class="project-bottom">
+          <div class="project-desc">Full-featured online store with product listings, cart, order management, and payment integration.</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-emoji">👥</div>
+          <div class="project-name">Employee Management System</div>
+          <span class="project-stack">Django · REST API · MySQL</span>
+        </div>
+        <div class="project-bottom">
+          <div class="project-desc">HR dashboard to manage employee profiles, departments, attendance, and payroll records.</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-emoji">📝</div>
+          <div class="project-name">Blog & CMS Application</div>
+          <span class="project-stack">Django · Bootstrap · SQLite</span>
+        </div>
+        <div class="project-bottom">
+          <div class="project-desc">Full content management system with user authentication, rich text editor, and SEO features.</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-emoji">🔌</div>
+          <div class="project-name">REST API Service</div>
+          <span class="project-stack">DRF · JWT · Postman</span>
+        </div>
+        <div class="project-bottom">
+          <div class="project-desc">Production-ready REST API with token authentication, rate limiting, and full documentation.</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-emoji">📊</div>
+          <div class="project-name">Data Dashboard App</div>
+          <span class="project-stack">Django · Charts.js · PostgreSQL</span>
+        </div>
+        <div class="project-bottom">
+          <div class="project-desc">Interactive analytics dashboard visualizing real data with charts, filters, and export features.</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-emoji">💬</div>
+          <div class="project-name">Real-Time Chat App</div>
+          <span class="project-stack">Django Channels · WebSocket</span>
+        </div>
+        <div class="project-bottom">
+          <div class="project-desc">Live messaging application using Django Channels and WebSockets with room-based chat.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DURATION BAND -->
+<div class="duration-band">
+  <div class="duration-inner">
+    <div>
+      <div class="dur-label">Duration</div>
+      <div class="dur-value">6 Months</div>
+      <div class="dur-sub">Intensive Practical Training</div>
+    </div>
+    <div class="dur-divider"></div>
+    <div>
+      <div class="dur-label">Training Mode</div>
+      <div class="dur-value">Hands-on Projects</div>
+      <div class="dur-sub">Real apps · Live code · Full deployment</div>
+    </div>
+  </div>
+</div>
+
+<!-- CAREERS -->
+<section class="careers-section" id="careers">
+  <div class="section-inner">
+    <div class="section-tag">Career Opportunities</div>
+    <h2 class="section-title">Your Python Career Path</h2>
+    <p class="section-sub">Python developers are among the most in-demand and highest-paid professionals globally.</p>
+    <div class="careers-grid">
+      <div class="career-card">
+        <div class="career-icon">🐍</div>
+        <div><div class="career-name">Python Developer</div><div class="career-sub">Web apps · Scripting · Automation</div></div>
+      </div>
+      <div class="career-card">
+        <div class="career-icon">🌐</div>
+        <div><div class="career-name">Full Stack Developer</div><div class="career-sub">Frontend + Backend + Database</div></div>
+      </div>
+      <div class="career-card">
+        <div class="career-icon">🔌</div>
+        <div><div class="career-name">Backend Developer</div><div class="career-sub">APIs · Django · Server-side Logic</div></div>
+      </div>
+      <div class="career-card">
+        <div class="career-icon">🎸</div>
+        <div><div class="career-name">Django Developer</div><div class="career-sub">Web Frameworks · REST · MVT</div></div>
+      </div>
+      <div class="career-card">
+        <div class="career-icon">☁️</div>
+        <div><div class="career-name">DevOps Engineer</div><div class="career-sub">Deployment · CI/CD · Cloud</div></div>
+      </div>
+      <div class="career-card">
+        <div class="career-icon">💻</div>
+        <div><div class="career-name">Software Engineer</div><div class="career-sub">Product & Service Companies</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-section">
+  <div class="section-inner">
+    <div class="section-tag">Why BE6</div>
+    <h2 class="section-title">Why Choose BE6 Technologies?</h2>
+    <p class="section-sub">Real projects, expert mentors, and dedicated placement support every step of the way.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon-wrap">👨‍🏫</div>
+        <div>
+          <div class="why-name">Industry Expert Trainers</div>
+          <div class="why-desc">Learn from Python developers who build and ship production apps at real companies.</div>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon-wrap">🏗️</div>
+        <div>
+          <div class="why-name">Real-Time Projects</div>
+          <div class="why-desc">Build 6+ full-stack portfolio apps that demonstrate your skills to any hiring team.</div>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon-wrap">📝</div>
+        <div>
+          <div class="why-name">Interview Preparation</div>
+          <div class="why-desc">Mock interviews, technical Q&A sessions, and resume reviews to get you job-ready fast.</div>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon-wrap">🤝</div>
+        <div>
+          <div class="why-name">100% Support</div>
+          <div class="why-desc">Dedicated placement cell with company tie-ups to help you land your first tech role.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="data:image/png;base64,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" alt="BE6 Technologies">
+    <span class="footer-brand">BE6 TECHNOLOGIES</span>
+  </div>
+  <div class="footer-tagline">Empowering Careers Through Technology</div>
+  <div class="footer-cta">🚀 Start Your Python Journey Today!</div>
+  <div class="footer-contacts">
+    <div class="footer-contact">📞 +91 9000351289</div>
+    <div class="footer-contact">📧 <a href="mailto:Info@be6technologies.com">Info@be6technologies.com</a></div>
+    <div class="footer-contact">🌐 <a href="https://www.be6technologies.in/" target="_blank">www.be6technologies.in</a></div>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-copy">© 2026 BE6 Technologies. All Rights Reserved.</div>
+</footer>
+
+</body>
+</html>

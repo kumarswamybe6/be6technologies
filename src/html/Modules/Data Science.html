@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BE6 Technologies – Data Science & Machine Learning</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #132040;
+    --navy-light: #1a3a6e;
+    --orange: #f97316;
+    --orange-deep: #ea580c;
+    --orange-glow: rgba(249,115,22,0.18);
+    --orange-subtle: rgba(249,115,22,0.08);
+    --teal: #06B6D4;
+    --teal-subtle: rgba(6,182,212,0.08);
+    --white: #ffffff;
+    --off-white: #0d1b2e;
+    --muted: #94a3b8;
+    --text: #1e293b;
+    --text-light: #64748b;
+    --border: #e2e8f0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #070e1c;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,22,40,0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(249,115,22,0.2);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px; height: 68px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; }
+  .nav-logo img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--orange); }
+  .nav-brand { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: white; letter-spacing: 1px; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--orange); }
+  .nav-cta {
+    background: var(--orange); color: white;
+    padding: 10px 24px; border-radius: 6px;
+    font-size: 14px; font-weight: 600; text-decoration: none;
+    transition: background 0.2s, transform 0.1s; letter-spacing: 0.4px;
+  }
+  .nav-cta:hover { background: var(--orange-deep); transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #050e1a 0%, #061a2e 30%, #062535 55%, #073040 100%);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; position: relative; overflow: hidden;
+    padding-top: 68px;
+  }
+
+  /* Animated gradient mesh */
+  .hero-mesh {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse at 70% 20%, rgba(6,182,212,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse at 20% 75%, rgba(6,182,212,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 55% 55%, rgba(6,182,212,0.08) 0%, transparent 40%);
+    animation: meshPulse 14s ease-in-out infinite alternate;
+  }
+  @keyframes meshPulse {
+    0%   { opacity:1; transform:scale(1) rotate(0deg); }
+    50%  { opacity:0.75; transform:scale(1.1) rotate(1.5deg); }
+    100% { opacity:0.9; transform:scale(0.97) rotate(-1deg); }
+  }
+
+  /* Scrolling dot grid */
+  .hero-dots {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: radial-gradient(circle at 1.5px 1.5px, rgba(255,255,255,0.06) 1px, transparent 0);
+    background-size: 28px 28px;
+    animation: dotsScroll 22s linear infinite;
+  }
+  @keyframes dotsScroll {
+    from { background-position: 0 0; }
+    to   { background-position: 28px 28px; }
+  }
+
+  /* Animated grid lines scrolling horizontally */
+  .hero-grid-lines {
+    position: absolute; inset: 0; opacity: 0.035; z-index: 0;
+    background-image:
+      linear-gradient(rgba(6,182,212,0.8) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(6,182,212,0.8) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridScroll 18s linear infinite;
+  }
+  @keyframes gridScroll {
+    from { background-position: 0 0; }
+    to   { background-position: 60px 60px; }
+  }
+
+  /* Floating orbs */
+  .hero-orb1 {
+    position: absolute; width: 560px; height: 560px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(6,182,212,0.2) 0%, transparent 70%);
+    top: -160px; right: -120px; z-index: 0;
+    animation: orb1Drift 16s ease-in-out infinite alternate;
+  }
+  @keyframes orb1Drift {
+    0%   { transform: translate(0,0) scale(1); }
+    50%  { transform: translate(-70px, 50px) scale(1.12); }
+    100% { transform: translate(30px, -40px) scale(0.94); }
+  }
+  .hero-orb2 {
+    position: absolute; width: 440px; height: 440px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(6,182,212,0.09) 0%, transparent 70%);
+    bottom: -100px; left: -100px; z-index: 0;
+    animation: orb2Drift 20s ease-in-out infinite alternate;
+  }
+  @keyframes orb2Drift {
+    0%   { transform: translate(0,0) scale(1); }
+    50%  { transform: translate(60px,-50px) scale(1.1); }
+    100% { transform: translate(-30px, 30px) scale(0.93); }
+  }
+  .hero-orb3 {
+    position: absolute; width: 320px; height: 320px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 70%);
+    top:50%; left:50%; transform:translate(-50%,-50%); z-index: 0;
+    animation: orb3Pulse 9s ease-in-out infinite;
+  }
+  @keyframes orb3Pulse {
+    0%,100% { transform:translate(-50%,-50%) scale(1); opacity:0.5; }
+    50%     { transform:translate(-50%,-50%) scale(1.5); opacity:1; }
+  }
+
+  /* Animated mini bar chart in background */
+  .hero-bars {
+    position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: flex-end; gap: 8px;
+    z-index: 0; opacity: 0.1; pointer-events: none;
+  }
+  .bar {
+    width: 18px; border-radius: 3px 3px 0 0;
+    background: linear-gradient(180deg, #22D3EE, #06B6D4);
+    animation: barRise ease-in-out infinite alternate;
+  }
+  .bar:nth-child(1)  { height:60px;  animation-duration:2.1s; animation-delay:0s; }
+  .bar:nth-child(2)  { height:110px; animation-duration:2.4s; animation-delay:0.2s; }
+  .bar:nth-child(3)  { height:80px;  animation-duration:1.9s; animation-delay:0.4s; }
+  .bar:nth-child(4)  { height:150px; animation-duration:2.7s; animation-delay:0.6s; }
+  .bar:nth-child(5)  { height:100px; animation-duration:2.2s; animation-delay:0.8s; }
+  .bar:nth-child(6)  { height:170px; animation-duration:2.5s; animation-delay:1.0s; }
+  .bar:nth-child(7)  { height:120px; animation-duration:2.0s; animation-delay:1.2s; }
+  .bar:nth-child(8)  { height:200px; animation-duration:2.8s; animation-delay:1.4s; }
+  .bar:nth-child(9)  { height:140px; animation-duration:2.3s; animation-delay:1.6s; }
+  .bar:nth-child(10) { height:180px; animation-duration:2.6s; animation-delay:1.8s; }
+  .bar:nth-child(11) { height:90px;  animation-duration:2.1s; animation-delay:2.0s; }
+  .bar:nth-child(12) { height:220px; animation-duration:3.0s; animation-delay:2.2s; }
+  @keyframes barRise {
+    0%   { transform: scaleY(0.4); opacity:0.6; }
+    100% { transform: scaleY(1.2); opacity:1; }
+  }
+
+  /* Floating data particles */
+  .hero-particles { position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+  .particle {
+    position: absolute;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(6,182,212,0.2);
+    white-space: nowrap;
+    animation: particleFloat linear infinite;
+    user-select: none;
+  }
+  @keyframes particleFloat {
+    0%   { transform:translateY(110vh); opacity:0; }
+    5%   { opacity:1; }
+    95%  { opacity:1; }
+    100% { transform:translateY(-10vh); opacity:0; }
+  }
+
+  /* Expanding rings */
+  .hero-ring {
+    position:absolute; border-radius:50%;
+    border:1px solid rgba(6,182,212,0.08);
+    animation:ringExpand ease-out infinite;
+    z-index:0; pointer-events:none;
+  }
+  .hero-ring:nth-child(1) { width:300px; height:300px; top:50%; left:50%; margin:-150px 0 0 -150px; animation-duration:7s; animation-delay:0s; }
+  .hero-ring:nth-child(2) { width:520px; height:520px; top:50%; left:50%; margin:-260px 0 0 -260px; animation-duration:7s; animation-delay:2.3s; }
+  .hero-ring:nth-child(3) { width:740px; height:740px; top:50%; left:50%; margin:-370px 0 0 -370px; animation-duration:7s; animation-delay:4.6s; }
+  @keyframes ringExpand {
+    0%   { transform:scale(0.5); opacity:0.6; }
+    100% { transform:scale(1.7); opacity:0; }
+  }
+
+  /* Beam sweep */
+  .hero-beam {
+    position:absolute; bottom:0; left:0; right:0; height:2px; z-index:1;
+    background:linear-gradient(90deg, transparent 0%, #06B6D4 30%, #fff 50%, #06B6D4 70%, transparent 100%);
+    background-size:200% 100%;
+    animation:beamSlide 3.5s linear infinite;
+  }
+  @keyframes beamSlide {
+    0%   { background-position:200% 0; }
+    100% { background-position:-200% 0; }
+  }
+
+  /* Hero icon */
+  .hero-icon {
+    width:86px; height:86px; margin:0 auto 28px;
+    background:rgba(6,182,212,0.12);
+    border:1px solid rgba(6,182,212,0.35);
+    border-radius:22px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:44px;
+    box-shadow:0 0 48px rgba(6,182,212,0.22), inset 0 1px 0 rgba(255,255,255,0.06);
+    animation:iconFloat 4s ease-in-out infinite;
+    position:relative; z-index:2;
+  }
+  .hero-icon::after {
+    content:''; position:absolute; inset:-2px; border-radius:24px;
+    background:linear-gradient(135deg, rgba(6,182,212,0.4), transparent 60%);
+    z-index:-1; animation:iconGlow 4s ease-in-out infinite;
+  }
+  @keyframes iconFloat {
+    0%,100% { transform:translateY(0px); box-shadow:0 0 48px rgba(6,182,212,0.22), inset 0 1px 0 rgba(255,255,255,0.06); }
+    50%      { transform:translateY(-10px); box-shadow:0 24px 64px rgba(6,182,212,0.38), inset 0 1px 0 rgba(255,255,255,0.08); }
+  }
+  @keyframes iconGlow {
+    0%,100% { opacity:0.5; }
+    50%      { opacity:1; }
+  }
+
+  .hero-content { position:relative; z-index:2; max-width:860px; padding:0 24px; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(6,182,212,0.12); border: 1px solid rgba(6,182,212,0.3);
+    color: #22D3EE; padding: 6px 16px; border-radius: 100px;
+    font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+    margin-bottom: 28px; animation: fadeUp 0.6s ease both;
+  }
+  .hero-eyebrow::before { content: ''; width: 6px; height: 6px; background: #22D3EE; border-radius: 50%; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.4; transform:scale(0.7); } }
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(42px, 7vw, 76px); font-weight: 800;
+    line-height: 1.05; color: white; margin-bottom: 16px;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  .hero-title span { color: var(--orange); }
+  .hero-title .teal { color: #22D3EE; }
+  .hero-sub {
+    font-size: 18px; color: rgba(255,255,255,0.6); font-weight: 300;
+    max-width: 560px; margin: 0 auto 48px;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 48px;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+  .badge {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+    padding: 10px 20px; border-radius: 8px;
+    color: white; font-size: 14px; font-weight: 500;
+  }
+  .badge-icon { font-size: 18px; }
+  .hero-btns { display: flex; gap: 16px; justify-content: center; animation: fadeUp 0.7s 0.4s ease both; }
+  .btn-primary {
+    background: var(--orange); color: white;
+    padding: 15px 36px; border-radius: 8px;
+    font-size: 15px; font-weight: 700; text-decoration: none;
+    letter-spacing: 0.4px; transition: all 0.2s;
+    box-shadow: 0 8px 24px rgba(249,115,22,0.4);
+  }
+  .btn-primary:hover { background: var(--orange-deep); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(249,115,22,0.5); }
+  .btn-outline {
+    background: transparent; color: white;
+    padding: 15px 36px; border-radius: 8px;
+    font-size: 15px; font-weight: 600; text-decoration: none;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: #22D3EE; color: #22D3EE; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+  /* STATS BAND */
+  .stats-band {
+    background: var(--navy);
+    border-top: 1px solid rgba(249,115,22,0.2);
+    border-bottom: 1px solid rgba(249,115,22,0.2);
+    display: grid; grid-template-columns: repeat(4, 1fr);
+  }
+  .stat-item {
+    padding: 36px 24px; text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    transition: background 0.2s;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-item:hover { background: rgba(6,182,212,0.05); }
+  .stat-num {
+    font-family: 'Syne', sans-serif; font-size: 38px; font-weight: 800;
+    color: var(--orange); line-height: 1;
+  }
+  .stat-label { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 6px; font-weight: 500; }
+
+  /* SECTIONS */
+  section { padding: 96px 48px; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block;
+    background: var(--orange-subtle); border: 1px solid rgba(249,115,22,0.2);
+    color: var(--orange); padding: 4px 14px; border-radius: 100px;
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .section-tag.teal {
+    background: rgba(6,182,212,0.08); border-color: rgba(6,182,212,0.25);
+    color: #0891B2;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif; font-size: clamp(28px, 4vw, 42px); font-weight: 800;
+    color: white; line-height: 1.15; margin-bottom: 16px;
+  }
+  .section-sub { font-size: 16px; color: rgba(255,255,255,0.55); max-width: 520px; margin-bottom: 56px; }
+
+  /* INTRO + AUDIENCE SPLIT */
+  .intro-section { background: #0d1b2e; }
+  .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .intro-desc { font-size: 16px; color: rgba(255,255,255,0.55); line-height: 1.8; margin-bottom: 32px; }
+  .demand-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .demand-card {
+    background: #0a1628; border-radius: 12px; padding: 20px 14px; text-align: center;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: all 0.2s;
+  }
+  .demand-card:hover { border-color: var(--orange); box-shadow: 0 6px 20px rgba(249,115,22,0.08); transform: translateY(-2px); }
+  .demand-emoji { font-size: 28px; margin-bottom: 8px; }
+  .demand-label { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--teal); }
+
+  .audience-title {
+    font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: white;
+    margin-bottom: 20px;
+  }
+  .audience-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 32px; }
+  .audience-card {
+    background: #0a1628; border-radius: 12px; padding: 20px;
+    border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; gap: 14px;
+    transition: all 0.2s;
+  }
+  .audience-card:hover { border-color: rgba(6,182,212,0.4); box-shadow: 0 4px 16px rgba(6,182,212,0.08); }
+  .audience-emoji { font-size: 28px; }
+  .audience-name { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: white; }
+  .audience-desc { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+
+  /* SKILLS */
+  .skills-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 0; }
+  .skill-chip {
+    background: rgba(6,182,212,0.08); border: 1px solid rgba(6,182,212,0.25);
+    color: #0891B2;
+    padding: 8px 18px; border-radius: 100px;
+    font-size: 13px; font-weight: 600;
+    transition: all 0.2s;
+  }
+  .skill-chip:hover { background: var(--teal); color: white; border-color: var(--teal); }
+
+  /* CURRICULUM */
+  .curriculum-section { background: #0a1628; }
+  .modules-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .module-card {
+    border-radius: 14px; padding: 28px 26px;
+    border: 1px solid rgba(255,255,255,0.08); background: #0d1b2e;
+    position: relative; overflow: hidden;
+    transition: all 0.25s;
+  }
+  .module-card:hover { border-color: var(--teal); background: #0a1628; box-shadow: 0 8px 24px rgba(6,182,212,0.08); transform: translateY(-2px); }
+  .module-num {
+    position: absolute; top: 20px; right: 20px;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--orange); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800; font-family: 'Syne', sans-serif;
+  }
+  .module-icon { font-size: 26px; margin-bottom: 12px; }
+  .module-name { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: white; margin-bottom: 8px; }
+  .module-desc { font-size: 13.5px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+  /* TECH */
+  .tech-section { background: #0d1b2e; }
+  .tech-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .tech-card {
+    background: #0a1628; border-radius: 12px;
+    padding: 24px 16px; text-align: center;
+    border: 1px solid rgba(255,255,255,0.08);
+    font-size: 14px; font-weight: 600; color: white;
+    transition: all 0.2s;
+  }
+  .tech-card:hover { border-color: var(--teal); box-shadow: 0 4px 16px rgba(6,182,212,0.1); color: #0891B2; }
+  .tech-emoji { font-size: 28px; margin-bottom: 10px; display: block; }
+
+  /* PROJECTS */
+  .projects-section { background: #0a1628; }
+  .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .project-card {
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.25s;
+  }
+  .project-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(10,22,40,0.12); border-color: var(--orange); }
+  .project-top {
+    background: linear-gradient(135deg, #0f2448, #0c3a6b);
+    padding: 28px 24px 24px;
+  }
+  .project-emoji { font-size: 32px; }
+  .project-name { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; color: white; margin-top: 10px; }
+  .project-bottom { padding: 18px 24px; background: #0d1b2e; }
+  .project-desc { font-size: 13.5px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+  /* DURATION BANNER */
+  .duration-banner {
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
+    border-top: 3px solid var(--orange); border-bottom: 3px solid var(--orange);
+    padding: 32px 48px; text-align: center; margin: 0;
+  }
+  .duration-inner { max-width: 700px; margin: 0 auto; }
+  .duration-num { font-family: 'Syne', sans-serif; font-size: 56px; font-weight: 800; color: var(--orange); line-height: 1; }
+  .duration-label { font-size: 18px; color: rgba(255,255,255,0.7); margin-top: 8px; font-weight: 400; }
+  .duration-note { font-size: 14px; color: rgba(255,255,255,0.4); margin-top: 6px; }
+
+  /* CAREERS */
+  .careers-section { background: var(--navy); }
+  .careers-section .section-title { color: white; }
+  .careers-section .section-sub { color: rgba(255,255,255,0.5); }
+  .careers-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .career-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px; padding: 28px 26px;
+    display: flex; align-items: center; gap: 20px;
+    transition: all 0.25s;
+    border-bottom: 3px solid var(--orange);
+  }
+  .career-card:hover { background: rgba(6,182,212,0.07); border-color: rgba(6,182,212,0.4); transform: translateY(-2px); }
+  .career-icon {
+    width: 52px; height: 52px; border-radius: 12px;
+    background: rgba(6,182,212,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; flex-shrink: 0;
+  }
+  .career-name { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; color: white; margin-bottom: 4px; }
+  .career-sub { font-size: 13px; color: rgba(255,255,255,0.4); }
+
+  /* WHY US */
+  .why-section { background: #0d1b2e; }
+  .why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .why-card {
+    background: #0a1628; border-radius: 14px; padding: 28px 26px;
+    display: flex; gap: 20px; align-items: flex-start;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.25s;
+  }
+  .why-card:hover { border-color: var(--orange); box-shadow: 0 8px 24px rgba(249,115,22,0.08); }
+  .why-icon-wrap {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--orange), var(--orange-deep));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(249,115,22,0.3);
+  }
+  .why-name { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; color: white; margin-bottom: 6px; }
+  .why-desc { font-size: 13.5px; color: rgba(255,255,255,0.55); }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    border-top: 1px solid rgba(249,115,22,0.25);
+    padding: 64px 48px 40px;
+    text-align: center;
+  }
+  .footer-logo { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 12px; }
+  .footer-logo img { width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--orange); }
+  .footer-brand { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; color: white; letter-spacing: 2px; }
+  .footer-tagline { font-size: 14px; color: rgba(255,255,255,0.4); letter-spacing: 1px; margin-bottom: 40px; }
+  .footer-cta { font-size: 20px; font-weight: 700; color: #fed7aa; margin-bottom: 32px; }
+  .footer-contacts { display: flex; justify-content: center; gap: 48px; margin-bottom: 40px; }
+  .footer-contact { display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.65); }
+  .footer-contact a { color: #fed7aa; text-decoration: none; }
+  .footer-contact a:hover { color: var(--orange); }
+  .footer-contact  { color: #fed7aa; text-decoration: none; }
+
+  .footer-divider { width: 80px; height: 2px; background: var(--orange); margin: 0 auto 24px; opacity: 0.4; }
+  .footer-copy { font-size: 12px; color: rgba(255,255,255,0.25); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="data:image/png;base64,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" alt="BE6 Technologies">
+    <span class="nav-brand">BE6 TECHNOLOGIES</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#curriculum">Curriculum</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#careers">Careers</a></li>
+    <li><a href="#why-us">Why Us</a></li>
+  </ul>
+  <a href="/src/html/index.html" class="nav-cta">←Back to Home</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-mesh"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-ring"></div>
+  <div class="hero-ring"></div>
+  <div class="hero-ring"></div>
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-orb3"></div>
+  <div class="hero-particles">
+    <div class="particle" style="left:4%;animation-duration:20s;animation-delay:0s;">df.groupby('category').mean()</div>
+    <div class="particle" style="left:13%;animation-duration:25s;animation-delay:3s;">model.fit(X_train, y_train)</div>
+    <div class="particle" style="left:23%;animation-duration:18s;animation-delay:6s;">accuracy_score(y_test, y_pred)</div>
+    <div class="particle" style="left:36%;animation-duration:22s;animation-delay:1s;">import pandas as pd</div>
+    <div class="particle" style="left:47%;animation-duration:28s;animation-delay:9s;">sns.heatmap(corr_matrix)</div>
+    <div class="particle" style="left:57%;animation-duration:19s;animation-delay:4s;">KMeans(n_clusters=5)</div>
+    <div class="particle" style="left:67%;animation-duration:24s;animation-delay:7s;">plt.scatter(X, y)</div>
+    <div class="particle" style="left:76%;animation-duration:21s;animation-delay:2s;">RandomForestClassifier()</div>
+    <div class="particle" style="left:86%;animation-duration:26s;animation-delay:11s;">train_test_split(data, 0.2)</div>
+    <div class="particle" style="left:93%;animation-duration:17s;animation-delay:5s;">LinearRegression().fit(X, y)</div>
+  </div>
+  <div class="hero-bars">
+    <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+  </div>
+  <div class="hero-beam"></div>
+  <div class="hero-content">
+    <div class="hero-icon">📊</div>
+    <div class="hero-eyebrow">✨ Now Enrolling — Batch 2026</div>
+    <h1 class="hero-title">Data Science &<br><span>Machine Learning</span></h1>
+    <p class="hero-sub">Transform raw data into powerful insights. Learn Python, ML, and real-world analytics from industry experts.</p>
+    <div class="hero-badges">
+      <div class="badge"><span class="badge-icon">⏱️</span> 6 Months Training</div>
+      <div class="badge"><span class="badge-icon">📈</span> High Demand Career</div>
+      <div class="badge"><span class="badge-icon">💰</span> Top Salaries</div>
+      <div class="badge"><span class="badge-icon">🤖</span> Real ML Projects</div>
+    </div>
+    <div class="hero-btns">
+      <a href="#enroll" class="btn-primary" id="enroll" onclick="window.location.href='/src/html/Register/BE6_Register.html'">Enroll Now →</a>
+      <a href="#curriculum" class="btn-outline">View Curriculum</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-band">
+  <div class="stat-item">
+    <div class="stat-num">6</div>
+    <div class="stat-label">Months Duration</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">8</div>
+    <div class="stat-label">Course Modules</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">7+</div>
+    <div class="stat-label">Tools & Libraries</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">3+</div>
+    <div class="stat-label">Real ML Projects</div>
+  </div>
+</div>
+
+<!-- INTRO + AUDIENCE -->
+<section class="intro-section">
+  <div class="section-inner">
+    <div class="intro-grid">
+      <div>
+        <div class="section-tag">About the Course</div>
+        <h2 class="section-title">What is Data Science?</h2>
+        <p class="intro-desc">Data Science is the art of uncovering insights and trends hidden behind data. It's one of the most in-demand careers globally as businesses increasingly rely on data for decision-making. This course takes you from zero to job-ready with hands-on, practical training.</p>
+        <div class="demand-cards">
+          <div class="demand-card">
+            <div class="demand-emoji">📈</div>
+            <div class="demand-label">High Demand</div>
+          </div>
+          <div class="demand-card">
+            <div class="demand-emoji">💰</div>
+            <div class="demand-label">Top Salaries</div>
+          </div>
+          <div class="demand-card">
+            <div class="demand-emoji">🚀</div>
+            <div class="demand-label">Future-Proof</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="audience-title">Who Should Enroll?</div>
+        <div class="audience-grid">
+          <div class="audience-card">
+            <div class="audience-emoji">🎓</div>
+            <div>
+              <div class="audience-name">Students</div>
+              <div class="audience-desc">Pursuing any degree</div>
+            </div>
+          </div>
+          <div class="audience-card">
+            <div class="audience-emoji">💼</div>
+            <div>
+              <div class="audience-name">Graduates</div>
+              <div class="audience-desc">Fresh or experienced</div>
+            </div>
+          </div>
+          <div class="audience-card">
+            <div class="audience-emoji">⚙️</div>
+            <div>
+              <div class="audience-name">Engineers</div>
+              <div class="audience-desc">Looking to upskill</div>
+            </div>
+          </div>
+          <div class="audience-card">
+            <div class="audience-emoji">📊</div>
+            <div>
+              <div class="audience-name">Analysts</div>
+              <div class="audience-desc">Wanting to level up</div>
+            </div>
+          </div>
+        </div>
+        <div class="section-tag teal" style="margin-bottom:14px;">Skills You Will Learn</div>
+        <div class="skills-row">
+          <div class="skill-chip">Data Analysis</div>
+          <div class="skill-chip">Statistics</div>
+          <div class="skill-chip">Machine Learning</div>
+          <div class="skill-chip">Data Visualization</div>
+          <div class="skill-chip">Predictive Modeling</div>
+          <div class="skill-chip">Python</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section class="curriculum-section" id="curriculum">
+  <div class="section-inner">
+    <div class="section-tag">Course Curriculum</div>
+    <h2 class="section-title">8 Power-Packed Modules</h2>
+    <p class="section-sub">A structured path from Python basics to deploying real machine learning models.</p>
+    <div class="modules-grid">
+      <div class="module-card">
+        <div class="module-num">1</div>
+        <div class="module-icon">🐍</div>
+        <div class="module-name">Python for Data Science</div>
+        <div class="module-desc">Python basics, NumPy, and Pandas — the core toolkit every data scientist must master.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">2</div>
+        <div class="module-icon">🔍</div>
+        <div class="module-name">Data Analysis</div>
+        <div class="module-desc">Data cleaning, preprocessing, and exploratory analysis to uncover hidden patterns.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">3</div>
+        <div class="module-icon">📐</div>
+        <div class="module-name">Statistics</div>
+        <div class="module-desc">Probability, distributions, and hypothesis testing — the math behind the models.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">4</div>
+        <div class="module-icon">📊</div>
+        <div class="module-name">Data Visualization</div>
+        <div class="module-desc">Matplotlib, Seaborn, and interactive dashboards to tell compelling data stories.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">5</div>
+        <div class="module-icon">🤖</div>
+        <div class="module-name">Machine Learning</div>
+        <div class="module-desc">Supervised & unsupervised learning, regression, and classification algorithms.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">6</div>
+        <div class="module-icon">🌲</div>
+        <div class="module-name">Advanced ML</div>
+        <div class="module-desc">Decision trees, random forests, boosting, and clustering techniques for complex data.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">7</div>
+        <div class="module-icon">🗃️</div>
+        <div class="module-name">Real World Projects</div>
+        <div class="module-desc">Working with real datasets and building end-to-end predictive models from scratch.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-num">8</div>
+        <div class="module-icon">🚀</div>
+        <div class="module-name">Deployment</div>
+        <div class="module-desc">Model deployment, API integration, and project presentation for job interviews.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH -->
+<section class="tech-section">
+  <div class="section-inner">
+    <div class="section-tag teal">Tech Stack</div>
+    <h2 class="section-title">Tools & Technologies</h2>
+    <p class="section-sub">Industry-standard Python ecosystem tools you'll be fluent in by graduation.</p>
+    <div class="tech-grid">
+      <div class="tech-card"><span class="tech-emoji">🐍</span>Python</div>
+      <div class="tech-card"><span class="tech-emoji">🔢</span>NumPy</div>
+      <div class="tech-card"><span class="tech-emoji">🐼</span>Pandas</div>
+      <div class="tech-card"><span class="tech-emoji">📊</span>Matplotlib</div>
+      <div class="tech-card"><span class="tech-emoji">📉</span>Seaborn</div>
+      <div class="tech-card"><span class="tech-emoji">🤖</span>Scikit-Learn</div>
+      <div class="tech-card"><span class="tech-emoji">📓</span>Jupyter</div>
+      <div class="tech-card"><span class="tech-emoji">🔬</span>SciPy</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects-section" id="projects">
+  <div class="section-inner">
+    <div class="section-tag">Real-Time Projects</div>
+    <h2 class="section-title">Build a Data Portfolio</h2>
+    <p class="section-sub">Portfolio-ready projects powered by real datasets — the kind employers actually look for.</p>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-emoji">🛍️</div>
+          <div class="project-name">Sales Prediction Model</div>
+        </div>
+        <div class="project-bottom">
+          <div class="project-desc">Forecast future sales using regression and time-series analysis on real retail datasets.</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-emoji">👥</div>
+          <div class="project-name">Customer Segmentation</div>
+        </div>
+        <div class="project-bottom">
+          <div class="project-desc">Apply clustering algorithms to group customers by behavior and purchase patterns.</div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-top">
+          <div class="project-emoji">🎬</div>
+          <div class="project-name">Recommendation Engine</div>
+        </div>
+        <div class="project-bottom">
+          <div class="project-desc">Build a collaborative filtering recommender system similar to Netflix or Amazon.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DURATION BANNER -->
+<div class="duration-banner">
+  <div class="duration-inner">
+    <div class="duration-num">6</div>
+    <div class="duration-label">Months of Intensive Practical Training</div>
+    <div class="duration-note">Hands-on labs · Real datasets · Project-based learning · Career guidance</div>
+  </div>
+</div>
+
+<!-- CAREERS -->
+<section class="careers-section" id="careers">
+  <div class="section-inner">
+    <div class="section-tag" style="background:rgba(249,115,22,0.12);border-color:rgba(249,115,22,0.3);color:var(--orange);">Career Opportunities</div>
+    <h2 class="section-title">Your Next Role in Data</h2>
+    <p class="section-sub">Data roles are among the highest-paid positions globally. Here's where you could land.</p>
+    <div class="careers-grid">
+      <div class="career-card">
+        <div class="career-icon">🧠</div>
+        <div>
+          <div class="career-name">Data Scientist</div>
+          <div class="career-sub">ML Models · Statistical Analysis · AI</div>
+        </div>
+      </div>
+      <div class="career-card">
+        <div class="career-icon">📊</div>
+        <div>
+          <div class="career-name">Data Analyst</div>
+          <div class="career-sub">Insights · Reporting · Dashboards</div>
+        </div>
+      </div>
+      <div class="career-card">
+        <div class="career-icon">🤖</div>
+        <div>
+          <div class="career-name">ML Engineer</div>
+          <div class="career-sub">Model Deployment · Pipelines · MLOps</div>
+        </div>
+      </div>
+      <div class="career-card">
+        <div class="career-icon">📈</div>
+        <div>
+          <div class="career-name">Business Analyst</div>
+          <div class="career-sub">Strategy · Data-Driven Decisions</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-section" id="why-us">
+  <div class="section-inner">
+    <div class="section-tag">Why BE6</div>
+    <h2 class="section-title">Why Choose BE6 Technologies?</h2>
+    <p class="section-sub">We don't just teach concepts — we build careers through real-world, practical experience.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon-wrap">👨‍🏫</div>
+        <div>
+          <div class="why-name">Hands-on Practical Training</div>
+          <div class="why-desc">Every session involves coding, data, and building — not just watching slides go by.</div>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon-wrap">🗃️</div>
+        <div>
+          <div class="why-name">Real-World Datasets</div>
+          <div class="why-desc">Work with actual industry datasets so your skills translate directly to the job.</div>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon-wrap">🏆</div>
+        <div>
+          <div class="why-name">Expert Instructors</div>
+          <div class="why-desc">Learn from data professionals who have built and shipped models at real companies.</div>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon-wrap">🤝</div>
+        <div>
+          <div class="why-name">Dedicated Career Guidance</div>
+          <div class="why-desc">Resume reviews, mock interviews, and placement support until you land the role.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="data:image/png;base64,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" alt="BE6 Technologies">
+    <span class="footer-brand">BE6 TECHNOLOGIES</span>
+  </div>
+  <div class="footer-tagline">Empowering Careers Through Technology</div>
+  <div class="footer-cta">🚀 Start Your Data Journey Today!</div>
+  <div class="footer-contacts">
+    <div class="footer-contact">📞 +91 9000351289</div>
+    <div class="footer-contact">📧 <a href="/cdn-cgi/l/email-protection#92dbfcf4fdd2f0f7a4e6f7f1fafcfdfefdf5fbf7e1bcf1fdff"><span class="__cf_email__" data-cfemail="85ccebe3eac5e7e0b3f1e0e6edebeae9eae2ece0f6abe6eae8">[email&#160;protected]</span></a></div>
+    <div class="footer-contact">🌐 <a href="https://www.be6technologies.in/" target="_blank">www.be6technologies.in</a></div>
+  </div

@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BE6 Technologies – Salesforce Development</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #0d1e38;
+    --navy-card: #0f1d32;
+    --dark-bg: #070e1c;
+    --sf-blue: #00A1E0;
+    --sf-blue-deep: #0176D3;
+    --sf-blue-dim: rgba(0,161,224,0.1);
+    --sf-blue-border: rgba(0,161,224,0.22);
+    --sf-blue-glow: rgba(0,161,224,0.05);
+    --sf-cyan: #06B6D4;
+    --sf-teal: #00C4B4;
+    --orange: #f97316;
+    --orange-deep: #ea580c;
+    --pink: #FF6B9D;
+    --text: rgba(255,255,255,0.88);
+    --text-muted: rgba(255,255,255,0.5);
+    --text-dim: rgba(255,255,255,0.22);
+    --border: rgba(255,255,255,0.07);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  ::-webkit-scrollbar { width:4px; }
+  ::-webkit-scrollbar-track { background:var(--dark-bg); }
+  ::-webkit-scrollbar-thumb { background:var(--sf-blue); border-radius:2px; }
+
+  body {
+    font-family:'DM Sans',sans-serif;
+    background:var(--dark-bg);
+    color:var(--text);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  /* NAV */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(7,14,28,0.96);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--sf-blue-border);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 48px; height:68px;
+  }
+  .nav-logo { display:flex; align-items:center; gap:12px; }
+  .nav-logo img { width:42px; height:42px; border-radius:50%; object-fit:cover; border:2px solid var(--sf-blue); box-shadow:0 0 14px rgba(0,161,224,0.35); }
+  .nav-brand { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:white; letter-spacing:1px; }
+  .nav-links { display:flex; gap:32px; list-style:none; }
+  .nav-links a { color:var(--text-muted); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--sf-blue); }
+  .nav-cta {
+    background:var(--sf-blue); color:white;
+    padding:10px 24px; border-radius:6px;
+    font-size:13px; font-weight:700; text-decoration:none;
+    letter-spacing:0.5px; transition:all 0.2s;
+    box-shadow:0 4px 20px rgba(0,161,224,0.3);
+  }
+  .nav-cta:hover { background:var(--sf-blue-deep); transform:translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height:100vh;
+    background: linear-gradient(135deg, #050d1a 0%, #071828 40%, #082035 70%, #091e30 100%);
+    display:flex; align-items:center; justify-content:center;
+    text-align:center; position:relative; overflow:hidden;
+    padding-top:68px;
+  }
+
+  /* Mesh */
+  .hero-mesh {
+    position:absolute; inset:0; z-index:0;
+    background:
+      radial-gradient(ellipse at 65% 20%, rgba(0,161,224,0.15) 0%, transparent 55%),
+      radial-gradient(ellipse at 20% 75%, rgba(0,196,180,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(0,161,224,0.05) 0%, transparent 40%);
+    animation: meshPulse 14s ease-in-out infinite alternate;
+  }
+  @keyframes meshPulse {
+    0%   { opacity:1; transform:scale(1); }
+    50%  { opacity:0.75; transform:scale(1.08); }
+    100% { opacity:0.9; transform:scale(0.97); }
+  }
+
+  /* Dot grid */
+  .hero-dots {
+    position:absolute; inset:0; z-index:0;
+    background-image:radial-gradient(circle at 1.5px 1.5px, rgba(0,161,224,0.1) 1px, transparent 0);
+    background-size:32px 32px;
+    animation:dotsScroll 20s linear infinite;
+  }
+  @keyframes dotsScroll {
+    from { background-position:0 0; }
+    to   { background-position:32px 32px; }
+  }
+
+  /* Orbs */
+  .hero-orb1 {
+    position:absolute; width:600px; height:600px; border-radius:50%;
+    background:radial-gradient(circle, rgba(0,161,224,0.18) 0%, transparent 70%);
+    top:-180px; right:-140px; z-index:0;
+    animation:orb1Drift 16s ease-in-out infinite alternate;
+  }
+  @keyframes orb1Drift {
+    0%   { transform:translate(0,0) scale(1); }
+    50%  { transform:translate(-60px,50px) scale(1.1); }
+    100% { transform:translate(30px,-30px) scale(0.95); }
+  }
+  .hero-orb2 {
+    position:absolute; width:450px; height:450px; border-radius:50%;
+    background:radial-gradient(circle, rgba(0,196,180,0.1) 0%, transparent 70%);
+    bottom:-110px; left:-110px; z-index:0;
+    animation:orb2Drift 20s ease-in-out infinite alternate;
+  }
+  @keyframes orb2Drift {
+    0%   { transform:translate(0,0) scale(1); }
+    50%  { transform:translate(55px,-45px) scale(1.12); }
+    100% { transform:translate(-25px,30px) scale(0.93); }
+  }
+  .hero-orb3 {
+    position:absolute; width:340px; height:340px; border-radius:50%;
+    background:radial-gradient(circle, rgba(0,161,224,0.07) 0%, transparent 70%);
+    top:50%; left:50%; transform:translate(-50%,-50%); z-index:0;
+    animation:orb3Pulse 9s ease-in-out infinite;
+  }
+  @keyframes orb3Pulse {
+    0%,100% { transform:translate(-50%,-50%) scale(1); opacity:0.5; }
+    50%     { transform:translate(-50%,-50%) scale(1.5); opacity:1; }
+  }
+
+  /* Floating Salesforce CRM particles */
+  .hero-particles { position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+  .particle {
+    position:absolute; font-family:'DM Mono',monospace; font-size:11px;
+    color:rgba(0,161,224,0.18); white-space:nowrap;
+    animation:particleFloat linear infinite; user-select:none;
+  }
+  @keyframes particleFloat {
+    0%   { transform:translateY(110vh); opacity:0; }
+    5%   { opacity:1; }
+    95%  { opacity:1; }
+    100% { transform:translateY(-10vh); opacity:0; }
+  }
+
+  /* Expanding rings */
+  .hero-ring {
+    position:absolute; border-radius:50%;
+    border:1px solid rgba(0,161,224,0.08);
+    animation:ringExpand ease-out infinite;
+    z-index:0; pointer-events:none;
+  }
+  .hero-ring:nth-child(1) { width:300px; height:300px; top:50%; left:50%; margin:-150px 0 0 -150px; animation-duration:7s; animation-delay:0s; }
+  .hero-ring:nth-child(2) { width:540px; height:540px; top:50%; left:50%; margin:-270px 0 0 -270px; animation-duration:7s; animation-delay:2.3s; }
+  .hero-ring:nth-child(3) { width:780px; height:780px; top:50%; left:50%; margin:-390px 0 0 -390px; animation-duration:7s; animation-delay:4.6s; }
+  @keyframes ringExpand {
+    0%   { transform:scale(0.5); opacity:0.6; }
+    100% { transform:scale(1.7); opacity:0; }
+  }
+
+  /* Beam */
+  .hero-beam {
+    position:absolute; bottom:0; left:0; right:0; height:2px; z-index:1;
+    background:linear-gradient(90deg, transparent 0%, var(--sf-blue) 30%, #fff 50%, var(--sf-blue) 70%, transparent 100%);
+    background-size:200% 100%;
+    animation:beamSlide 3s linear infinite;
+  }
+  @keyframes beamSlide {
+    0%   { background-position:200% 0; }
+    100% { background-position:-200% 0; }
+  }
+
+  /* Hero icon */
+  .hero-icon {
+    width:88px; height:88px; margin:0 auto 28px;
+    background:var(--sf-blue-dim); border:1px solid var(--sf-blue-border);
+    border-radius:22px; display:flex; align-items:center; justify-content:center;
+    font-size:46px;
+    box-shadow:0 0 50px rgba(0,161,224,0.25), inset 0 1px 0 rgba(255,255,255,0.06);
+    animation:iconFloat 4s ease-in-out infinite; position:relative; z-index:2;
+  }
+  .hero-icon::after {
+    content:''; position:absolute; inset:-2px; border-radius:24px;
+    background:linear-gradient(135deg, rgba(0,161,224,0.4), transparent 60%);
+    z-index:-1; animation:iconGlow 4s ease-in-out infinite;
+  }
+  @keyframes iconFloat {
+    0%,100% { transform:translateY(0); box-shadow:0 0 50px rgba(0,161,224,0.25); }
+    50%     { transform:translateY(-10px); box-shadow:0 24px 64px rgba(0,161,224,0.4); }
+  }
+  @keyframes iconGlow { 0%,100%{opacity:0.5;} 50%{opacity:1;} }
+
+  .hero-content { position:relative; z-index:2; max-width:900px; padding:0 24px; }
+  .hero-eyebrow {
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--sf-blue-dim); border:1px solid var(--sf-blue-border);
+    color:var(--sf-blue); padding:6px 18px; border-radius:100px;
+    font-size:12px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase;
+    margin-bottom:28px; animation:fadeUp 0.6s ease both;
+  }
+  .hero-eyebrow::before { content:''; width:6px; height:6px; background:var(--sf-blue); border-radius:50%; animation:pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.4;transform:scale(0.7);} }
+  .hero-title {
+    font-family:'Syne',sans-serif;
+    font-size:clamp(42px,7vw,80px); font-weight:800;
+    line-height:1.0; color:white; margin-bottom:14px;
+    animation:fadeUp 0.7s 0.1s ease both; letter-spacing:-1px;
+  }
+  .hero-title .sf-blue { color:var(--sf-blue); text-shadow:0 0 40px rgba(0,161,224,0.6); }
+  .hero-title .sf-teal { color:var(--sf-teal); }
+  .hero-sub {
+    font-size:17px; color:var(--text-muted); font-weight:300;
+    max-width:600px; margin:0 auto 44px;
+    animation:fadeUp 0.7s 0.2s ease both; line-height:1.75;
+  }
+  .hero-badges {
+    display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-bottom:48px;
+    animation:fadeUp 0.7s 0.3s ease both;
+  }
+  .badge {
+    display:flex; align-items:center; gap:8px;
+    background:rgba(255,255,255,0.05); border:1px solid var(--border);
+    padding:10px 20px; border-radius:8px;
+    color:var(--text); font-size:13px; font-weight:500;
+  }
+  .hero-btns { display:flex; gap:16px; justify-content:center; animation:fadeUp 0.7s 0.4s ease both; }
+  .btn-primary {
+    background:var(--sf-blue); color:white;
+    padding:15px 36px; border-radius:8px;
+    font-size:14px; font-weight:700; text-decoration:none;
+    letter-spacing:0.4px; transition:all 0.2s;
+    box-shadow:0 8px 28px rgba(0,161,224,0.4);
+  }
+  .btn-primary:hover { background:var(--sf-blue-deep); transform:translateY(-2px); box-shadow:0 12px 40px rgba(0,161,224,0.5); }
+  .btn-outline {
+    background:transparent; color:var(--text);
+    padding:15px 36px; border-radius:8px;
+    font-size:14px; font-weight:600; text-decoration:none;
+    border:1px solid var(--border); transition:all 0.2s;
+  }
+  .btn-outline:hover { border-color:var(--sf-blue); color:var(--sf-blue); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(22px);} to{opacity:1;transform:translateY(0);} }
+
+  /* STATS BAND */
+  .stats-band {
+    background:var(--navy);
+    border-top:1px solid var(--sf-blue-border);
+    border-bottom:1px solid var(--sf-blue-border);
+    display:grid; grid-template-columns:repeat(3,1fr);
+  }
+  .stat-item {
+    padding:40px 24px; text-align:center;
+    border-right:1px solid var(--border); transition:background 0.2s;
+  }
+  .stat-item:last-child { border-right:none; }
+  .stat-item:hover { background:var(--sf-blue-glow); }
+  .stat-num { font-family:'Syne',sans-serif; font-size:44px; font-weight:800; color:var(--sf-blue); line-height:1; }
+  .stat-plus { color:var(--orange); }
+  .stat-label { font-size:13px; color:var(--text-muted); margin-top:8px; line-height:1.5; }
+
+  /* SECTIONS */
+  section { padding:96px 48px; }
+  .section-inner { max-width:1100px; margin:0 auto; }
+  .section-tag {
+    display:inline-block;
+    background:var(--sf-blue-dim); border:1px solid var(--sf-blue-border);
+    color:var(--sf-blue); padding:4px 14px; border-radius:100px;
+    font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+    margin-bottom:16px;
+  }
+  .section-tag.teal { background:rgba(0,196,180,0.08); border-color:rgba(0,196,180,0.25); color:var(--sf-teal); }
+  .section-tag.orange { background:rgba(249,115,22,0.08); border-color:rgba(249,115,22,0.25); color:var(--orange); }
+  .section-title {
+    font-family:'Syne',sans-serif; font-size:clamp(28px,4vw,44px); font-weight:800;
+    color:white; line-height:1.1; margin-bottom:16px;
+  }
+  .section-title span { color:var(--sf-blue); }
+  .section-sub { font-size:15px; color:var(--text-muted); max-width:560px; margin-bottom:56px; line-height:1.75; }
+
+  /* OVERVIEW */
+  .overview-section { background:var(--navy); }
+  .overview-grid { display:grid; grid-template-columns:1.2fr 1fr; gap:64px; align-items:start; }
+  .overview-desc { font-size:15px; color:var(--text-muted); line-height:1.85; margin-bottom:32px; }
+  .highlight-list { display:flex; flex-direction:column; gap:12px; }
+  .highlight-item {
+    display:flex; align-items:flex-start; gap:14px;
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:8px; padding:14px 18px; transition:all 0.2s;
+  }
+  .highlight-item:hover { border-color:var(--sf-blue-border); background:var(--sf-blue-glow); }
+  .hi-dot { color:var(--sf-blue); font-size:16px; flex-shrink:0; margin-top:1px; }
+  .hi-text { font-size:14px; color:var(--text); }
+
+  /* INDUSTRIES */
+  .industries-section { background:var(--dark-bg); }
+  .industries-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:14px; }
+  .industry-card {
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:12px; padding:24px 12px; text-align:center;
+    transition:all 0.25s;
+  }
+  .industry-card:hover { border-color:var(--sf-blue-border); transform:translateY(-3px); box-shadow:0 8px 28px rgba(0,161,224,0.1); background:var(--sf-blue-dim); }
+  .industry-emoji { font-size:28px; margin-bottom:10px; display:block; }
+  .industry-name { font-size:12px; font-weight:600; color:var(--text-muted); }
+
+  /* EXPERTISE */
+  .expertise-section { background:var(--navy); }
+  .expertise-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .expertise-card {
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:14px; padding:28px 24px;
+    border-top:3px solid var(--sf-blue);
+    transition:all 0.25s; position:relative; overflow:hidden;
+  }
+  .expertise-card:hover { border-color:var(--sf-blue); transform:translateY(-3px); box-shadow:0 12px 36px rgba(0,161,224,0.1); }
+  .expertise-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; bottom:0;
+    background:linear-gradient(135deg, var(--sf-blue-dim), transparent);
+    opacity:0; transition:opacity 0.25s;
+  }
+  .expertise-card:hover::before { opacity:1; }
+  .exp-icon { font-size:30px; margin-bottom:14px; display:block; position:relative; z-index:1; }
+  .exp-name { font-family:'Syne',sans-serif; font-size:17px; font-weight:700; color:white; margin-bottom:12px; position:relative; z-index:1; }
+  .exp-list { display:flex; flex-direction:column; gap:7px; position:relative; z-index:1; }
+  .exp-item { display:flex; align-items:flex-start; gap:8px; font-size:13px; color:var(--text-muted); }
+  .exp-item::before { content:'→'; color:var(--sf-blue); flex-shrink:0; font-size:12px; margin-top:1px; }
+
+  /* ECOSYSTEM */
+  .ecosystem-section { background:var(--dark-bg); }
+  .ecosystem-cols { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .eco-col-title {
+    font-family:'Syne',sans-serif; font-size:15px; font-weight:700;
+    text-transform:uppercase; letter-spacing:1.5px; margin-bottom:18px;
+    padding-bottom:12px; border-bottom:1px solid var(--border);
+  }
+  .eco-col-title.platform { color:var(--sf-blue); }
+  .eco-col-title.toolkit  { color:var(--sf-teal); }
+  .eco-col-title.integrations { color:var(--orange); }
+  .eco-items { display:flex; flex-direction:column; gap:10px; }
+  .eco-item {
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:8px; padding:12px 16px;
+    font-size:13px; font-weight:600; color:var(--text);
+    display:flex; align-items:center; gap:10px; transition:all 0.2s;
+  }
+  .eco-item:hover { border-color:var(--sf-blue-border); color:var(--sf-blue); background:var(--sf-blue-dim); }
+  .eco-item-icon { font-size:16px; }
+
+  /* SUCCESS STORIES */
+  .stories-section { background:var(--navy); }
+  .stories-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:24px; }
+  .story-card {
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:16px; overflow:hidden; transition:all 0.25s;
+  }
+  .story-card:hover { border-color:var(--sf-blue-border); transform:translateY(-3px); box-shadow:0 16px 48px rgba(0,161,224,0.1); }
+  .story-header {
+    background:linear-gradient(135deg, #08192e, #0c2a42);
+    padding:24px 28px; border-bottom:1px solid var(--border);
+    display:flex; align-items:center; gap:16px;
+  }
+  .story-icon { font-size:32px; }
+  .story-client { font-family:'Syne',sans-serif; font-size:16px; font-weight:700; color:white; }
+  .story-body { padding:24px 28px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+  .story-col-title { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:10px; }
+  .story-col-title.challenge { color:#f87171; }
+  .story-col-title.solution  { color:var(--sf-blue); }
+  .story-col-title.result    { color:var(--sf-teal); }
+  .story-points { display:flex; flex-direction:column; gap:7px; }
+  .story-point { font-size:12.5px; color:var(--text-muted); line-height:1.5; padding-left:12px; position:relative; }
+  .story-point::before { content:''; position:absolute; left:0; top:7px; width:4px; height:4px; border-radius:50%; background:var(--border); }
+  .story-col-title.challenge + .story-points .story-point::before { background:#f87171; }
+  .story-col-title.solution + .story-points .story-point::before  { background:var(--sf-blue); }
+  .story-col-title.result + .story-points .story-point::before    { background:var(--sf-teal); }
+  .result-stat { font-family:'Syne',sans-serif; font-size:20px; font-weight:800; color:var(--sf-teal); }
+
+  /* WHY CHOOSE */
+  .why-section { background:var(--dark-bg); }
+  .why-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:16px; }
+  .why-card {
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:12px; padding:28px 18px; text-align:center;
+    transition:all 0.25s;
+    border-bottom:3px solid var(--sf-blue);
+  }
+  .why-card:hover { border-color:var(--sf-blue); transform:translateY(-3px); box-shadow:0 10px 30px rgba(0,161,224,0.1); background:var(--sf-blue-dim); }
+  .why-num { font-family:'DM Mono',monospace; font-size:11px; color:var(--sf-blue); letter-spacing:2px; margin-bottom:14px; opacity:0.7; }
+  .why-icon { font-size:30px; margin-bottom:12px; display:block; }
+  .why-name { font-family:'Syne',sans-serif; font-size:14px; font-weight:700; color:white; line-height:1.3; }
+
+  /* ABOUT */
+  .about-section { background:var(--navy); }
+  .about-grid { display:grid; grid-template-columns:1.4fr 1fr; gap:64px; align-items:start; }
+  .about-desc { font-size:15px; color:var(--text-muted); line-height:1.85; margin-bottom:28px; }
+  .about-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:36px; }
+  .about-stat {
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:10px; padding:20px 16px; text-align:center;
+    transition:all 0.2s;
+  }
+  .about-stat:hover { border-color:var(--sf-blue-border); background:var(--sf-blue-dim); }
+  .about-stat-num { font-family:'Syne',sans-serif; font-size:28px; font-weight:800; color:var(--sf-blue); }
+  .about-stat-label { font-size:12px; color:var(--text-muted); margin-top:4px; }
+  .recognitions { display:flex; flex-direction:column; gap:10px; }
+  .recognition-item {
+    background:var(--navy-card); border:1px solid var(--border);
+    border-radius:8px; padding:12px 16px;
+    display:flex; align-items:center; gap:12px;
+    font-size:13px; font-weight:600; color:var(--text);
+    transition:all 0.2s;
+  }
+  .recognition-item:hover { border-color:var(--sf-blue-border); color:var(--sf-blue); }
+  .rec-icon { font-size:20px; }
+
+  /* FOOTER */
+  footer {
+    background:var(--dark-bg);
+    border-top:1px solid var(--sf-blue-border);
+    padding:64px 48px 40px; text-align:center;
+  }
+  .footer-logo { display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:12px; }
+  .footer-logo img { width:50px; height:50px; border-radius:50%; border:2px solid var(--sf-blue); box-shadow:0 0 16px rgba(0,161,224,0.3); }
+  .footer-brand { font-family:'Syne',sans-serif; font-size:22px; font-weight:800; color:white; letter-spacing:2px; }
+  .footer-tagline { font-size:13px; color:var(--text-muted); letter-spacing:1px; margin-bottom:36px; }
+  .footer-cta { font-size:20px; font-weight:700; color:#7dd3fc; margin-bottom:32px; }
+  .footer-contacts { display:flex; justify-content:center; gap:48px; margin-bottom:36px; }
+  .footer-contact { display:flex; align-items:center; gap:10px; font-size:14px; color:var(--text-muted); }
+  .footer-contact a { color:#7dd3fc; text-decoration:none; }
+  .footer-contact a:hover { color:var(--sf-blue); }
+  .footer-contact  { color:#7dd3fc; text-decoration:none; }
+
+  .footer-divider { width:70px; height:2px; background:var(--sf-blue); margin:0 auto 22px; opacity:0.3; }
+  .footer-copy { font-size:11px; color:var(--text-dim); font-family:'DM Mono',monospace; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="data:image/png;base64,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" alt="BE6 Technologies">
+    <span class="nav-brand">BE6 TECHNOLOGIES</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#stories">Success Stories</a></li>
+    <li><a href="#why-us">Why Us</a></li>
+  </ul>
+  <a href="/src/html/index.html" class="nav-cta">←Back to Home</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-mesh"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-ring"></div>
+  <div class="hero-ring"></div>
+  <div class="hero-ring"></div>
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-orb3"></div>
+  <div class="hero-particles">
+    <div class="particle" style="left:4%;animation-duration:20s;animation-delay:0s;">SELECT Id, Name FROM Account</div>
+    <div class="particle" style="left:13%;animation-duration:26s;animation-delay:3s;">trigger OpportunityTrigger on Opportunity</div>
+    <div class="particle" style="left:23%;animation-duration:18s;animation-delay:6s;">@AuraEnabled public static List&lt;Lead&gt;</div>
+    <div class="particle" style="left:36%;animation-duration:23s;animation-delay:1s;">Process.Builder → Flow → Apex</div>
+    <div class="particle" style="left:48%;animation-duration:29s;animation-delay:9s;">LWC: connectedCallback()</div>
+    <div class="particle" style="left:58%;animation-duration:19s;animation-delay:4s;">sf deploy --source-dir force-app</div>
+    <div class="particle" style="left:68%;animation-duration:25s;animation-delay:7s;">SOQL: WHERE StageName = 'Closed Won'</div>
+    <div class="particle" style="left:78%;animation-duration:21s;animation-delay:2s;">Agentforce.createAgent(config)</div>
+    <div class="particle" style="left:88%;animation-duration:27s;animation-delay:11s;">RestResource(urlMapping='/api/v1')</div>
+    <div class="particle" style="left:94%;animation-duration:16s;animation-delay:5s;">@isTest static void testMethod()</div>
+  </div>
+  <div class="hero-beam"></div>
+  <div class="hero-content">
+    <div class="hero-icon">☁️</div>
+    <div class="hero-eyebrow">✦ Salesforce Development Partner</div>
+    <h1 class="hero-title">Scaling the Modern<br><span class="sf-blue">Enterprise</span> with<br><span class="sf-teal">AI-Powered Salesforce</span></h1>
+    <p class="hero-sub">We help modern enterprises go beyond traditional CRM — unlocking growth, enhancing customer engagement, and creating lasting business value with deep Salesforce expertise.</p>
+    <div class="hero-badges">
+      <div class="badge">🏆 50+ Salesforce Projects</div>
+      <div class="badge">🌍 70+ Global Clients</div>
+      <div class="badge">📱 50+ Custom Apps Built</div>
+      <div class="badge">🤖 Agentforce & AI-Powered</div>
+    </div>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary" id="contact" onclick="window.location.href='/src/html/Register/BE6_Register.html'">Enroll Now →</a>
+      <a href="#expertise" class="btn-outline">Our Expertise</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAND -->
+<div class="stats-band">
+  <div class="stat-item">
+    <div class="stat-num">50<span class="stat-plus">+</span></div>
+    <div class="stat-label">Salesforce projects across<br>Sales, Service & Industry Clouds</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">50<span class="stat-plus">+</span></div>
+    <div class="stat-label">Custom apps built with<br>tailored Salesforce integrations</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">70<span class="stat-plus">+</span></div>
+    <div class="stat-label">Global clients served with<br>end-to-end Salesforce solutions</div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<section class="overview-section" id="overview">
+  <div class="section-inner">
+    <div class="overview-grid">
+      <div>
+        <div class="section-tag">About Our Practice</div>
+        <h2 class="section-title">Beyond Traditional <span>CRM</span></h2>
+        <p class="overview-desc">Consumers today expect more — seamless digital experiences, intuitive products, and personalized services across every touchpoint. At BE6 Technologies, we solve complex business challenges with agility, innovation, and deep Salesforce expertise. We help modern enterprises unlock new growth opportunities, enhance customer engagement, and create lasting business value.</p>
+        <div class="highlight-list">
+          <div class="highlight-item"><span class="hi-dot">◆</span><span class="hi-text">Full-spectrum Salesforce implementation from Sales to Service Cloud</span></div>
+          <div class="highlight-item"><span class="hi-dot">◆</span><span class="hi-text">AI-powered automation with Agentforce & Salesforce GPT</span></div>
+          <div class="highlight-item"><span class="hi-dot">◆</span><span class="hi-text">Seamless ERP, payment gateway & third-party API integrations</span></div>
+          <div class="highlight-item"><span class="hi-dot">◆</span><span class="hi-text">Secure, zero-downtime legacy-to-Salesforce migrations</span></div>
+          <div class="highlight-item"><span class="hi-dot">◆</span><span class="hi-text">SLA-driven ongoing support and continuous improvements</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="section-tag teal" style="margin-bottom:20px;">Industries We Serve</div>
+        <div class="industries-grid" style="grid-template-columns:repeat(2,1fr);">
+          <div class="industry-card"><span class="industry-emoji">🏥</span><div class="industry-name">Healthcare</div></div>
+          <div class="industry-card"><span class="industry-emoji">🏦</span><div class="industry-name">Banking & Finance</div></div>
+          <div class="industry-card"><span class="industry-emoji">🎮</span><div class="industry-name">iGaming</div></div>
+          <div class="industry-card"><span class="industry-emoji">🏠</span><div class="industry-name">Real Estate</div></div>
+          <div class="industry-card"><span class="industry-emoji">🚗</span><div class="industry-name">Automobile</div></div>
+          <div class="industry-card"><span class="industry-emoji">🎓</span><div class="industry-name">Education</div></div>
+          <div class="industry-card" style="grid-column:span 2;"><span class="industry-emoji">🛍️</span><div class="industry-name">Retail</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section class="expertise-section" id="expertise" style="background:var(--dark-bg);">
+  <div class="section-inner">
+    <div class="section-tag">Our Salesforce Expertise</div>
+    <h2 class="section-title">Scalable, Smart & Secure <span>Salesforce Services</span></h2>
+    <p class="section-sub">End-to-end Salesforce platform services — from strategy through deployment and beyond.</p>
+    <div class="expertise-grid">
+      <div class="expertise-card">
+        <span class="exp-icon">🎯</span>
+        <div class="exp-name">Strategic Consulting</div>
+        <div class="exp-list">
+          <div class="exp-item">Tailored implementation roadmaps aligned to business needs</div>
+          <div class="exp-item">Architecture analysis & performance advisory</div>
+          <div class="exp-item">Brownfield transformations</div>
+          <div class="exp-item">Staff augmentation with certified Salesforce professionals</div>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <span class="exp-icon">⚙️</span>
+        <div class="exp-name">Customization & Implementation</div>
+        <div class="exp-list">
+          <div class="exp-item">Role-based configuration & platform security</div>
+          <div class="exp-item">Workflow automation & process streamlining</div>
+          <div class="exp-item">Data migration & validation</div>
+          <div class="exp-item">Experience Cloud setup & personalization</div>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <span class="exp-icon">🔌</span>
+        <div class="exp-name">Ecosystem Integrations</div>
+        <div class="exp-list">
+          <div class="exp-item">ERP & Core Systems — SAP, Oracle</div>
+          <div class="exp-item">Finance & Support Tools — QuickBooks, Zendesk</div>
+          <div class="exp-item">Heroku & AppExchange integrations</div>
+          <div class="exp-item">MuleSoft, HubSpot & third-party APIs</div>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <span class="exp-icon">🔄</span>
+        <div class="exp-name">Migration Services</div>
+        <div class="exp-list">
+          <div class="exp-item">Legacy-to-Salesforce CRM migration</div>
+          <div class="exp-item">Scalable, zero-downtime migrations</div>
+          <div class="exp-item">Secure data handling with audit trails</div>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <span class="exp-icon">🛡️</span>
+        <div class="exp-name">Support & Maintenance</div>
+        <div class="exp-list">
+          <div class="exp-item">Proactive monitoring & environment health checks</div>
+          <div class="exp-item">Patch management, upgrades & continuous improvements</div>
+          <div class="exp-item">SLA-driven ongoing support</div>
+        </div>
+      </div>
+      <div class="expertise-card" style="border-top-color:var(--sf-teal);">
+        <span class="exp-icon">🤖</span>
+        <div class="exp-name">Agentforce & AI</div>
+        <div class="exp-list">
+          <div class="exp-item">Workflow automation using Apex & flows</div>
+          <div class="exp-item">AI agent integration & prompt engineering</div>
+          <div class="exp-item">Salesforce GPT & Agentforce-powered smart operations</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONNECTED ECOSYSTEM -->
+<section style="background:var(--navy); padding:96px 48px;">
+  <div class="section-inner">
+    <div class="section-tag">Connected Ecosystem</div>
+    <h2 class="section-title">Building a <span>Connected</span> Ecosystem</h2>
+    <p class="section-sub">A complete Salesforce stack — from platform to integrations — all working together seamlessly.</p>
+    <div class="ecosystem-cols">
+      <div>
+        <div class="eco-col-title platform">01 — Salesforce Platform</div>
+        <div class="eco-items">
+          <div class="eco-item"><span class="eco-item-icon">☁️</span>Sales Cloud</div>
+          <div class="eco-item"><span class="eco-item-icon">☁️</span>Data Cloud</div>
+          <div class="eco-item"><span class="eco-item-icon">☁️</span>Service Cloud</div>
+          <div class="eco-item"><span class="eco-item-icon">☁️</span>Pardot (Marketing Cloud Account Engagement)</div>
+          <div class="eco-item"><span class="eco-item-icon">☁️</span>Marketing Cloud</div>
+          <div class="eco-item"><span class="eco-item-icon">🤖</span>Agentforce</div>
+          <div class="eco-item"><span class="eco-item-icon">⚙️</span>Salesforce DevOps</div>
+        </div>
+      </div>
+      <div>
+        <div class="eco-col-title toolkit">02 — Sales Toolkit</div>
+        <div class="eco-items">
+          <div class="eco-item"><span class="eco-item-icon">🔧</span>Salesforce Workbench</div>
+          <div class="eco-item"><span class="eco-item-icon">📦</span>Dataloader.io</div>
+          <div class="eco-item"><span class="eco-item-icon">🗄️</span>SOQL / Apex</div>
+          <div class="eco-item"><span class="eco-item-icon">🛒</span>AppExchange</div>
+          <div class="eco-item"><span class="eco-item-icon">⚡</span>Lightning Inspector</div>
+          <div class="eco-item"><span class="eco-item-icon">🐛</span>Apex Debugger</div>
+        </div>
+      </div>
+      <div>
+        <div class="eco-col-title integrations">03 — Integrations</div>
+        <div class="eco-items">
+          <div class="eco-item"><span class="eco-item-icon">🔗</span>MuleSoft</div>
+          <div class="eco-item"><span class="eco-item-icon">📊</span>Google Analytics</div>
+          <div class="eco-item"><span class="eco-item-icon">🔶</span>HubSpot</div>
+          <div class="eco-item"><span class="eco-item-icon">💳</span>Payment Gateways</div>
+          <div class="eco-item"><span class="eco-item-icon">☁️</span>Database Cloud & DevOps (AWS / Azure)</div>
+          <div class="eco-item"><span class="eco-item-icon">🔌</span>Third-party APIs</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUCCESS STORIES -->
+<section class="stories-section" id="stories">
+  <div class="section-inner">
+    <div class="section-tag orange">Proven Success Stories</div>
+    <h2 class="section-title">Real Results for <span>Real Clients</span></h2>
+    <p class="section-sub">Measurable business impact delivered through smart Salesforce solutions.</p>
+    <div class="stories-grid">
+      <div class="story-card">
+        <div class="story-header">
+          <div class="story-icon">🏦</div>
+          <div class="story-client">Leading American Private Equity Firm</div>
+        </div>
+        <div class="story-body">
+          <div>
+            <div class="story-col-title challenge">Challenge</div>
+            <div class="story-points">
+              <div class="story-point">Low email engagement due to non-responsive templates & generic messaging</div>
+              <div class="story-point">Poor lead quality and high bounce rates from unclean databases</div>
+            </div>
+          </div>
+          <div>
+            <div class="story-col-title solution">Solution</div>
+            <div class="story-points">
+              <div class="story-point">Revamped all email templates for responsiveness & personalization</div>
+              <div class="story-point">Implemented automated data hygiene to improve quality & deliverability</div>
+            </div>
+          </div>
+          <div>
+            <div class="story-col-title result">Results</div>
+            <div class="story-points">
+              <div class="story-point"><span class="result-stat">+75%</span> open rates</div>
+              <div class="story-point"><span class="result-stat">+40%</span> click-through rates</div>
+              <div class="story-point">Sales rejection rate dropped from <span class="result-stat">50%→20%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-header">
+          <div class="story-icon">🎮</div>
+          <div class="story-client">Australia's Leading Wagering & Media Organization</div>
+        </div>
+        <div class="story-body">
+          <div>
+            <div class="story-col-title challenge">Challenge</div>
+            <div class="story-points">
+              <div class="story-point">Difficulty managing opt-outs & consent preferences posed regulatory compliance risk</div>
+              <div class="story-point">Lack of targeted engagement led to revenue loss & inefficiencies</div>
+            </div>
+          </div>
+          <div>
+            <div class="story-col-title solution">Solution</div>
+            <div class="story-points">
+              <div class="story-point">Implemented Service Cloud for case management, telephony integration & reporting</div>
+              <div class="story-point">Built Help Center & Self-Exclusion on Experience Cloud</div>
+            </div>
+          </div>
+          <div>
+            <div class="story-col-title result">Results</div>
+            <div class="story-points">
+              <div class="story-point">Improved compliance & regulatory alignment</div>
+              <div class="story-point">Up to <span class="result-stat">+1%</span> revenue uplift from high-value customers</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="why-section" id="why-us">
+  <div class="section-inner">
+    <div class="section-tag">Why Choose Us</div>
+    <h2 class="section-title">5 Reasons to Choose <span>BE6 Technologies</span></h2>
+    <p class="section-sub">We don't just implement Salesforce — we transform your business with it.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-num">01</div>
+        <span class="why-icon">🎯</span>
+        <div class="why-name">Custom Solutions Aligned to Your Business Goals</div>
+      </div>
+      <div class="why-card">
+        <div class="why-num">02</div>
+        <span class="why-icon">🤖</span>
+        <div class="why-name">Salesforce + AI for Smarter Automation</div>
+      </div>
+      <div class="why-card">
+        <div class="why-num">03</div>
+        <span class="why-icon">⚡</span>
+        <div class="why-name">Faster Implementation & Cost Efficiency</div>
+      </div>
+      <div class="why-card">
+        <div class="why-num">04</div>
+        <span class="why-icon">☁️</span>
+        <div class="why-name">Multi-Cloud & Integration Expertise</div>
+      </div>
+      <div class="why-card">
+        <div class="why-num">05</div>
+        <span class="why-icon">🏛️</span>
+        <div class="why-name">Deep Experience Across Regulated Industries</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div>
+        <div class="section-tag">About BE6 Technologies</div>
+        <h2 class="section-title">A Digital Technology <span>Company</span></h2>
+        <p class="about-desc">BE6 Technologies is a digital technology services company providing innovative product engineering solutions to diverse industries across the globe. We design and build digital platforms with Cloud, Data, and AI as the main pillars.</p>
+        <p class="about-desc">Global analyst firms like Gartner, Forrester, Everest, ISG, and Zinnov have recognized our capabilities across Digital Engineering, Cloud, Data & AI, and Digital Marketing.</p>
+        <div class="about-stats">
+          <div class="about-stat"><div class="about-stat-num">2008</div><div class="about-stat-label">Founded</div></div>
+          <div class="about-stat"><div class="about-stat-num">25<span style="color:var(--orange)">+</span></div><div class="about-stat-label">Client Locations</div></div>
+          <div class="about-stat"><div class="about-stat-num">5</div><div class="about-stat-label">Global Offices</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="section-tag teal" style="margin-bottom:20px;">Recognized By</div>
+        <div class="recognitions">
+          <div class="recognition-item"><span class="rec-icon">🏆</span>Gartner — Digital Engineering</div>
+          <div class="recognition-item"><span class="rec-icon">🏆</span>Forrester — Cloud Capabilities</div>
+          <div class="recognition-item"><span class="rec-icon">🏆</span>Everest Group — Data & AI</div>
+          <div class="recognition-item"><span class="rec-icon">🏆</span>ISG — Digital Marketing</div>
+          <div class="recognition-item"><span class="rec-icon">🏆</span>Zinnov — Media & Entertainment Solutions</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-logo">
+    <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCABaAFoDASIAAhEBAxEB/8QAHQAAAgMAAwEBAAAAAAAAAAAAAAcGCAkCBAUBA//EADwQAAIBAwMDAgQCBggHAAAAAAECAwQFEQAGBxIhMQgTIkFRYRRCCRUyUoGhFiMkYnGRlNQlU1Zjg5Ki/8QAGgEBAAIDAQAAAAAAAAAAAAAAAAMEAQIFBv/EACwRAAIBAgQGAQIHAAAAAAAAAAABAgMRBBIhMQUTQVFhgSIUcRUykbHB0eH/2gAMAwEAAhEDEQA/AKZaNGm16buEr1y9uJwJJLft2hcfrC4dOTnyIogezSEfwUdz+UMBCePdi7r3/fBZtpWaoudVjqkKALHCv70jnCoPuSM+Bk6t3xj6LbLRxxVnIe4JrnUdi1DbCYoAc+GlYdbgj6BCNWX4/wBmbb2HtmDb217ZFQUMPchRl5X+byN5djgdz9APAA1IdAQLbPDXFW3KdYbVsGwL0HKy1FItTKP/ACS9T/z1M4Ldb6eD8PBQ0sUOMe2kSquP8AMa7WjQEUvvG/H19WQXfZG3a1pAQ0kttiMnf6P09QP3BzpL8iejvji+xPNtWpr9rVmPhVHNVTE/MlJD1/5OAPpqyejQGWXMvCO/eLJ/cv8AblqbUzBYrpREyUzE+ATgFG+zAZwcZHfS11shX0lJX0U1DX0sFVSzoY5oJow8ciEYKsp7EEfI6oj6s/TWdlw1O99hwyzbeB666gyXegz+dD5aL657r9xkqBV3Ro0aAkvGOzbryBvq17Ssyj8VXzdBkYfDDGBl5G+yqCfvjA7ka1S482fY9h7QoNr7epvYoaOPpBbBeVz+1I5+bse5P+WAANVp/Rz7FSj23eeQqyHFRcZDb6FmBBECENKw+RDSdI+xh1bbQBo0aNAGjRo0AaNGuld7pbrRQvW3KripoE8s5+f0AHcn7DvrKTbsjWc404uUnZLqzu6/OohiqIJKeeJJoZFKSRuoZXUjBBB7EEfLSxvnLEJkaCx2+onYfmKdz/D8vy7kN9wNedt277m3bLPIi0k9JEFWUrKlWQT9VD+2D8+0ecDsDqPESdB2ktexyI8dwtWoqdBub8LT9dimHq04spuNOSJP1J0nbt0LT0Kq3V+HYHEkBPn4W8f3SBkkNpNa0l9SHGFVvbhi5wJ7MddRUwuNLTR0yhvfhVyUBXGetWZR27E/c6za0puTjeSOtTk5K8lY1b9Pdih25whs60wxtH0WmCaVT5Esq+7J/wDbtpTeoXfe94OaLTsnZl8moHqKamhEcYXDVE0rjLkqxChegkgdhk99WOt8MNPQU9PT49mKJUjx46QAB/LVJbjZrnyz6rN12+w3ySzTxVM7JXqrloFpFjpj09DqwywwCGHnOr+CUc7lLZLqQ4lSlFRj1Y1f6Fepn/rq1/60/wC2153DvIvI1HzYdgbuugvEQaeKtJCMKQxRNJ7qyIoJUkKhDfvjwRgkvp15ISNnfnW7KqgklmrAAPv/AGrxpV8N7wi2xZuUaGOltc9ZDYK16bcMLF5Gl91II1V2JDRyvKjrgAkqCerPw3M0KkJJWf2VrX6kHKcJxab9u5MeOd080cpXa8PtLdzUsVMy1LRVcqxrDHM7+2gKxOSQEI7/ALvk6mp2Z6lwCf6c2v8A1p/22lZwDw/u/fG0Kjcli31VbTpnq2pFjp1mzUrEB8ZMUydgzOoBBwVY/PUs39tLc/EmyK6S88h3jcVTuKWO1pI004Wipul5KhlSSWQNI4REz2IUtg9zqVuE6vLp5b7Wy/yRcvJT5lRy77jLod61O1uOI7leL7VX0vI0MNY7BGutR36vYwB7dKmCPdx1OAWXsUMi4S+127alr7uO8wWu0RSGL8U6HpDdiYqaIZLN3BOPA7ux7Z8b1b3CS373t9tpWjprPSWKAW3A/qEiLOGZSB4+CMHGeyJ27jNodt7H2pZrdQwUdnopjS0ywRTyxLI/R5OGOcdTZY48sxJyTnUbqQw1NVIr5Sv6RQxnD58Rm6U38I201s352bXv3fUU+391cXW0RqlmvdcEbIqp1jY58dYAcEdvoB58abdi3Vt6ts6XC3Tp+rlf2mlVSFhbthZAcMh7juRjBBz3Gkp6mItr2q/Wems8NNTXupLGpgpEALocCMsi+XLZC9ssOrzga9DYlNUba2vdYLmrQ3O9CJPwROWpoV6sNIB+zI3WcJ5A6c4OQPLcU4lGhmqdlu9dei9vQi4dLE4TEywzUci6xVraaf1bfyP0EEAg5B1lVyPx5crTyHuS12yjkaho7tVU9MSPMaTMq/yA1qHtWmnpNu0NNUgrKkIBU+UHyX+AwP4aXN92ztmovlfPOsPvSVMjyZxnqLEn+erlGbqU4yas2k7dvB6hO6uTHiO7C+8WbUvPuLI1ZZ6WV2Bz8ZiXqH+IbIP3GkLdPR7bLnXVNZXb/ucs1VO9RKTb4sGR2LMcEn5k69H9H9vGPcHDc+1Z5M1e3apoukZBNPMWkjbP16vdXt4CjTsqNvVwsCW+kutVHM1V780xqpC7L1l+hWbqKr+yuMEdIxqeFSUPysNJ7leU9Fu3A6l97XFlB7hbdACf499T4+nDadJxdctkWW519HJdZ4JbhdZlSapnEMnuImAFVVDAYAGPOckk6aNTaK2V6ACrZoYYPblRqiVSXJX+s6kI6j2IwcecjHcH49ouj3xq03yoFI1Ys34NQAntLCF6M46smQdZwQCO2PJO0q05bsxlRXJ/RhYZHLyb5uTsfJa3Qk6mts9O1HQcTVWwl3RUVKpcP1na6uWkVWo6goUYFVbDxsCQV7H4mIOcENS12a8Ut6aqnvslTRu1TKad1YlJHkzH0t1Y6FjyvQR+1hhjuNdek2/eI7TX08t5kapqqFKYSLNL2kAcNOCWJRm6x2XHT0ju2BjZYmqmpX1Rh04tWa0K8XHZHJ1vs0W19z7Got3WSkH9lKOJxT5/aFPIjx1EXbA+QAwAMa9za9Rva2WFNu2Xj/eFHQRx+1FDLcqoLEuMBUd3V0UDwFcY+WNPi92263KOn6KuOnKxyrJEksqoXbASTqQqx6AG+HsCWzkFVOvyrbLdpbrSTxXmT8PClOpViwOY3LSMQpAYyKVXvjp6c/ECVO9bFSrL5Jeij+HyjpCrJLto/wB02KTamwN9tUmphtFq2u8wK1NUZfcrJh9Wm6pZnPb80oz89M/Z+xbbYClTNK9wr17+9IvSqN8yid8H7kk9z313bvZrnVU08dPdZoXnrxUMVlZSsYQKI1PfpGVUkYwct2yc6+3CzXGee1tT3KaBaQKJR7zES4ZS3UMDrJCkA5XHUfIJXXJ+houoqkldra+tvt0JaGChRd7uT7t3/wAPf1nNyjzTdqbkzdNPQ1BlpIrzVpA6NlWQTOFI+xGNXq5n3jDsHi7cG7JGVZKGjY0wYZDTt8ESkfQuyg/bOsmXZndndizMckk9ydXC4Mr008my8V8pUV+l63tNSpo7pEoyWp3IJYD95GCuMdz0lcgMdai0NVTV1FBW0VRFU0tRGssM0ThkkRhlWUjsQQQQRrG7VpvRx6hodniLYO+atlsEj/8ADq9zkULse8b/APaJOQfyEnPwnKgXx0a4QSxTwpPBIksUih0dGBVlIyCCPIOuegDRo0aANGjRoA0aNVr9W3qJotj22q2bs2tSo3XOpjqKiJsrbFPkk/8AO+i/l8n5AgKT1+crRbg3JBxvZagSW+yze7cpEIIkrMECPI+UYLA/3mYEZUaqvrlI7ySNJI7O7EszMckk+STrjoA0aNGgHZwH6jt5cXJFaJx+vttKTi31EnS8GfJhkwSnfv0kFfOACSdXZ4x5+4u5Ajijte44bfcZMD9XXMinn6icBVyelz9kZtZdaNAbL6NZX8Pb23nbL3SWu27uv9FQdefwtPcpo4v/AEVgP5a0M2ZcbhUbLWonrqqWb2s+48rM2cfUnOgGJqI8gcmbD2FTtLuzdFvtsgUMKdpOuocHwViXLkfcDGqOepbfm+KO/wA1DSbz3FT0shKPBFc5ljZfoVDYI1XuR3kdndmZmOSzHJJ0BafnP1e3rcEM9l43p6iw29wVkuc2PxkgIwegAkQjz3BLeCCp7aqxI7ySNJI7O7EszMckk+STrjo0AaNGjQH/2Q==" alt="BE6 Technologies">
+    <span class="footer-brand">BE6 TECHNOLOGIES</span>
+  </div>
+  <div class="footer-tagline">Driving Innovation · Delivering Excellence</div>
+  <div class="footer-cta">☁️ Transform Your Salesforce Experience With Us!</div>
+  <div class="footer-contacts">
+    <div class="footer-contact">📞 +91 9000351289</div>
+    <div class="footer-contact">📧 <a href="mailto:Info@be6technologies.com">Info@be6technologies.com</a></div>
+    <div class="footer-contact">🌐 <a href="https://www.be6technologies.in/" target="_blank">www.be6technologies.in</a></div>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-copy">© 2026 BE6 Technologies. All Rights Reserved.</div>
+</footer>
+
+</body>
+</html>
