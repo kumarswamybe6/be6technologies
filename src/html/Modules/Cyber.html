@@ -12,8 +12,8 @@
     --dark-2: #0d1525;
     --dark-3: #111d2e;
     --dark-card: #0f1b2d;
-    --cyan: #00ff88;
-    --cyan-deep: #00ff88;
+    --cyan: #00d4ff;
+    --cyan-deep: #00d4ff;
     --cyan-dim: rgba(0,212,255,0.12);
     --cyan-border: rgba(0,212,255,0.2);
     --cyan-glow: rgba(0,212,255,0.06);
@@ -36,15 +36,14 @@
     color: var(--text);
     line-height: 1.6;
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
   }
 
   /* SCROLLBAR */
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: var(--dark); }
   ::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 2px; }
-
-@media (max-width: 768px) {
-
 
   /* NAV */
   nav {
@@ -134,7 +133,7 @@
     letter-spacing: 2px; text-transform: uppercase;
     margin-bottom: 28px; animation: fadeUp 0.6s ease both;
   }
-  .hero-eyebrow::before { content: '>_'; color: var(--green); margin-right: 4px; }
+  .hero-eyebrow::before { content: '>_'; color: #00ff88; margin-right: 4px; }
 
   .hero-title {
     font-family: 'Syne', sans-serif;
@@ -149,7 +148,7 @@
   .hero-sub-title {
     font-family: 'Syne', sans-serif;
     font-size: clamp(20px, 3vw, 30px); font-weight: 700;
-    color: var(--green); letter-spacing: 3px; text-transform: uppercase;
+    color: #00ff88; letter-spacing: 3px; text-transform: uppercase;
     margin-bottom: 20px; animation: fadeUp 0.7s 0.15s ease both;
     text-shadow: 0 0 20px rgba(0,255,136,0.4);
   }
@@ -157,7 +156,7 @@
   .hero-badge-cert {
     display: inline-flex; align-items: center; gap: 8px;
     border: 1px solid rgba(0,255,136,0.3);
-    color: var(--green); padding: 8px 20px; border-radius: 100px;
+    color: #00ff88; padding: 8px 20px; border-radius: 100px;
     font-size: 13px; font-weight: 600; letter-spacing: 1px;
     margin-bottom: 40px; animation: fadeUp 0.7s 0.2s ease both;
     background: rgba(0,255,136,0.05);
@@ -198,19 +197,6 @@
 
   @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
 
-  /* WHY LEARN */
-  .why-learn-section { background: var(--dark-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-  .why-learn-grid { display: grid; grid-template-columns: repeat(3, 1fr) 2fr; gap: 0; }
-  .wl-stat {
-    padding: 40px 28px; border-right: 1px solid var(--border);
-    text-align: center; transition: background 0.2s;
-  }
-  .wl-stat:hover { background: var(--cyan-glow); }
-  .wl-stat:last-child { border-right: none; padding: 40px 28px; display: flex; align-items: center; justify-content: center; }
-  .wl-num { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; color: var(--cyan); }
-  .wl-label { font-size: 12px; color: var(--text-muted); margin-top: 6px; letter-spacing: 0.5px; }
-  .wl-desc { font-size: 13px; color: var(--text-muted); line-height: 1.7; text-align: left; max-width: 340px; }
-
   /* SECTIONS */
   section { padding: 96px 48px; }
   .section-inner { max-width: 1100px; margin: 0 auto; }
@@ -223,7 +209,7 @@
   }
   .section-tag::before { content: '//'; opacity: 0.5; }
   .section-tag.green {
-    background: var(--green-dim); border-color: rgba(0,255,136,0.25); color: var(--green);
+    background: var(--green-dim); border-color: rgba(0,255,136,0.25); color: #00ff88;
   }
   .section-title {
     font-family: 'Syne', sans-serif; font-size: clamp(28px, 4vw, 44px); font-weight: 800;
@@ -244,7 +230,7 @@
     transition: all 0.2s;
   }
   .why-item:hover { border-color: var(--cyan-border); background: var(--cyan-glow); }
-  .why-item-icon { color: var(--green); font-size: 14px; margin-top: 2px; flex-shrink: 0; font-family: 'DM Mono', monospace; }
+  .why-item-icon { color: #00ff88; font-size: 14px; margin-top: 2px; flex-shrink: 0; font-family: 'DM Mono', monospace; }
   .why-item-text { font-size: 14px; color: var(--text); }
 
   /* AUDIENCE */
@@ -262,7 +248,7 @@
   .no-prereq {
     background: var(--green-dim); border: 1px solid rgba(0,255,136,0.2);
     border-radius: 6px; padding: 12px 16px;
-    font-size: 13px; color: var(--green); font-weight: 500;
+    font-size: 13px; color: #00ff88; font-weight: 500;
     display: flex; align-items: center; gap: 8px;
   }
 
@@ -381,7 +367,7 @@
     display: inline-block; padding: 3px 12px; border-radius: 3px; font-size: 10px;
     font-family: 'DM Mono', monospace; letter-spacing: 1px; font-weight: 500;
   }
-  .badge-demand { background: rgba(0,255,136,0.1); color: var(--green); border: 1px solid rgba(0,255,136,0.2); }
+  .badge-demand { background: rgba(0,255,136,0.1); color: #00ff88; border: 1px solid rgba(0,255,136,0.2); }
   .badge-salary { background: rgba(249,115,22,0.1); color: #fb923c; border: 1px solid rgba(249,115,22,0.2); }
   .badge-spec { background: var(--cyan-dim); color: var(--cyan); border: 1px solid var(--cyan-border); }
 
@@ -436,15 +422,109 @@
   .footer-logo img { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--cyan); box-shadow: 0 0 16px rgba(0,212,255,0.3); }
   .footer-brand { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: white; letter-spacing: 2px; }
   .footer-tagline { font-size: 13px; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 36px; }
-  .footer-contacts { display: flex; justify-content: center; gap: 48px; margin-bottom: 36px; }
+  .footer-contacts { display: flex; justify-content: center; gap: 48px; margin-bottom: 36px; flex-wrap: wrap; }
   .footer-contact { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted); }
   .footer-contact a { color: var(--cyan); text-decoration: none; }
-  .footer-contact a:hover { color: white;}
-  .footer-contact  { color: var(--cyan); text-decoration: none; }
-
-  .footer-contact { color: var(--cyan); text-decoration: none; }
+  .footer-contact a:hover { color: white; }
   .footer-divider { width: 60px; height: 1px; background: var(--cyan); margin: 0 auto 20px; opacity: 0.3; }
   .footer-copy { font-size: 11px; color: var(--text-dim); font-family: 'DM Mono', monospace; }
+
+  /* ── MOBILE RESPONSIVE ─────────────────────────────────── */
+  @media (max-width: 768px) {
+    /* NAV */
+    nav { padding: 0 16px; height: 60px; }
+    .nav-links { display: none; }
+    .nav-brand { font-size: 13px; letter-spacing: 0.5px; }
+    .nav-logo img { width: 34px; height: 34px; }
+    .nav-cta { padding: 8px 14px; font-size: 11px; }
+
+    /* HERO */
+    .hero { padding-top: 60px; min-height: 100svh; }
+    .hero-content { padding: 0 16px; }
+    .hero-shield { width: 60px; height: 60px; margin-bottom: 20px; }
+    .shield-svg { width: 60px; height: 60px; }
+    .hero-eyebrow { font-size: 9px; padding: 5px 12px; margin-bottom: 18px; letter-spacing: 1px; }
+    .hero-title { font-size: clamp(30px, 9vw, 48px); letter-spacing: -0.5px; margin-bottom: 10px; }
+    .hero-sub-title { font-size: clamp(14px, 4vw, 20px); letter-spacing: 2px; margin-bottom: 16px; }
+    .hero-badge-cert { font-size: 11px; padding: 7px 14px; margin-bottom: 24px; }
+    .hero-stats { margin-bottom: 28px; }
+    .hero-stat { padding: 14px 8px; }
+    .hero-stat-num { font-size: 20px; }
+    .hero-stat-label { font-size: 10px; }
+    .hero-btns { flex-direction: column; align-items: center; gap: 10px; }
+    .btn-primary, .btn-outline { width: 100%; max-width: 280px; text-align: center; padding: 13px 20px; }
+    .hero-glow-tl { width: 250px; height: 250px; }
+    .hero-glow-br { display: none; }
+
+    /* SECTIONS */
+    section { padding: 48px 16px; }
+    .section-title { font-size: clamp(20px, 6vw, 32px); }
+    .section-sub { font-size: 14px; margin-bottom: 28px; }
+
+    /* OVERVIEW */
+    .overview-grid { grid-template-columns: 1fr; gap: 32px; }
+    .overview-desc { font-size: 14px; margin-bottom: 24px; }
+    .audience-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .audience-card { padding: 12px 10px; gap: 8px; }
+    .audience-icon { font-size: 18px; }
+    .audience-name { font-size: 12px; }
+
+    /* SKILLS */
+    .skills-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .skill-card { padding: 20px 10px; }
+    .skill-icon { font-size: 24px; margin-bottom: 8px; }
+    .skill-name { font-size: 12px; }
+
+    /* CURRICULUM */
+    .modules-grid { grid-template-columns: 1fr; gap: 12px; }
+    .module-card { padding: 20px 16px; }
+    .module-name { font-size: 14px; }
+    .module-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+
+    /* TOOLS */
+    .tools-grid { grid-template-columns: 1fr; gap: 10px; }
+    .tool-card { padding: 20px 16px; }
+
+    /* PROJECTS */
+    .projects-grid { grid-template-columns: 1fr; gap: 14px; }
+    .project-top { padding: 20px 16px 16px; }
+    .project-bottom { padding: 14px 16px; }
+    .project-name { font-size: 15px; }
+
+    /* DURATION BAND */
+    .duration-band { padding: 32px 16px; }
+    .duration-inner { grid-template-columns: 1fr; gap: 28px; }
+    .duration-divider { display: none; }
+    .dur-value { font-size: 26px; }
+
+    /* CAREERS */
+    .careers-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .career-card { padding: 20px 12px; }
+    .career-icon { font-size: 22px; }
+    .career-name { font-size: 13px; }
+
+    /* WHY US */
+    .whyus-grid { grid-template-columns: 1fr; gap: 12px; }
+    .whyus-card { padding: 20px 16px; }
+
+    /* CTA */
+    .cta-block { padding: 36px 20px; }
+    .cta-title { font-size: 20px; }
+    .cta-btn { padding: 14px 28px; font-size: 12px; }
+
+    /* FOOTER */
+    footer { padding: 40px 16px 28px; }
+    .footer-contacts { flex-direction: column; gap: 12px; align-items: center; }
+    .footer-brand { font-size: 16px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-title { font-size: clamp(26px, 10vw, 36px); }
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    .careers-grid { grid-template-columns: 1fr; }
+    .audience-grid { grid-template-columns: 1fr; }
+    .tools-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -461,7 +541,7 @@
     <li><a href="#projects">Projects</a></li>
     <li><a href="#careers">Careers</a></li>
   </ul>
-  <a href="/be6technologies/src/html/index.html" class="nav-cta">←Back to Home</a>
+  <a href="/be6technologies/src/html/index.html" class="nav-cta">← Back to Home</a>
 </nav>
 
 <!-- HERO -->
@@ -477,7 +557,6 @@
         <path d="M40 20L24 27.5V40C24 50.5 31 59.5 40 63C49 59.5 56 50.5 56 40V27.5L40 20Z" fill="rgba(0,212,255,0.15)" stroke="#00d4ff" stroke-width="1.5"/>
         <rect x="34" y="34" width="12" height="14" rx="2" fill="none" stroke="#00d4ff" stroke-width="1.5"/>
         <circle cx="40" cy="41" r="2.5" fill="#00d4ff"/>
-        <line x1="34" y1="38" x2="34" y2="38" stroke="#00d4ff" stroke-width="1.5"/>
         <path d="M36 34V31C36 28.79 37.79 27 40 27C42.21 27 44 28.79 44 31V34" stroke="#00d4ff" stroke-width="1.5" fill="none"/>
       </svg>
     </div>
@@ -509,7 +588,6 @@
     </div>
   </div>
 </section>
-
 
 <!-- OVERVIEW + AUDIENCE -->
 <section class="overview-section" id="overview">
@@ -861,7 +939,7 @@
     <div class="cta-block" id="enroll">
       <div class="cta-title">Start Your Cyber Security Journey Today!</div>
       <div class="cta-sub">Join BE6 Technologies and become a professional Cyber Security expert</div>
-      <a href="https://www.be6technologies.in/" target="_blank" class="cta-btn" onclick="window.location.href='/be6technologies/src/html/Register/BE6_Register.html'">Enroll Now</a>
+      <a href="#" class="cta-btn" onclick="window.location.href='/be6technologies/src/html/Register/BE6_Register.html'">Enroll Now</a>
     </div>
   </div>
 </section>
@@ -879,7 +957,7 @@
     <div class="footer-contact">📧 <a href="mailto:info@be6technologies.in">info@be6technologies.in</a></div>
   </div>
   <div class="footer-divider"></div>
-  <div class="footer-copy">© 2024 BE6 Technologies. All Rights Reserved.</div>
+  <div class="footer-copy">© 2026 BE6 Technologies. All Rights Reserved.</div>
 </footer>
 
 </body>
