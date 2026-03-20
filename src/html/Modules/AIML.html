@@ -28,147 +28,6 @@
     --border: rgba(255,255,255,0.07);
     --border-purple: rgba(168,85,247,0.2);
   }
-    /* =========================
-   MOBILE RESPONSIVE FIX
-========================= */
-@media (max-width: 768px) {
-
-  /* NAVBAR */
-  nav {
-    padding: 0 16px;
-  }
-
-  .nav-links {
-    display: none; /* hide menu on mobile */
-  }
-
-  .nav-cta {
-    padding: 8px 12px;
-    font-size: 11px;
-  }
-
-  /* HERO */
-  .hero {
-    padding: 100px 16px 40px;
-    min-height: auto;
-  }
-
-  .hero-title {
-    font-size: 34px;
-    line-height: 1.2;
-  }
-
-  .hero-sub {
-    font-size: 14px;
-  }
-
-  .hero-course-pills {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .hero-badges {
-    gap: 8px;
-  }
-
-  .badge {
-    font-size: 11px;
-    padding: 8px 12px;
-  }
-
-  .hero-btns {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .btn-primary,
-  .btn-outline {
-    width: 100%;
-    text-align: center;
-  }
-
-  /* STATS */
-  .stats-band {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .stat-item {
-    padding: 20px 10px;
-  }
-
-  .stat-num {
-    font-size: 26px;
-  }
-
-  /* SECTIONS */
-  section {
-    padding: 60px 16px;
-  }
-
-  .section-title {
-    font-size: 26px;
-  }
-
-  /* COURSES */
-  .courses-split {
-    grid-template-columns: 1fr;
-  }
-
-  /* TOPICS */
-  .topics-outer {
-    grid-template-columns: 1fr;
-  }
-
-  .topics-grid {
-    grid-template-columns: 1fr;
-  }
-
-  /* AUDIENCE */
-  .audience-grid {
-    grid-template-columns: 1fr;
-  }
-
-  /* CAREERS */
-  .careers-outer {
-    grid-template-columns: 1fr;
-  }
-
-  /* DURATION */
-  .duration-inner {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .dur-divider {
-    display: none;
-  }
-
-  /* WHY SECTION */
-  .why-grid {
-    grid-template-columns: 1fr;
-  }
-
-  /* FOOTER */
-  footer {
-    padding: 40px 16px;
-  }
-
-  .footer-contacts {
-    flex-direction: column;
-    gap: 12px;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-orb1,
-  .hero-orb2,
-  .hero-orb3,
-  .hero-ring,
-  .hero-particles {
-    display: none;
-  }
-}
-
   * { margin:0; padding:0; box-sizing:border-box; }
   ::-webkit-scrollbar { width:4px; }
   ::-webkit-scrollbar-track { background:var(--dark-bg); }
@@ -529,6 +388,118 @@
   .footer-contact  { color:#d8b4fe; text-decoration:none; }
   .footer-divider { width:70px; height:2px; background:var(--purple); margin:0 auto 22px; opacity:0.3; }
   .footer-copy { font-size:11px; color:var(--text-dim); font-family:'DM Mono',monospace; }
+
+  /* =========================
+   FORCE MOBILE FIX (FINAL)
+========================= */
+@media (max-width: 768px) {
+
+  /* GLOBAL FIX */
+  * {
+    max-width: 100%;
+  }
+
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* CONTAINERS */
+  .section-inner,
+  .hero-content {
+    padding: 0 16px !important;
+  }
+
+  /* HERO FIX */
+  .hero {
+    padding: 100px 16px 40px !important;
+  }
+
+  .hero-title {
+    font-size: 30px !important;
+    line-height: 1.2;
+  }
+
+  /* BUTTON FULL WIDTH */
+  .hero-btns {
+    flex-direction: column !important;
+  }
+
+  .btn-primary,
+  .btn-outline {
+    width: 100% !important;
+  }
+
+  /* ===== MAIN ISSUE FIX ===== */
+  /* STATS BAND OVERFLOW */
+  .stats-band {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .stat-item {
+    padding: 16px !important;
+  }
+
+  .stat-num {
+    font-size: 24px !important;
+  }
+
+  /* FORCE ALL GRIDS TO STACK */
+  .courses-split,
+  .topics-outer,
+  .audience-grid,
+  .careers-outer,
+  .why-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* TOPIC CHIPS */
+  .topics-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* DURATION FIX */
+  .duration-inner {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+  }
+
+  .dur-divider {
+    display: none !important;
+  }
+
+  /* NAV FIX */
+  nav {
+    padding: 0 12px !important;
+  }
+
+  .nav-links {
+    display: none !important;
+  }
+
+  .nav-brand {
+    font-size: 14px;
+  }
+
+  /* CARDS SPACING */
+  .course-body,
+  .course-header,
+  .why-card,
+  .audience-card {
+    padding: 16px !important;
+  }
+
+  /* REMOVE HEAVY ELEMENTS */
+  .hero-orb1,
+  .hero-orb2,
+  .hero-orb3,
+  .hero-ring,
+  .hero-particles {
+    display: none !important;
+  }
+}
+  
 </style>
 </head>
 <body>
