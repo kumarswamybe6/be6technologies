@@ -32,6 +32,8 @@
     color: var(--text);
     line-height: 1.6;
   }
+  /* ── MOBILE RESPONSIVE ─────────────────────────────────── */
+  @media (max-width: 768px) {
 
   /* NAV */
   nav {
@@ -499,6 +501,14 @@
 
   .footer-divider { width: 80px; height: 2px; background: var(--orange); margin: 0 auto 24px; opacity: 0.4; }
   .footer-copy { font-size: 12px; color: rgba(255,255,255,0.25); }
+   @media (max-width: 480px) {
+    .hero-title { font-size: clamp(26px, 10vw, 36px); }
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    .careers-grid { grid-template-columns: 1fr; }
+    .audience-grid { grid-template-columns: 1fr; }
+    .tools-grid { grid-template-columns: 1fr; }
+
+  
 </style>
 </head>
 <body>
