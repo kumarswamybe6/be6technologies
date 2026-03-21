@@ -40,6 +40,8 @@
     color:var(--text);
     line-height:1.6;
     overflow-x:hidden;
+    width:100%;
+    max-width:100vw;
   }
 
   /* NAV */
@@ -62,7 +64,7 @@
     padding:10px 24px; border-radius:6px;
     font-size:13px; font-weight:700; text-decoration:none;
     letter-spacing:0.5px; transition:all 0.2s;
-    box-shadow:0 4px 20px rgba(249,115,22,0.3);
+    box-shadow:0 4px 20px rgba(34,197,94,0.3);
   }
   .nav-cta:hover { background:var(--orange-deep); transform:translateY(-1px); }
 
@@ -79,7 +81,6 @@
     padding-top:68px;
   }
 
-  /* Animated code rain columns */
   .code-rain {
     position:absolute; inset:0; overflow:hidden; pointer-events:none; opacity:0.035;
   }
@@ -152,6 +153,7 @@
     border-radius:8px; padding:12px 20px; margin-bottom:40px;
     font-family:'DM Mono',monospace; font-size:13px;
     animation:fadeUp 0.7s 0.25s ease both;
+    flex-wrap:wrap; justify-content:center;
   }
   .snippet-prompt { color:var(--green); }
   .snippet-code { color:var(--yellow); }
@@ -185,7 +187,6 @@
     border:1px solid var(--border); transition:all 0.2s;
   }
   .btn-outline:hover { border-color:var(--green); color:var(--green); }
-
   @keyframes fadeUp { from{opacity:0;transform:translateY(22px);} to{opacity:1;transform:translateY(0);} }
 
   /* STATS BAND */
@@ -240,7 +241,6 @@
   .why-dot { color:var(--green); font-size:16px; flex-shrink:0; margin-top:1px; }
   .why-text { font-size:14px; color:var(--text); }
 
-  /* AUDIENCE */
   .audience-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:28px; }
   .audience-card {
     background:var(--navy-card); border:1px solid var(--border);
@@ -281,7 +281,7 @@
   .module-name { font-family:'Syne',sans-serif; font-size:16px; font-weight:700; color:white; margin-bottom:8px; }
   .module-desc { font-size:13.5px; color:var(--text-muted); line-height:1.65; }
 
-  /* TECH STACK — split frontend / backend / db */
+  /* TECH STACK */
   .tech-section { background:var(--navy); }
   .tech-cols { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
   .tech-col-title {
@@ -386,14 +386,110 @@
   .footer-brand { font-family:'Syne',sans-serif; font-size:22px; font-weight:800; color:white; letter-spacing:2px; }
   .footer-tagline { font-size:13px; color:var(--text-muted); letter-spacing:1px; margin-bottom:36px; }
   .footer-cta { font-size:19px; font-weight:700; color:#86efac; margin-bottom:32px; }
-  .footer-contacts { display:flex; justify-content:center; gap:48px; margin-bottom:36px; }
+  .footer-contacts { display:flex; justify-content:center; gap:48px; margin-bottom:36px; flex-wrap:wrap; }
   .footer-contact { display:flex; align-items:center; gap:10px; font-size:14px; color:var(--text-muted); }
   .footer-contact a { color:#86efac; text-decoration:none; }
   .footer-contact a:hover { color:var(--green); }
-  .footer-contact  { color:#86efac; text-decoration:none; }
-
   .footer-divider { width:70px; height:2px; background:var(--green); margin:0 auto 22px; opacity:0.3; }
   .footer-copy { font-size:11px; color:var(--text-dim); font-family:'DM Mono',monospace; }
+
+  /* ── MOBILE RESPONSIVE ─────────────────────────────────── */
+  @media (max-width: 768px) {
+
+    /* NAV */
+    nav { padding:0 16px; height:60px; }
+    .nav-links { display:none; }
+    .nav-brand { font-size:13px; letter-spacing:0.5px; }
+    .nav-logo img { width:34px; height:34px; }
+    .nav-cta { padding:8px 14px; font-size:11px; }
+
+    /* HERO */
+    .hero { padding-top:60px; min-height:100svh; }
+    .hero-content { padding:0 16px; }
+    .hero-icon { width:64px; height:64px; font-size:32px; margin-bottom:20px; }
+    .hero-eyebrow { font-size:10px; padding:5px 12px; margin-bottom:18px; letter-spacing:1px; }
+    .hero-title { font-size:clamp(32px,9vw,50px); letter-spacing:-0.5px; margin-bottom:12px; }
+    .hero-sub { font-size:14px; margin-bottom:24px; }
+    .hero-code-snippet { font-size:11px; padding:10px 14px; margin-bottom:24px; }
+    .snippet-code { font-size:10px; }
+    .hero-badges { gap:8px; margin-bottom:24px; }
+    .badge { padding:8px 12px; font-size:11px; }
+    .hero-btns { flex-direction:column; align-items:center; gap:10px; }
+    .btn-primary, .btn-outline { width:100%; max-width:280px; text-align:center; padding:13px 20px; font-size:14px; }
+    .hero-orb1, .hero-orb2 { display:none; }
+    .code-rain { display:none; }
+
+    /* STATS BAND */
+    .stats-band { grid-template-columns:repeat(2,1fr); }
+    .stat-item { padding:20px 10px; border-right:none; border-bottom:1px solid var(--border); }
+    .stat-item:nth-child(odd) { border-right:1px solid var(--border); }
+    .stat-item:nth-child(3), .stat-item:nth-child(4) { border-bottom:none; }
+    .stat-num { font-size:26px; }
+    .stat-label { font-size:11px; }
+
+    /* SECTIONS */
+    section { padding:48px 16px; }
+    .section-title { font-size:clamp(20px,6vw,32px); }
+    .section-sub { font-size:14px; margin-bottom:28px; }
+
+    /* OVERVIEW */
+    .overview-grid { grid-template-columns:1fr; gap:32px; }
+    .overview-desc { font-size:14px; margin-bottom:20px; }
+    .audience-grid { grid-template-columns:1fr 1fr; gap:10px; }
+    .audience-card { padding:14px 12px; gap:10px; }
+    .audience-emoji { font-size:20px; }
+    .audience-name { font-size:13px; }
+
+    /* CURRICULUM */
+    .modules-grid { grid-template-columns:1fr; gap:12px; }
+    .module-card { padding:20px 16px; }
+    .module-name { font-size:14px; }
+    .module-desc { font-size:12px; }
+
+    /* TECH STACK */
+    .tech-cols { grid-template-columns:1fr; gap:28px; }
+    .tech-grid-mini { grid-template-columns:1fr 1fr; gap:10px; }
+    .tech-card { padding:14px 10px; }
+    .tech-emoji { font-size:20px; margin-bottom:6px; }
+    .tech-name { font-size:12px; }
+
+    /* PROJECTS */
+    .projects-grid { grid-template-columns:1fr; gap:14px; }
+    .project-top { padding:22px 18px 18px; }
+    .project-bottom { padding:14px 18px; }
+    .project-name { font-size:15px; }
+
+    /* DURATION BAND */
+    .duration-band { padding:32px 16px; }
+    .duration-inner { grid-template-columns:1fr; gap:28px; }
+    .dur-divider { display:none; }
+    .dur-value { font-size:28px; }
+
+    /* CAREERS */
+    .careers-grid { grid-template-columns:1fr; gap:12px; }
+    .career-card { padding:20px 16px; gap:14px; }
+    .career-icon { width:44px; height:44px; font-size:22px; }
+    .career-name { font-size:15px; }
+
+    /* WHY US */
+    .why-grid { grid-template-columns:1fr; gap:12px; }
+    .why-card { padding:20px 16px; gap:14px; }
+    .why-name { font-size:15px; }
+
+    /* FOOTER */
+    footer { padding:40px 16px 28px; }
+    .footer-contacts { flex-direction:column; gap:12px; align-items:center; }
+    .footer-brand { font-size:16px; }
+    .footer-cta { font-size:15px; }
+
+  } /* ← END @media 768px */
+
+  @media (max-width: 480px) {
+    .hero-title { font-size:clamp(26px,10vw,36px); }
+    .tech-cols { grid-template-columns:1fr; }
+    .audience-grid { grid-template-columns:1fr; }
+    .hero-code-snippet { flex-direction:column; text-align:center; }
+  }
 </style>
 </head>
 <body>
@@ -401,7 +497,7 @@
 <!-- NAV -->
 <nav>
   <div class="nav-logo">
-    <img src="data:image/png;base64,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" alt="BE6 Technologies">
+    <img src="data:image/png;base64,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" alt="BE6 Technologies">
     <span class="nav-brand">BE6 TECHNOLOGIES</span>
   </div>
   <ul class="nav-links">
@@ -410,7 +506,7 @@
     <li><a href="#projects">Projects</a></li>
     <li><a href="#careers">Careers</a></li>
   </ul>
-  <a href="/be6technologies/src/html/index.html" class="nav-cta">←Back to Home</a>
+  <a href="/be6technologies/src/html/index.html" class="nav-cta">← Back to Home</a>
 </nav>
 
 <!-- HERO -->
@@ -430,7 +526,7 @@
     <p class="hero-sub">Build powerful web apps from front to back using Python, Django, React, and modern databases. Master the complete stack that top companies hire for.</p>
     <div class="hero-code-snippet">
       <span class="snippet-prompt">$</span>
-      <span class="snippet-code">python manage.py runserver &nbsp;→&nbsp; App running on port 8000</span>
+      <span class="snippet-code">python manage.py runserver → App running on port 8000</span>
       <span class="snippet-cursor"></span>
     </div>
     <div class="hero-badges">
@@ -499,54 +595,14 @@
     <h2 class="section-title">8 Comprehensive Modules</h2>
     <p class="section-sub">A structured path from Python basics to deploying full-stack web applications in production.</p>
     <div class="modules-grid">
-      <div class="module-card">
-        <div class="module-num">1</div>
-        <span class="module-icon">🐍</span>
-        <div class="module-name">Python Programming Fundamentals</div>
-        <div class="module-desc">Variables, data types, loops, functions, OOP, file handling, and exception management.</div>
-      </div>
-      <div class="module-card">
-        <div class="module-num">2</div>
-        <span class="module-icon">🎨</span>
-        <div class="module-name">Frontend Development</div>
-        <div class="module-desc">HTML5, CSS3, JavaScript ES6+, responsive design, Bootstrap, and building interactive UIs.</div>
-      </div>
-      <div class="module-card">
-        <div class="module-num">3</div>
-        <span class="module-icon">🌐</span>
-        <div class="module-name">Django Web Framework</div>
-        <div class="module-desc">MVT architecture, URL routing, views, templates, forms, authentication, and admin panel.</div>
-      </div>
-      <div class="module-card">
-        <div class="module-num">4</div>
-        <span class="module-icon">🔌</span>
-        <div class="module-name">Django REST Framework</div>
-        <div class="module-desc">Building RESTful APIs, serializers, viewsets, authentication tokens, and API testing.</div>
-      </div>
-      <div class="module-card">
-        <div class="module-num">5</div>
-        <span class="module-icon">🗄️</span>
-        <div class="module-name">Database Management</div>
-        <div class="module-desc">PostgreSQL, MySQL, Django ORM, CRUD operations, migrations, and query optimization.</div>
-      </div>
-      <div class="module-card">
-        <div class="module-num">6</div>
-        <span class="module-icon">⚛️</span>
-        <div class="module-name">React.js Frontend</div>
-        <div class="module-desc">Components, hooks, state management, axios API calls, and connecting React to Django backends.</div>
-      </div>
-      <div class="module-card">
-        <div class="module-num">7</div>
-        <span class="module-icon">🔐</span>
-        <div class="module-name">Authentication & Security</div>
-        <div class="module-desc">JWT tokens, session management, OAuth, CSRF protection, and web application security best practices.</div>
-      </div>
-      <div class="module-card">
-        <div class="module-num">8</div>
-        <span class="module-icon">🚀</span>
-        <div class="module-name">Deployment & DevOps</div>
-        <div class="module-desc">Git, GitHub, Docker basics, deploying on AWS/Heroku, CI/CD pipelines, and Nginx configuration.</div>
-      </div>
+      <div class="module-card"><div class="module-num">1</div><span class="module-icon">🐍</span><div class="module-name">Python Programming Fundamentals</div><div class="module-desc">Variables, data types, loops, functions, OOP, file handling, and exception management.</div></div>
+      <div class="module-card"><div class="module-num">2</div><span class="module-icon">🎨</span><div class="module-name">Frontend Development</div><div class="module-desc">HTML5, CSS3, JavaScript ES6+, responsive design, Bootstrap, and building interactive UIs.</div></div>
+      <div class="module-card"><div class="module-num">3</div><span class="module-icon">🌐</span><div class="module-name">Django Web Framework</div><div class="module-desc">MVT architecture, URL routing, views, templates, forms, authentication, and admin panel.</div></div>
+      <div class="module-card"><div class="module-num">4</div><span class="module-icon">🔌</span><div class="module-name">Django REST Framework</div><div class="module-desc">Building RESTful APIs, serializers, viewsets, authentication tokens, and API testing.</div></div>
+      <div class="module-card"><div class="module-num">5</div><span class="module-icon">🗄️</span><div class="module-name">Database Management</div><div class="module-desc">PostgreSQL, MySQL, Django ORM, CRUD operations, migrations, and query optimization.</div></div>
+      <div class="module-card"><div class="module-num">6</div><span class="module-icon">⚛️</span><div class="module-name">React.js Frontend</div><div class="module-desc">Components, hooks, state management, axios API calls, and connecting React to Django backends.</div></div>
+      <div class="module-card"><div class="module-num">7</div><span class="module-icon">🔐</span><div class="module-name">Authentication & Security</div><div class="module-desc">JWT tokens, session management, OAuth, CSRF protection, and web application security best practices.</div></div>
+      <div class="module-card"><div class="module-num">8</div><span class="module-icon">🚀</span><div class="module-name">Deployment & DevOps</div><div class="module-desc">Git, GitHub, Docker basics, deploying on AWS/Heroku, CI/CD pipelines, and Nginx configuration.</div></div>
     </div>
   </div>
 </section>
@@ -597,64 +653,28 @@
     <p class="section-sub">End-to-end web applications with real backends, databases, and deployments.</p>
     <div class="projects-grid">
       <div class="project-card">
-        <div class="project-top">
-          <div class="project-emoji">🛒</div>
-          <div class="project-name">E-Commerce Platform</div>
-          <span class="project-stack">Django · React · PostgreSQL</span>
-        </div>
-        <div class="project-bottom">
-          <div class="project-desc">Full-featured online store with product listings, cart, order management, and payment integration.</div>
-        </div>
+        <div class="project-top"><div class="project-emoji">🛒</div><div class="project-name">E-Commerce Platform</div><span class="project-stack">Django · React · PostgreSQL</span></div>
+        <div class="project-bottom"><div class="project-desc">Full-featured online store with product listings, cart, order management, and payment integration.</div></div>
       </div>
       <div class="project-card">
-        <div class="project-top">
-          <div class="project-emoji">👥</div>
-          <div class="project-name">Employee Management System</div>
-          <span class="project-stack">Django · REST API · MySQL</span>
-        </div>
-        <div class="project-bottom">
-          <div class="project-desc">HR dashboard to manage employee profiles, departments, attendance, and payroll records.</div>
-        </div>
+        <div class="project-top"><div class="project-emoji">👥</div><div class="project-name">Employee Management System</div><span class="project-stack">Django · REST API · MySQL</span></div>
+        <div class="project-bottom"><div class="project-desc">HR dashboard to manage employee profiles, departments, attendance, and payroll records.</div></div>
       </div>
       <div class="project-card">
-        <div class="project-top">
-          <div class="project-emoji">📝</div>
-          <div class="project-name">Blog & CMS Application</div>
-          <span class="project-stack">Django · Bootstrap · SQLite</span>
-        </div>
-        <div class="project-bottom">
-          <div class="project-desc">Full content management system with user authentication, rich text editor, and SEO features.</div>
-        </div>
+        <div class="project-top"><div class="project-emoji">📝</div><div class="project-name">Blog & CMS Application</div><span class="project-stack">Django · Bootstrap · SQLite</span></div>
+        <div class="project-bottom"><div class="project-desc">Full content management system with user authentication, rich text editor, and SEO features.</div></div>
       </div>
       <div class="project-card">
-        <div class="project-top">
-          <div class="project-emoji">🔌</div>
-          <div class="project-name">REST API Service</div>
-          <span class="project-stack">DRF · JWT · Postman</span>
-        </div>
-        <div class="project-bottom">
-          <div class="project-desc">Production-ready REST API with token authentication, rate limiting, and full documentation.</div>
-        </div>
+        <div class="project-top"><div class="project-emoji">🔌</div><div class="project-name">REST API Service</div><span class="project-stack">DRF · JWT · Postman</span></div>
+        <div class="project-bottom"><div class="project-desc">Production-ready REST API with token authentication, rate limiting, and full documentation.</div></div>
       </div>
       <div class="project-card">
-        <div class="project-top">
-          <div class="project-emoji">📊</div>
-          <div class="project-name">Data Dashboard App</div>
-          <span class="project-stack">Django · Charts.js · PostgreSQL</span>
-        </div>
-        <div class="project-bottom">
-          <div class="project-desc">Interactive analytics dashboard visualizing real data with charts, filters, and export features.</div>
-        </div>
+        <div class="project-top"><div class="project-emoji">📊</div><div class="project-name">Data Dashboard App</div><span class="project-stack">Django · Charts.js · PostgreSQL</span></div>
+        <div class="project-bottom"><div class="project-desc">Interactive analytics dashboard visualizing real data with charts, filters, and export features.</div></div>
       </div>
       <div class="project-card">
-        <div class="project-top">
-          <div class="project-emoji">💬</div>
-          <div class="project-name">Real-Time Chat App</div>
-          <span class="project-stack">Django Channels · WebSocket</span>
-        </div>
-        <div class="project-bottom">
-          <div class="project-desc">Live messaging application using Django Channels and WebSockets with room-based chat.</div>
-        </div>
+        <div class="project-top"><div class="project-emoji">💬</div><div class="project-name">Real-Time Chat App</div><span class="project-stack">Django Channels · WebSocket</span></div>
+        <div class="project-bottom"><div class="project-desc">Live messaging application using Django Channels and WebSockets with room-based chat.</div></div>
       </div>
     </div>
   </div>
@@ -684,30 +704,12 @@
     <h2 class="section-title">Your Python Career Path</h2>
     <p class="section-sub">Python developers are among the most in-demand and highest-paid professionals globally.</p>
     <div class="careers-grid">
-      <div class="career-card">
-        <div class="career-icon">🐍</div>
-        <div><div class="career-name">Python Developer</div><div class="career-sub">Web apps · Scripting · Automation</div></div>
-      </div>
-      <div class="career-card">
-        <div class="career-icon">🌐</div>
-        <div><div class="career-name">Full Stack Developer</div><div class="career-sub">Frontend + Backend + Database</div></div>
-      </div>
-      <div class="career-card">
-        <div class="career-icon">🔌</div>
-        <div><div class="career-name">Backend Developer</div><div class="career-sub">APIs · Django · Server-side Logic</div></div>
-      </div>
-      <div class="career-card">
-        <div class="career-icon">🎸</div>
-        <div><div class="career-name">Django Developer</div><div class="career-sub">Web Frameworks · REST · MVT</div></div>
-      </div>
-      <div class="career-card">
-        <div class="career-icon">☁️</div>
-        <div><div class="career-name">DevOps Engineer</div><div class="career-sub">Deployment · CI/CD · Cloud</div></div>
-      </div>
-      <div class="career-card">
-        <div class="career-icon">💻</div>
-        <div><div class="career-name">Software Engineer</div><div class="career-sub">Product & Service Companies</div></div>
-      </div>
+      <div class="career-card"><div class="career-icon">🐍</div><div><div class="career-name">Python Developer</div><div class="career-sub">Web apps · Scripting · Automation</div></div></div>
+      <div class="career-card"><div class="career-icon">🌐</div><div><div class="career-name">Full Stack Developer</div><div class="career-sub">Frontend + Backend + Database</div></div></div>
+      <div class="career-card"><div class="career-icon">🔌</div><div><div class="career-name">Backend Developer</div><div class="career-sub">APIs · Django · Server-side Logic</div></div></div>
+      <div class="career-card"><div class="career-icon">🎸</div><div><div class="career-name">Django Developer</div><div class="career-sub">Web Frameworks · REST · MVT</div></div></div>
+      <div class="career-card"><div class="career-icon">☁️</div><div><div class="career-name">DevOps Engineer</div><div class="career-sub">Deployment · CI/CD · Cloud</div></div></div>
+      <div class="career-card"><div class="career-icon">💻</div><div><div class="career-name">Software Engineer</div><div class="career-sub">Product & Service Companies</div></div></div>
     </div>
   </div>
 </section>
@@ -721,31 +723,19 @@
     <div class="why-grid">
       <div class="why-card">
         <div class="why-icon-wrap">👨‍🏫</div>
-        <div>
-          <div class="why-name">Industry Expert Trainers</div>
-          <div class="why-desc">Learn from Python developers who build and ship production apps at real companies.</div>
-        </div>
+        <div><div class="why-name">Industry Expert Trainers</div><div class="why-desc">Learn from Python developers who build and ship production apps at real companies.</div></div>
       </div>
       <div class="why-card">
         <div class="why-icon-wrap">🏗️</div>
-        <div>
-          <div class="why-name">Real-Time Projects</div>
-          <div class="why-desc">Build 6+ full-stack portfolio apps that demonstrate your skills to any hiring team.</div>
-        </div>
+        <div><div class="why-name">Real-Time Projects</div><div class="why-desc">Build 6+ full-stack portfolio apps that demonstrate your skills to any hiring team.</div></div>
       </div>
       <div class="why-card">
         <div class="why-icon-wrap">📝</div>
-        <div>
-          <div class="why-name">Interview Preparation</div>
-          <div class="why-desc">Mock interviews, technical Q&A sessions, and resume reviews to get you job-ready fast.</div>
-        </div>
+        <div><div class="why-name">Interview Preparation</div><div class="why-desc">Mock interviews, technical Q&A sessions, and resume reviews to get you job-ready fast.</div></div>
       </div>
       <div class="why-card">
         <div class="why-icon-wrap">🤝</div>
-        <div>
-          <div class="why-name">100% Support</div>
-          <div class="why-desc">Dedicated placement cell with company tie-ups to help you land your first tech role.</div>
-        </div>
+        <div><div class="why-name">100% Support</div><div class="why-desc">Dedicated placement cell with company tie-ups to help you land your first tech role.</div></div>
       </div>
     </div>
   </div>
@@ -754,7 +744,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">
-    <img src="data:image/png;base64,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" alt="BE6 Technologies">
+    <img src="data:image/png;base64,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" alt="BE6 Technologies">
     <span class="footer-brand">BE6 TECHNOLOGIES</span>
   </div>
   <div class="footer-tagline">Empowering Careers Through Technology</div>
@@ -764,9 +754,3 @@
     <div class="footer-contact">📧 <a href="mailto:Info@be6technologies.com">Info@be6technologies.com</a></div>
     <div class="footer-contact">🌐 <a href="https://www.be6technologies.in/" target="_blank">www.be6technologies.in</a></div>
   </div>
-  <div class="footer-divider"></div>
-  <div class="footer-copy">© 2026 BE6 Technologies. All Rights Reserved.</div>
-</footer>
-
-</body>
-</html>
