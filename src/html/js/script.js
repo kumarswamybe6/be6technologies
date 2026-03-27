@@ -233,6 +233,9 @@ sections.forEach(s => navObs.observe(s));
   const stepOk    = document.getElementById('bm-step-success');
   const openBtn   = document.getElementById('bm-open-brochure');
 
+  // ── Same Google Apps Script URL used in the registration form ──
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbzjzw1joFYtlKXNajW-YMlqC8NLJQN8ZckppOzb-WXxzpgf6zYImecJOxp4f4VMnnbGVA/exec";
+
   let pendingBrochureUrl  = '#';
   let pendingModuleName   = 'Module';
   let pendingModuleNum    = '';
@@ -247,7 +250,7 @@ sections.forEach(s => navObs.observe(s));
     'Cloud Computing'             : '☁️',
     'Python Full Stack Developer' : '🐍',
     'Salesforce Development'      : '☁️',
-    'SAP (ERP & S/4HANA)'        : '🏭',
+    'SAP FICO & HANA'             : '💻',
   };
 
   /* ── Attach click to every brochure button ── */
@@ -271,12 +274,9 @@ sections.forEach(s => navObs.observe(s));
   /* ── Open modal ── */
   function openModal() {
     resetForm();
-
-    /* Update modal header to show which module */
-    document.getElementById('bm-modal-emoji').textContent  = pendingModuleEmoji;
-    document.getElementById('bm-modal-modnum').textContent = pendingModuleNum;
+    document.getElementById('bm-modal-emoji').textContent   = pendingModuleEmoji;
+    document.getElementById('bm-modal-modnum').textContent  = pendingModuleNum;
     document.getElementById('bm-modal-modname').textContent = pendingModuleName;
-
     overlay.classList.add('active');
     overlay.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -290,10 +290,10 @@ sections.forEach(s => navObs.observe(s));
     document.body.style.overflow = '';
   }
 
-  /* ── Reset form fields ── */
+  /* ── Reset form ── */
   function resetForm() {
     stepForm.style.display = '';
-    stepOk.style.display = 'none';
+    stepOk.style.display   = 'none';
     ['bm-name','bm-phone','bm-email'].forEach(id => {
       const el = document.getElementById(id);
       el.value = '';
@@ -302,7 +302,7 @@ sections.forEach(s => navObs.observe(s));
     ['err-name','err-phone','err-email'].forEach(id => {
       document.getElementById(id).textContent = '';
     });
-    submitBtn.disabled = false;
+    submitBtn.disabled     = false;
     submitTxt.style.display = '';
     submitLdr.style.display = 'none';
   }
@@ -319,30 +319,24 @@ sections.forEach(s => navObs.observe(s));
   function validatePhone(v) { return /^[6-9]\d{9}$/.test(v.replace(/\s+/g, '')); }
   function validateEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
 
-  function showError(fieldId, errId, msg) {
+  function showErr(fieldId, errId, msg) {
     document.getElementById(fieldId).classList.add('bm-error');
     document.getElementById(errId).textContent = msg;
   }
-  function clearError(fieldId, errId) {
+  function clearErr(fieldId, errId) {
     document.getElementById(fieldId).classList.remove('bm-error');
     document.getElementById(errId).textContent = '';
   }
 
   /* ── Live validation ── */
   document.getElementById('bm-name').addEventListener('input', function () {
-    validateName(this.value)
-      ? clearError('bm-name','err-name')
-      : showError('bm-name','err-name','Please enter your full name (min 2 chars)');
+    validateName(this.value) ? clearErr('bm-name','err-name') : showErr('bm-name','err-name','Please enter your full name (min 2 chars)');
   });
   document.getElementById('bm-phone').addEventListener('input', function () {
-    validatePhone(this.value)
-      ? clearError('bm-phone','err-phone')
-      : showError('bm-phone','err-phone','Enter a valid 10-digit mobile number');
+    validatePhone(this.value) ? clearErr('bm-phone','err-phone') : showErr('bm-phone','err-phone','Enter a valid 10-digit mobile number');
   });
   document.getElementById('bm-email').addEventListener('input', function () {
-    validateEmail(this.value)
-      ? clearError('bm-email','err-email')
-      : showError('bm-email','err-email','Enter a valid email address');
+    validateEmail(this.value) ? clearErr('bm-email','err-email') : showErr('bm-email','err-email','Enter a valid email address');
   });
 
   /* ── Submit ── */
@@ -352,52 +346,59 @@ sections.forEach(s => navObs.observe(s));
     const email = document.getElementById('bm-email').value;
 
     let valid = true;
-    if (!validateName(name))  { showError('bm-name','err-name','Please enter your full name (min 2 chars)'); valid = false; }
-    if (!validatePhone(phone)){ showError('bm-phone','err-phone','Enter a valid 10-digit mobile number'); valid = false; }
-    if (!validateEmail(email)){ showError('bm-email','err-email','Enter a valid email address'); valid = false; }
+    if (!validateName(name))  { showErr('bm-name','err-name','Please enter your full name (min 2 chars)'); valid = false; }
+    if (!validatePhone(phone)){ showErr('bm-phone','err-phone','Enter a valid 10-digit mobile number');    valid = false; }
+    if (!validateEmail(email)){ showErr('bm-email','err-email','Enter a valid email address');             valid = false; }
     if (!valid) return;
 
     /* Show loader */
-    submitBtn.disabled = true;
+    submitBtn.disabled      = true;
     submitTxt.style.display = 'none';
     submitLdr.style.display = '';
 
+    /* ── Send to Google Apps Script via Image GET (no CORS issues) ── */
+    const params = new URLSearchParams({
+      name:   name.trim(),
+      email:  email.trim(),
+      phone:  phone.trim(),
+      course: pendingModuleName   // module name goes into the "course" column
+    });
+
+    const img = new Image();
+    img.src = GAS_URL + "?" + params.toString();
+
+    // Whether it succeeds or errors, show success (no-cors — we can't read response)
+    img.onload = img.onerror = () => {
+      showSuccessScreen(name.trim(), phone.trim(), email.trim());
+    };
+
+    // Fallback timeout in case image never fires
     setTimeout(() => {
-      /* Save registration to localStorage */
-      const registration = {
-        name      : name.trim(),
-        phone     : phone.trim(),
-        email     : email.trim(),
-        module    : pendingModuleName,
-        moduleNum : pendingModuleNum,
-        timestamp : new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
-      };
-      const existing = JSON.parse(localStorage.getItem('be6_registrations') || '[]');
-      existing.push(registration);
-      localStorage.setItem('be6_registrations', JSON.stringify(existing));
-
-      /* Switch to success screen */
-      stepForm.style.display = 'none';
-      stepOk.style.display   = '';
-
-      /* Populate success screen */
-      document.getElementById('bm-success-name').textContent = name.trim().split(' ')[0];
-
-      document.getElementById('bm-success-details').innerHTML =
-        `<div class="bm-detail-row"><span class="bm-detail-label">👤 Name</span><span class="bm-detail-val">${name.trim()}</span></div>` +
-        `<div class="bm-detail-row"><span class="bm-detail-label">📱 Phone</span><span class="bm-detail-val">${phone.trim()}</span></div>` +
-        `<div class="bm-detail-row"><span class="bm-detail-label">✉️ Email</span><span class="bm-detail-val">${email.trim()}</span></div>` +
-        `<div class="bm-detail-row bm-module-row">
-           <span class="bm-detail-label">📘 Module</span>
-           <span class="bm-detail-val bm-module-highlight">
-             ${pendingModuleEmoji} ${pendingModuleNum} — ${pendingModuleName}
-           </span>
-         </div>`;
-
-      /* Auto-open brochure */
-      setTimeout(() => { window.open(pendingBrochureUrl, '_blank'); }, 800);
-    }, 1200);
+      showSuccessScreen(name.trim(), phone.trim(), email.trim());
+    }, 4000);
   });
+
+  /* ── Show success screen ── */
+  function showSuccessScreen(name, phone, email) {
+    stepForm.style.display = 'none';
+    stepOk.style.display   = '';
+
+    document.getElementById('bm-success-name').textContent = name.split(' ')[0];
+
+    document.getElementById('bm-success-details').innerHTML =
+      `<div class="bm-detail-row"><span class="bm-detail-label">👤 Name</span><span class="bm-detail-val">${name}</span></div>` +
+      `<div class="bm-detail-row"><span class="bm-detail-label">📱 Phone</span><span class="bm-detail-val">${phone}</span></div>` +
+      `<div class="bm-detail-row"><span class="bm-detail-label">✉️ Email</span><span class="bm-detail-val">${email}</span></div>` +
+      `<div class="bm-detail-row bm-module-row">
+         <span class="bm-detail-label">📘 Module</span>
+         <span class="bm-detail-val bm-module-highlight">
+           ${pendingModuleEmoji} ${pendingModuleNum} — ${pendingModuleName}
+         </span>
+       </div>`;
+
+    /* Auto-open brochure after short delay */
+    setTimeout(() => { window.open(pendingBrochureUrl, '_blank'); }, 800);
+  }
 
   /* ── Manual open button on success screen ── */
   openBtn.addEventListener('click', function () {
