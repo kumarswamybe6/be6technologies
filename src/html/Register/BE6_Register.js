@@ -60,7 +60,7 @@ document.getElementById("applyForm").addEventListener("submit", async function(e
   // ── Validation ──
   if (!name)                          return triggerError("field-name");
   if (!email || !email.includes("@")) return triggerError("field-email");
-  if (!phone || phone.length < 7)     return triggerError("field-phone");
+  if (!phone || phone.length !== 10)  return triggerError("field-phone");
   if (!course) { accTrigger.classList.add("error"); return; }
 
   const btn     = document.getElementById("submitBtn");
@@ -71,11 +71,20 @@ document.getElementById("applyForm").addEventListener("submit", async function(e
 
   const payload = { name, email, phone, course };
 
-  // ── Backend not connected yet — shows success directly ──
-  // TODO: When your backend is ready, replace this block with a fetch() call
-  setTimeout(() => {
+  // ── Google Apps Script Backend (GET method — most reliable, no CORS issues) ──
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbzjzw1joFYtlKXNajW-YMlqC8NLJQN8ZckppOzb-WXxzpgf6zYImecJOxp4f4VMnnbGVA/exec";
+  const params  = new URLSearchParams({
+    name:   payload.name,
+    email:  payload.email,
+    phone:  payload.phone,
+    course: payload.course
+  });
+
+  const img = new Image();
+  img.src = GAS_URL + "?" + params.toString();
+  img.onload = img.onerror = () => {
     showSuccess(name, email, course);
-  }, 800);
+  };
 });
 
 // ─── FIELD ERRORS ─────────────────────────────────────────
